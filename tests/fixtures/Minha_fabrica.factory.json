@@ -1,0 +1,204 @@
+{
+  "format": "factory-flow-mobile",
+  "version": 1,
+  "exported": "2026-11-01T13:40:44.270Z",
+  "project": {
+    "id": "oau0fnmvc9e5",
+    "name": "Minha fábrica",
+    "created": 1793539886477,
+    "boards": [
+      {
+        "id": "root",
+        "name": "Plano principal",
+        "parent": null
+      }
+    ],
+    "current": "root",
+    "nodes": [
+      {
+        "id": "pw1qgfmvcstj",
+        "board": "root",
+        "x": 1.592592592592581,
+        "y": 100.66666666666669,
+        "title": "",
+        "clock": 100,
+        "limit": null,
+        "target": null,
+        "portCaps": {},
+        "type": "recipe",
+        "rid": 0
+      },
+      {
+        "id": "2tpwxxivcyt3",
+        "board": "root",
+        "x": -410,
+        "y": 104,
+        "title": "",
+        "clock": 100,
+        "limit": 120,
+        "target": null,
+        "portCaps": {},
+        "type": "source",
+        "item": 0,
+        "sourceMachine": "miner-mk2",
+        "purity": 1,
+        "sourceCount": 1,
+        "autoSupply": false
+      },
+      {
+        "id": "uhnkotzvdg94",
+        "board": "root",
+        "x": 422.3081072998227,
+        "y": 65.21870946686309,
+        "title": "",
+        "clock": 100,
+        "limit": null,
+        "target": null,
+        "portCaps": {},
+        "type": "recipe",
+        "rid": 9
+      },
+      {
+        "id": "coptcuzvj7hs",
+        "board": "root",
+        "x": 848.5309404360204,
+        "y": 38.55295917115967,
+        "title": "",
+        "clock": 100,
+        "limit": null,
+        "target": null,
+        "portCaps": {},
+        "type": "recipe",
+        "rid": 46
+      },
+      {
+        "id": "276uhzyvjhu0",
+        "board": "root",
+        "x": 1241.3053581869328,
+        "y": -25.821178502059666,
+        "title": "",
+        "clock": 100,
+        "limit": null,
+        "target": null,
+        "portCaps": {},
+        "type": "storage",
+        "item": 28
+      },
+      {
+        "id": "2a0kimlvktn6",
+        "board": "root",
+        "x": 12.514445758681845,
+        "y": 315.0440116382574,
+        "title": "",
+        "clock": 100,
+        "limit": null,
+        "target": null,
+        "portCaps": {},
+        "type": "source",
+        "item": 2,
+        "sourceMachine": "miner-mk2",
+        "purity": 1,
+        "sourceCount": 1,
+        "autoSupply": true
+      },
+      {
+        "id": "ty5z68zvlni8",
+        "board": "root",
+        "x": 840.2338295877569,
+        "y": 263.6120909303106,
+        "title": "",
+        "clock": 100,
+        "limit": null,
+        "target": null,
+        "portCaps": {},
+        "type": "recipe",
+        "rid": 48
+      },
+      {
+        "id": "v75eoc6vnbgo",
+        "board": "root",
+        "x": 1243.7138856032955,
+        "y": 252.59147258363754,
+        "title": "",
+        "clock": 100,
+        "limit": null,
+        "target": null,
+        "portCaps": {},
+        "type": "storage",
+        "item": 29
+      }
+    ],
+    "edges": [
+      {
+        "id": "myvaaddvcyt3",
+        "board": "root",
+        "from": "2tpwxxivcyt3",
+        "fi": 0,
+        "to": "pw1qgfmvcstj",
+        "ti": 0
+      },
+      {
+        "id": "47zrc8gvdg94",
+        "board": "root",
+        "from": "pw1qgfmvcstj",
+        "fi": 0,
+        "to": "uhnkotzvdg94",
+        "ti": 0
+      },
+      {
+        "id": "367cvghvj7hs",
+        "board": "root",
+        "from": "uhnkotzvdg94",
+        "fi": 0,
+        "to": "coptcuzvj7hs",
+        "ti": 0
+      },
+      {
+        "id": "e6e52fpvjhu1",
+        "board": "root",
+        "from": "coptcuzvj7hs",
+        "fi": 0,
+        "to": "276uhzyvjhu0",
+        "ti": 0
+      },
+      {
+        "id": "qpb1v4yvktn7",
+        "board": "root",
+        "from": "2a0kimlvktn6",
+        "fi": 0,
+        "to": "uhnkotzvdg94",
+        "ti": 1
+      },
+      {
+        "id": "mokx2m9vlni8",
+        "board": "root",
+        "from": "uhnkotzvdg94",
+        "fi": 0,
+        "to": "ty5z68zvlni8",
+        "ti": 0
+      },
+      {
+        "id": "hw6z84zvnbgo",
+        "board": "root",
+        "from": "ty5z68zvlni8",
+        "fi": 0,
+        "to": "v75eoc6vnbgo",
+        "ti": 0
+      }
+    ],
+    "cameras": {
+      "root": {
+        "x": 74.2386254435551,
+        "y": 269.20491752661326,
+        "z": 0.27
+      }
+    },
+    "settings": {
+      "snap": false,
+      "grid": 32,
+      "calc": "auto",
+      "decimals": 2,
+      "showLabels": true
+    }
+  }
+}
