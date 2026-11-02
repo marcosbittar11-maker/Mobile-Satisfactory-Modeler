@@ -1,8 +1,55 @@
-# Relatório de auditoria — Factory Flow v0.4.1 (Satisfactory Mobile Modeler)
+# Relatório de auditoria — Factory Flow (v0.4.1 → v0.4.4)
 
 Data: 01/11/2026 · Arquivos analisados: `Satisfactory_Mobile_Modeler_v0.4.1_Offline.html` (2.152 linhas, ~207 KB de código sem o atlas base64) e `Minha_fabrica.factory.json`.
 
-Referências de linha (`L123`) apontam para o HTML original.
+Referências de linha (`L123`) apontam para o HTML v0.4.1. A seção 0 traz os números de linha na v0.4.4.
+
+## 0. Atualização — v0.4.4 (02/11/2026)
+
+Repeti todos os testes deste relatório na v0.4.4. O código só mudou no motor de cálculo, nos rótulos das portas e no nível de detalhe por zoom.
+
+**Mudanças da v0.4.4 em relação à v0.4.1:**
+- `reserveSpareResources` (L1565): com uma meta fixa, a sobra de recurso vai para os ramos sem meta.
+- Passada de "disponibilidade planejada" (`previewIns/Outs`): agora é ela que alimenta os alertas de falta e os rótulos das conexões.
+- Portas mostram "✓ / ⚠ disponível / necessário".
+- `lodFor`: cards completos até 10% de zoom (antes, 42%).
+
+**O que melhorou (testado):**
+- Fonte fixa de 120 de minério → lingote → Iron Plate (meta 20) + Iron Rod sem meta → armazenamento. Na v0.4.1 só a placa era abastecida (30 usados, 90 parados). Na v0.4.4 a barra recebe os 90 restantes: 6 construtoras. ✓
+- Todos os resultados que estavam corretos continuam idênticos: gerador automático, clock, Somersloop, ciclo, geradores e o seu JSON (96,6 MW).
+
+**O que continua igual (nenhum P0/P1 foi corrigido):**
+- P0-1: ordem dos nós (3 × 12 foundries).
+- P0-2: a fonte Mk2 do seu JSON ainda vira automática ao salvar (96,6 → 81,6 MW). Linhas L1875 e L1923.
+- P0-3: colar outpost (L1047).
+- P0-4: divisor prioritário e pesos.
+- P1-1: lista cortada em 200 (L2092).
+- P1-2: botão de alertas some em ≤365 px (CSS L14).
+- P1-5: "esteira mais rápido" (L1813).
+- P1-6: "/m".
+- Todos os itens das seções 5 e 6.
+
+**Regressões novas da v0.4.4:**
+
+- **R1 — Meta não atingida sem nenhum alerta.**
+  - Teste: Iron Ingot com meta de 60/min, que só pode entregar para 1 Iron Plate limitado a 1 máquina (aceita 30).
+  - Fluxo real: 30/min. HUD: "✓ Sem pendências".
+  - Na v0.4.1 havia um alerta (com texto enganoso, "Recebe 30/60"). Agora não há nenhum. Os alertas de entrada passaram a usar a disponibilidade planejada, que ignora a contrapressão. Como a entrada também cai para 50%, o aviso "Saída bloqueada" (L1795, `uOut < min(1,uIn)`) também não dispara.
+  - Correção: alerta explícito "meta X/min, entregue Y/min" sempre que o fluxo real de um nó com meta (ou de um nó de destino) ficar abaixo do pedido.
+
+- **R2 — Zoom distante ficou ~20–30× mais pesado.**
+  - Teste: 400 cards, tudo na tela.
+
+    | Zoom | v0.4.1 | v0.4.4 |
+    |---|---|---|
+    | 10% | 12,7 ms (800 elementos) | 376 ms (14.400 elementos) |
+    | 20% | 12,7 ms | 242 ms |
+
+  - Em celular, isso deve virar travadas de mais de 1 s a cada mudança de nível ao fazer pinça ou enquadrar.
+  - A 10%, o texto do card tem ~1,3 px: ninguém consegue ler. O custo não traz ganho.
+  - Correção: voltar a algo como `full ≥ 0,3`, `compact ≥ 0,1`. Outra opção é decidir pelo número de nós visíveis (ex.: full só com até 150 cards na tela).
+
+- **R3 (menor) — Fonte automática ganha um teto implícito de 120.** A reserva de excedente usa `max(120, demanda)` como capacidade da fonte automática. Com fonte automática, os ramos sem meta recebem "o que sobra até 120", o mesmo número arbitrário do P0-1. Mais um motivo para tornar a referência configurável ou trocá-la por configuração real de extratora (P0-2).
 
 ## 1. Como foi verificado
 
