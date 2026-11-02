@@ -4,6 +4,30 @@ Data: 01/11/2026 · Arquivos analisados: `Satisfactory_Mobile_Modeler_v0.4.1_Off
 
 Referências de linha (`L123`) apontam para o HTML v0.4.1. A seção 0 traz os números de linha na v0.4.4.
 
+## Status — v0.4.5 (correções aplicadas)
+
+Tudo abaixo foi corrigido na v0.4.5 e está coberto por `tests/run.js` (26 testes, todos passando). A mudança de zoom da v0.4.4 (R2) foi **mantida** por decisão do autor: não travou no aparelho dele.
+
+| Item | Correção |
+|---|---|
+| P0-1 ordem dos nós | Sem fonte fixa, todas as fontes automáticas do componente ancoram (antes, só a primeira da ordem). Iron Alloy: 3 foundries em qualquer ordem. |
+| P0-2 extratora física | O editor tem o modo "Extratora física" (Mk1/2/3, extrator de petróleo/água, poço; pureza, nº de nós, clock). Subtítulo mostra a extratora; salvar sem mudanças não altera nada. O resumo conta extratoras e a energia delas. |
+| P0-3 outposts | Copiar, colar, duplicar e modelos clonam a área interna, inclusive outposts aninhados, e as ligações pelas portas. |
+| P0-4 divisores | A estimativa sem meta segue prioridade, pesos e o teto de quem recebe (transbordo). Divisor prioritário: 15 + 105 (antes 15 + 60, 45 parados). Pesos 1:1:2 sem falta falsa. |
+| R1 meta sem alerta | Meta fixa com fluxo real menor gera pendência ("Meta X/min, fluxo real Y/min"). |
+| R3 | Mantido o 120/min de referência para fontes automáticas, agora explicado no editor. |
+| P1-1 | Aba "Tudo": recursos e logística primeiro; limite da lista subiu para 500. |
+| P1-2 | Em ≤365 px some o contador de nós, não o botão de alertas/Recalcular. |
+| P1-3 | Com uma sheet aberta, o toast aparece no topo. |
+| P1-4/5/6 | "3 máquinas a 100%"; "esteira mais rápida liberada"; "/min" em vez de "/m". |
+| P1-7 | Arrastar um nó selecionado move toda a seleção (desfazer em um passo). |
+| P1-8 | Reconectar portas já ligadas não apaga mais a ligação (desconectar pelo toque na conexão). |
+| Seção 5 | Menu sem "Projetos", "Renomear" e "Plano vazio" duplicados; toque longo no nó abre o editor direto (sheet "Ações do bloco" removida); ícones distintos (∑ Resumo, ⤴/⤵ modelos); "Divisor prioritário (overflow)"; Blueprint oculto da lista de adição (idêntico ao outpost; projetos antigos continuam funcionando); descrição honesta do Depósito; pesos rotulados como planejamento; modelos com nome em sheet (sem `prompt()`) e botão de excluir. |
+| Seção 6 | Removido o pipeline de ícones online e as variáveis/funções sem uso; `'use strict'` no topo; receita personalizada criada sem o atalho via nota e sem máquinas geradoras na lista. |
+| Seção 7 (parcial) | Resumo com máquinas por tipo e balanço por item; gerador a carvão com Compacted Coal e Petroleum Coke; usina nuclear com Ficsonium Fuel Rod (150 GJ, conferir na wiki); export com versão do app e do catálogo; aviso ao importar arquivo antigo cujas receitas por índice não combinam com as ligações. |
+
+**Não feito (pendente de decisão):** seleção por área (caixa), Blueprint ×N, limites do mapa por recurso, nº de linhas paralelas por conexão, barra contextual no lugar do botão "Editar", modelos no backup JSON, persistência em IndexedDB, validação do formato `.sfmd`, e mudar o Depósito para "só recebe" (alteraria projetos existentes).
+
 ## 0. Atualização — v0.4.4 (02/11/2026)
 
 Repeti todos os testes deste relatório na v0.4.4. O código só mudou no motor de cálculo, nos rótulos das portas e no nível de detalhe por zoom.

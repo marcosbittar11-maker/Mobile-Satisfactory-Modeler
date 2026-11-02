@@ -1,17 +1,17 @@
 <!doctype html>
 <html lang="pt-BR"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover, user-scalable=no"/>
 <meta name="theme-color" content="#0a1018"/><meta name="apple-mobile-web-app-capable" content="yes"/><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
-<title>Factory Flow v0.4.4 — Satisfactory Mobile Modeler</title>
+<title>Factory Flow v0.4.5 — Satisfactory Mobile Modeler</title>
 <style>
 :root{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#e8f0f9;background:#0b121a;--bg:#0b121a;--panel:#15202d;--panel2:#1e2e3f;--border:#304357;--muted:#8e9fb2;--orange:#ffb74d;--aqua:#5ddbd2;--warn:#ff7e72;--green:#72d6a3;--blue:#72b5ff;--top:calc(57px + env(safe-area-inset-top,0px));--bottom:calc(72px + env(safe-area-inset-bottom,0px));}
 *{box-sizing:border-box}html,body{width:100%;height:100%;margin:0;overflow:hidden;overscroll-behavior:none}button,input,select,textarea{font:inherit}button{cursor:pointer;-webkit-tap-highlight-color:transparent}button:focus-visible,input:focus-visible{outline:2px solid var(--orange);outline-offset:2px}body{-webkit-touch-callout:none}
 #app{position:fixed;inset:0;overflow:hidden;background:var(--bg)}.topbar{position:absolute;z-index:100;inset:0 0 auto;min-height:var(--top);padding:calc(env(safe-area-inset-top,0px) + 7px) 12px 8px;display:flex;gap:7px;align-items:center;background:linear-gradient(180deg,#151f2bf7,#111a25f5);border-bottom:1px solid #324153;box-shadow:0 4px 20px #0008}.topbrand{min-width:0;flex:1;display:flex;flex-direction:column;gap:2px;padding:3px 0}.eyebrow{font-weight:800;color:var(--orange);font-size:10px;letter-spacing:2.2px}.planname{border:0;background:transparent;color:#fff;font-size:15px;font-weight:750;line-height:20px;text-align:left;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding:0}.top-actions{display:flex;align-items:center;gap:6px}.ib{display:grid;place-items:center;flex-shrink:0;color:#dceaf7;background:#203043;border:1px solid #314457;border-radius:12px;width:39px;height:39px;font-size:20px;line-height:1}.ib:active,.bbutton:active,.fab:active{transform:scale(.96)}.ib[disabled]{opacity:.35}.ib.active{border-color:var(--orange);background:#4a3b28;color:var(--orange)}.ib.em{background:#293e3b;color:var(--aqua)}
 #viewport{position:absolute;inset:var(--top) 0 var(--bottom);overflow:hidden;touch-action:none;cursor:grab;user-select:none;-webkit-user-select:none}#viewport:active{cursor:grabbing}#viewport,#world,.node,.port,.port-dot,.port-label,.qty{touch-action:none;-webkit-touch-callout:none}.grid{position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(#ffffff0b 1px,transparent 1px),linear-gradient(90deg,#ffffff0b 1px,transparent 1px);background-size:32px 32px;background-position:0 0}#wires{position:absolute;inset:0;pointer-events:none;width:100%;height:100%;z-index:1}#world{position:absolute;top:0;left:0;transform-origin:0 0;z-index:2;pointer-events:none}.node{position:absolute;width:246px;background:linear-gradient(145deg,#263545,#192532);border:1px solid #5f7187;border-radius:12px;box-shadow:0 10px 24px #0009,0 2px 1px #ffffff08;pointer-events:auto;touch-action:none;overflow:visible;color:#e8eff7;user-select:none;-webkit-user-select:none}.node.selected{border:2px solid var(--orange);box-shadow:0 0 0 4px #ffb74d23,0 12px 30px #0008}.node.connection-target{border-color:var(--aqua)}.node.warn{border-color:#f17d73}.node.source{border-color:#579678}.node.util{border-color:#71869f}.node.outpost{border-color:#b49aec}.node.note{border-color:#a8a579}.node-header{padding:11px 13px 10px;display:flex;align-items:flex-start;gap:9px;min-height:61px;border-bottom:1px solid #ffffff13}.machicon{flex:0 0 37px;height:37px;display:grid;place-items:center;background:#ffffff12;border-radius:9px;font-size:24px}.node-title{font-weight:750;font-size:13.5px;line-height:17px;max-height:37px;overflow:hidden;letter-spacing:-.1px}.node-sub{font-size:11px;color:#afc2d6;margin-top:3px}.node.alt .node-sub{color:var(--orange)}.node-body{display:grid;grid-template-columns:1fr 1fr;gap:4px;padding:9px 8px 5px;min-height:45px}.port-col{min-width:0;display:flex;flex-direction:column;gap:6px}.port-col.right{align-items:stretch}.port{position:relative;display:flex;align-items:center;gap:5px;min-height:32px;border-radius:7px;padding:3px 3px;touch-action:none;cursor:crosshair;min-width:0}.port.out{flex-direction:row-reverse;text-align:right}.port:active{background:#ffffff15}.port.pending{background:#2a5c61}.port.locked{background:#664f343d}.port-dot{width:19px;height:19px;flex:0 0 19px;border:2px solid #ddedf7;border-radius:50%;background:var(--aqua);box-shadow:0 0 0 3px #5ddbd21b}.port.in .port-dot{background:var(--orange)}.port-label{min-width:0;flex:1;display:flex;flex-direction:column;gap:2px;pointer-events:auto}.itemname{font-size:10.2px;line-height:12px;font-weight:640;overflow-wrap:anywhere;color:#d8e5ef}.qty{font-size:11.3px;font-weight:800;color:#bdebe7;letter-spacing:.1px;font-variant-numeric:tabular-nums}.port.in .qty{color:#ffcb86}.qty.empty{color:#78889b}.node-foot{height:33px;border-top:1px solid #ffffff15;display:flex;align-items:center;justify-content:space-between;gap:6px;padding:0px 12px;background:#0c111b35;border-radius:0 0 11px 11px;font-size:11px}.machinecount{font-size:14px;font-weight:850;color:#fff}.machineclock{color:#93a7bd;font-weight:670}.limitflag{font-size:10px;color:#ffc67a}.node-selecthint{color:#99adbf;font-size:10px}.node.note .node-header{border:none}.note-content{font-size:12px;color:#d9d6bd;line-height:1.45;white-space:pre-wrap;padding:3px 13px 14px;max-height:110px;overflow:hidden}
 .bottom{position:absolute;z-index:90;inset:auto 0 0;padding:9px 12px calc(8px + env(safe-area-inset-bottom,0px));display:flex;align-items:center;gap:8px;min-height:var(--bottom);background:linear-gradient(0deg,#151f2bf9,#101926f3);border-top:1px solid #35485d}.bbutton{display:flex;align-items:center;justify-content:center;gap:6px;padding:10px 11px;min-height:41px;background:#243446;color:#dce8f4;border:1px solid #394b5e;border-radius:11px;font-size:12px;font-weight:700;white-space:nowrap}.bbutton .ico{font-size:17px}.bbutton.pri{background:#f6ad48;color:#1d1b18;border-color:#f6ad48}.bbutton.good{background:#25443e;color:#a6e9c8;border-color:#366c5c}.bbutton.danger{background:#4a2929;color:#ffc1c1;border-color:#7a4141}.bbutton.ghost{background:transparent}.bbutton[disabled]{opacity:.4}.zoomwrap{display:flex;gap:5px;margin-left:auto}.zoomlabel{font-size:11px;color:var(--muted);font-weight:700;min-width:44px;text-align:center;align-self:center}.zoomwrap .ib{width:36px;height:38px}.fab{position:absolute;right:13px;bottom:calc(var(--bottom) + 17px);z-index:70;background:#f6b54b;color:#21180b;font-size:33px;font-weight:400;border:0;border-radius:18px;display:grid;place-items:center;width:59px;height:59px;box-shadow:0 10px 28px #0007}.fab.hidden{display:none}.bread{position:absolute;z-index:50;left:12px;top:3px;display:flex;gap:6px;max-width:calc(100vw - 24px);align-items:center;overflow:auto;scrollbar-width:none}.bread button{padding:7px 10px;color:#d8e9f9;background:#1b2c3de9;border:1px solid #3a5367;border-radius:9px;font-size:12px;white-space:nowrap}.bread button:last-child{color:#ffc57b}.hud{position:absolute;z-index:50;top:42px;left:12px;display:flex;align-items:center;gap:6px;max-width:calc(100vw - 24px);pointer-events:auto}.stat{background:#172532d9;border:1px solid #2e4355;border-radius:9px;padding:6px 9px;font-size:11px;color:#c7d7e4;white-space:nowrap;backdrop-filter:blur(6px)}.stat b{color:#fff}.stat.warning{border-color:#ae6c42;color:#ffbc8d}.hint{position:absolute;z-index:10;left:50%;top:54%;transform:translate(-50%,-50%);width:265px;text-align:center;pointer-events:none}.hint .hintlogo{font-size:34px}.hint h3{font-size:15px;margin:8px 0}.hint p{font-size:12px;line-height:1.6;color:#9eb0c3}.linkbanner{position:absolute;z-index:95;left:12px;right:12px;bottom:calc(var(--bottom) + 12px);background:#224b51;border:1px solid #7bc9cc;color:#e2feff;border-radius:12px;padding:12px 13px;display:flex;align-items:center;gap:8px;font-size:12px;box-shadow:0 4px 18px #0008}.linkbanner button{margin-left:auto;background:#376a6d;color:#e6ffff;border:1px solid #5ca4a4;border-radius:9px;padding:7px}
-.overlay{position:absolute;z-index:200;inset:0;background:#030609a6;display:flex;align-items:flex-end;justify-content:center;animation:fade .14s ease}.overlay.hidden{display:none}@keyframes fade{from{opacity:0}to{opacity:1}}.sheet{width:100%;max-width:640px;max-height:min(88dvh,820px);min-height:170px;display:flex;flex-direction:column;background:linear-gradient(180deg,#1b2a38,#101b26);border-radius:21px 21px 0 0;border:1px solid #41566a;border-bottom:0;box-shadow:0 -10px 50px #0009;padding-bottom:env(safe-area-inset-bottom,0px);overflow:hidden}.handle{margin:9px auto 1px;width:42px;height:5px;border-radius:9px;background:#627589}.sheethead{padding:12px 17px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #334656;gap:10px}.sheettitles{min-width:0}.sheettitle{font-size:17px;font-weight:800;margin:0}.sheetsub{font-size:11px;color:#a2b4c6;margin-top:3px}.sheetbody{overflow:auto;overscroll-behavior:contain;padding:14px 16px 20px;flex:1;-webkit-overflow-scrolling:touch}.sheetfooter{padding:12px 16px;display:flex;gap:9px;border-top:1px solid #2c3e51;background:#121f2a}.sheetfooter button{flex:1}.close{background:#2b3d50;border:0;border-radius:10px;color:#dbe9f7;font-size:20px;width:35px;height:35px}.search{display:flex;align-items:center;gap:10px;background:#0d1823;border:1px solid #4c647a;border-radius:12px;padding:2px 12px}.search input{background:transparent;border:0;outline:0;width:100%;padding:12px 0;color:#fff;font-size:16px}.tabs{display:flex;gap:5px;overflow:auto;margin:12px 0 10px;padding-bottom:2px}.tabs button{background:#243548;border:1px solid #314b61;border-radius:9px;padding:9px 11px;color:#afc0d2;font-size:11px;white-space:nowrap;font-weight:750}.tabs button.active{background:#52432b;color:#ffcf8b;border-color:#a88748}.pickerlist{display:flex;flex-direction:column;gap:6px;max-height:48dvh;overflow:auto}.pickitem{background:#203143;border:1px solid #364a5d;border-radius:11px;display:flex;gap:10px;align-items:center;text-align:left;padding:10px;color:#eaf3fd;min-height:58px;width:100%}.pickitem:active{background:#324963}.pickitem .pic{font-size:22px;width:36px;text-align:center}.picktext{flex:1;min-width:0}.picktitle{font-size:13px;font-weight:800;line-height:16px}.picksub{font-size:11px;margin-top:3px;color:#9fb5c7;line-height:15px}.picktag{font-size:10px;color:#fbc887;background:#594a35;padding:4px 5px;border-radius:6px}.emptylist{padding:27px;text-align:center;color:#9aadc1;font-size:12px}.field{display:flex;flex-direction:column;gap:6px;margin:0 0 14px}.field label{font-size:12px;color:#b8cbdd;font-weight:700}.field input,.field select,.field textarea{width:100%;min-height:45px;border-radius:10px;border:1px solid #53697d;background:#0c1823;color:#f0f6ff;padding:10px 12px;font-size:16px;outline:none;appearance:none}.field textarea{min-height:100px;resize:vertical}.field small{color:#849aaf;font-size:11px;line-height:1.4}.twocol{display:grid;grid-template-columns:1fr 1fr;gap:11px}.info{border:1px solid #33495d;border-radius:10px;padding:11px 12px;background:#0e1d2c;font-size:12px;line-height:1.55;color:#c1d2e1;margin-bottom:13px}.info.orange{border-color:#82673e;background:#342b2038;color:#ffdfae}.metricgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0}.metric{padding:13px;background:#203144;border:1px solid #334f60;border-radius:11px}.metric strong{font-size:21px;display:block}.metric span{font-size:11px;color:#9eb2c4}.line{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:11px 0;border-bottom:1px solid #283a4a;font-size:12px}.line b{color:#f6c077}.muted{color:#9dafc3}.actions{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 16px}.actions button{flex:1 0 auto}.toggle{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 3px;border-bottom:1px solid #2b3d4a;font-size:13px}.toggle input{width:20px;height:20px;accent-color:#ffc168}.toast{position:absolute;z-index:250;bottom:calc(var(--bottom) + 15px);left:50%;transform:translateX(-50%);max-width:90%;white-space:nowrap;border-radius:11px;background:#294c43;color:#ddffed;border:1px solid #6bb899;box-shadow:0 9px 24px #000a;padding:11px 14px;font-size:12px;pointer-events:none}.toast.bad{background:#533537;border-color:#ab6868;color:#ffe0e1}.toast.hidden{display:none}#linkBanner[hidden],#sheetFooter[hidden]{display:none!important}#importFile{display:none}
+.overlay{position:absolute;z-index:200;inset:0;background:#030609a6;display:flex;align-items:flex-end;justify-content:center;animation:fade .14s ease}.overlay.hidden{display:none}@keyframes fade{from{opacity:0}to{opacity:1}}.sheet{width:100%;max-width:640px;max-height:min(88dvh,820px);min-height:170px;display:flex;flex-direction:column;background:linear-gradient(180deg,#1b2a38,#101b26);border-radius:21px 21px 0 0;border:1px solid #41566a;border-bottom:0;box-shadow:0 -10px 50px #0009;padding-bottom:env(safe-area-inset-bottom,0px);overflow:hidden}.handle{margin:9px auto 1px;width:42px;height:5px;border-radius:9px;background:#627589}.sheethead{padding:12px 17px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #334656;gap:10px}.sheettitles{min-width:0}.sheettitle{font-size:17px;font-weight:800;margin:0}.sheetsub{font-size:11px;color:#a2b4c6;margin-top:3px}.sheetbody{overflow:auto;overscroll-behavior:contain;padding:14px 16px 20px;flex:1;-webkit-overflow-scrolling:touch}.sheetfooter{padding:12px 16px;display:flex;gap:9px;border-top:1px solid #2c3e51;background:#121f2a}.sheetfooter button{flex:1}.close{background:#2b3d50;border:0;border-radius:10px;color:#dbe9f7;font-size:20px;width:35px;height:35px}.search{display:flex;align-items:center;gap:10px;background:#0d1823;border:1px solid #4c647a;border-radius:12px;padding:2px 12px}.search input{background:transparent;border:0;outline:0;width:100%;padding:12px 0;color:#fff;font-size:16px}.tabs{display:flex;gap:5px;overflow:auto;margin:12px 0 10px;padding-bottom:2px}.tabs button{background:#243548;border:1px solid #314b61;border-radius:9px;padding:9px 11px;color:#afc0d2;font-size:11px;white-space:nowrap;font-weight:750}.tabs button.active{background:#52432b;color:#ffcf8b;border-color:#a88748}.pickerlist{display:flex;flex-direction:column;gap:6px;max-height:48dvh;overflow:auto}.pickitem{background:#203143;border:1px solid #364a5d;border-radius:11px;display:flex;gap:10px;align-items:center;text-align:left;padding:10px;color:#eaf3fd;min-height:58px;width:100%}.pickitem:active{background:#324963}.pickitem .pic{font-size:22px;width:36px;text-align:center}.picktext{flex:1;min-width:0}.picktitle{font-size:13px;font-weight:800;line-height:16px}.picksub{font-size:11px;margin-top:3px;color:#9fb5c7;line-height:15px}.picktag{font-size:10px;color:#fbc887;background:#594a35;padding:4px 5px;border-radius:6px}.emptylist{padding:27px;text-align:center;color:#9aadc1;font-size:12px}.field{display:flex;flex-direction:column;gap:6px;margin:0 0 14px}.field label{font-size:12px;color:#b8cbdd;font-weight:700}.field input,.field select,.field textarea{width:100%;min-height:45px;border-radius:10px;border:1px solid #53697d;background:#0c1823;color:#f0f6ff;padding:10px 12px;font-size:16px;outline:none;appearance:none}.field textarea{min-height:100px;resize:vertical}.field small{color:#849aaf;font-size:11px;line-height:1.4}.twocol{display:grid;grid-template-columns:1fr 1fr;gap:11px}.info{border:1px solid #33495d;border-radius:10px;padding:11px 12px;background:#0e1d2c;font-size:12px;line-height:1.55;color:#c1d2e1;margin-bottom:13px}.info.orange{border-color:#82673e;background:#342b2038;color:#ffdfae}.metricgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0}.metric{padding:13px;background:#203144;border:1px solid #334f60;border-radius:11px}.metric strong{font-size:21px;display:block}.metric span{font-size:11px;color:#9eb2c4}.line{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:11px 0;border-bottom:1px solid #283a4a;font-size:12px}.line b{color:#f6c077}.muted{color:#9dafc3}.actions{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 16px}.actions button{flex:1 0 auto}.toggle{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 3px;border-bottom:1px solid #2b3d4a;font-size:13px}.toggle input{width:20px;height:20px;accent-color:#ffc168}.toast{position:absolute;z-index:250;bottom:calc(var(--bottom) + 15px);left:50%;transform:translateX(-50%);max-width:90%;white-space:nowrap;border-radius:11px;background:#294c43;color:#ddffed;border:1px solid #6bb899;box-shadow:0 9px 24px #000a;padding:11px 14px;font-size:12px;pointer-events:none}.toast.bad{background:#533537;border-color:#ab6868;color:#ffe0e1}.toast.hidden{display:none}.overlay:not(.hidden)~.toast{top:calc(env(safe-area-inset-top,0px) + 10px);bottom:auto}#linkBanner[hidden],#sheetFooter[hidden]{display:none!important}#importFile{display:none}
 @media(min-width:650px){.sheet{border-radius:19px;margin-bottom:20px;border:1px solid #41566a;padding-bottom:0;max-height:88dvh}.overlay{align-items:center}.node{width:246px}.fab{right:22px}.topbar{padding-left:23px;padding-right:23px}.bottom{padding-left:23px;padding-right:23px}}
 @media(max-width:650px){.bottom{gap:5px;padding-left:8px;padding-right:8px}.bottom>.bbutton{flex:1;min-width:0;height:47px;flex-direction:column;gap:0;padding:4px 2px;font-size:10px;line-height:15px}.bottom>.bbutton .ico{font-size:18px}.zoomwrap{margin-left:0;flex-shrink:0;gap:3px}.zoomwrap .ib{width:32px;height:45px}.zoomlabel{display:none}.fab{right:13px}}
-@media(max-width:365px){.topbar{padding-left:8px;padding-right:8px}.eyebrow{font-size:9px}.bbutton{padding:8px 7px}.bottom{gap:4px;padding-left:6px;padding-right:6px}.zoomwrap{gap:2px}.zoomwrap .ib{width:31px}.ib{width:35px}.hud .stat:last-child{display:none}}
+@media(max-width:365px){.topbar{padding-left:8px;padding-right:8px}.eyebrow{font-size:9px}.bbutton{padding:8px 7px}.bottom{gap:4px;padding-left:6px;padding-right:6px}.zoomwrap{gap:2px}.zoomwrap .ib{width:31px}.ib{width:35px}.hud .stat:first-child{display:none}}
 
 /* v0.3.2: indicadores, ícones e sheets adaptados ao teclado */
 .stat.actionable{cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent;user-select:none}
@@ -35,8 +35,6 @@
 .game-item-icon{position:relative;display:inline-grid;place-items:center;isolation:isolate;overflow:hidden}
 .game-item-icon .fallback{grid-area:1/1;width:100%;height:100%;display:grid;place-items:center;font-size:0}
 .game-item-icon .fallback svg{display:block;width:100%;height:100%;max-width:37px;max-height:37px}
-.game-item-icon .game-icon-image{grid-area:1/1;position:relative;z-index:1;opacity:0;transition:opacity .1s}
-.game-item-icon .game-icon-image.loaded{opacity:1}
 
 /* v0.4: níveis de detalhe por zoom, geradores, recálculo manual e alertas tocáveis */
 .node.lod-c,.node.lod-m{box-shadow:none}
@@ -62,7 +60,7 @@ button.alert-row:active{background:#24384b}
 <div id="viewport"><div class="grid" id="gridBg"></div><canvas id="wires"></canvas><div id="world"></div><div class="bread" id="breadcrumbs"></div><div class="hud" id="stats"></div><div class="hint" id="hint"><div class="hintlogo">⚙️</div><h3>Monte a sua fábrica</h3><p>Comece do zero: toque em <b>+</b> para uma receita. Depois, arraste a <b>bolinha laranja</b> para criar automaticamente a etapa anterior. Use dois dedos para zoom.</p></div></div>
 <button class="fab" id="btnAdd" title="Adicionar receita ou máquina" aria-label="Adicionar">+</button>
 <div class="linkbanner" id="linkBanner" hidden><span id="linkInfo">Conexão pendente</span><button id="cancelLink">Cancelar</button></div>
-<footer class="bottom"><button class="bbutton" id="btnInspect"><span class="ico">⚙</span><span>Editar</span></button><button class="bbutton" id="btnCalc"><span class="ico">▤</span><span>Resumo</span></button><button class="bbutton" id="btnFit"><span class="ico">⛶</span><span>Enquadrar</span></button><div class="zoomwrap"><button class="ib" id="btnMinus" title="Diminuir zoom">−</button><span class="zoomlabel" id="zoomValue">100%</span><button class="ib" id="btnPlus" title="Aumentar zoom">+</button></div></footer>
+<footer class="bottom"><button class="bbutton" id="btnInspect"><span class="ico">⚙</span><span>Editar</span></button><button class="bbutton" id="btnCalc"><span class="ico">∑</span><span>Resumo</span></button><button class="bbutton" id="btnFit"><span class="ico">⛶</span><span>Enquadrar</span></button><div class="zoomwrap"><button class="ib" id="btnMinus" title="Diminuir zoom">−</button><span class="zoomlabel" id="zoomValue">100%</span><button class="ib" id="btnPlus" title="Aumentar zoom">+</button></div></footer>
 <div class="overlay hidden" id="overlay"><section class="sheet" role="dialog" aria-modal="true" aria-label="Painel de edição"><div class="handle"></div><div class="sheethead"><div class="sheettitles"><div class="sheettitle" id="sheetTitle"></div><div class="sheetsub" id="sheetSub"></div></div><button class="close" id="sheetClose" aria-label="Fechar">×</button></div><div class="sheetbody" id="sheetBody"></div><div class="sheetfooter" id="sheetFooter" hidden></div></section></div>
 <div class="toast hidden" id="toast"></div><input id="importFile" type="file" accept=".json,application/json,.sfmd"/>
 <script id="licenseText" type="text/plain">
@@ -269,6 +267,7 @@ button.alert-row:active{background:#24384b}
    limitations under the License.
 </script>
 <script>
+'use strict';
 // Dados de receitas: Kirk McDonald / satisfactory-calculator (Apache-2.0), reformatados para carregamento offline.
 // © dados/nomes do jogo: Coffee Stain Studios; ferramenta independente, sem vínculo com os criadores.
 const RAW_ITEMS=`Iron Ore~iron-ore
@@ -742,9 +741,6 @@ Vitamin Inhaler~14~20~q:10,4j:5~4l:1
 Xeno-Basher~14~80~4p:2,w:5,7:25,8:500~4q:1
 Xeno-Zapper~14~40~7:10,u:2,9:15,8:50~4p:1
 Zipline~14~40~4p:1,17:30,7:3,9:10~4r:1`;
-'use strict';
-'use strict';
-'use strict';
 const $=id=>document.getElementById(id);
 const items=RAW_ITEMS.trim().split('\n').map((line,id)=>{let [name,key]=line.split('~');return{id,name,key,fluid:id>=136&&id<151}});
 const cats=['Fundição','Fundição avançada','Refinaria','Construtor','Montador','Fabricante','Misturador','Acelerador','Embaladora','Conversor','Codificador quântico','Usina nuclear','Gerador a carvão','Gerador a combustível','Bancada manual'];
@@ -755,10 +751,9 @@ const recs=RAW_RECIPES.trim().split('\n').map((line,id)=>{let [name,cat,duration
 const ITEM_BY_KEY=Object.fromEntries(items.map(x=>[x.key,x.id]));
 // v0.4.1: geradores adicionados ao conjunto auditado 1.2; projetos anteriores em desenvolvimento podem usar índices diferentes.
 // Fonte dos valores: wiki oficial (satisfactory.wiki.gg). Geradores: taxas por minuto a 100% (ciclo de 60 s).
-const LEGACY_RECIPE_COUNT=recs.length;
 // Catálogo Satisfactory 1.2: 297 registros verificados + 2 ciclos nucleares; geradores à parte.
 for(const r of recs)if(r.cat===14)r.manual=true;
-// Seis geradores adicionados na v0.4 do Claude. As 297 receitas de fabricação
+// Geradores e ciclos adicionais (v0.4 e v0.4.5). As 297 receitas de fabricação
 // e os dois ciclos nucleares já foram carregados do catálogo auditado 1.2.
 const EXTRA_RECIPES=[
  ['Gerador a carvão · Coal',12,60,[['coal',15],['water',45]],[],{gen:75}],
@@ -766,7 +761,12 @@ const EXTRA_RECIPES=[
  ['Gerador a combustível · Liquid Biofuel',13,60,[['liquid-biofuel',20]],[],{gen:250}],
  ['Gerador a combustível · Turbofuel',13,60,[['turbofuel',7.5]],[],{gen:250}],
  ['Gerador a combustível · Rocket Fuel',13,60,[['rocket-fuel',250/3600*60]],[],{gen:250}],
- ['Gerador a combustível · Ionized Fuel',13,60,[['ionized-fuel',3]],[],{gen:250}]
+ ['Gerador a combustível · Ionized Fuel',13,60,[['ionized-fuel',3]],[],{gen:250}],
+ // v0.4.5: Compacted Coal (630 MJ) e Petroleum Coke (180 MJ) no gerador a carvão; Ficsonium Fuel Rod
+ // (150 GJ, sem resíduo) na usina nuclear. Conferir valores na wiki ao atualizar de patch.
+ ['Gerador a carvão · Compacted Coal',12,60,[['compacted-coal',75*60/630],['water',45]],[],{gen:75}],
+ ['Gerador a carvão · Petroleum Coke',12,60,[['petroleum-coke',75*60/180],['water',45]],[],{gen:75}],
+ ['Reactor Cycle (Ficsonium)',11,60,[['ficsonium-fuel-rod',1],['water',240]],[],{}]
 ];
 for(const [name,cat,duration,ins,outs,extra] of EXTRA_RECIPES){
  const conv=l=>l.map(([k,q])=>({item:ITEM_BY_KEY[k],qty:q}));
@@ -787,7 +787,6 @@ const slugify=s=>String(s).normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLow
 const RECIPE_BY_KEY=Object.fromEntries(recs.map(r=>[r.key,r]));
 const REC_BY_NAME=Object.fromEntries(recs.map(x=>[x.name.toLowerCase(),x]));
 const sourceItems=['iron-ore','copper-ore','coal','limestone','caterium-ore','raw-quartz','sulfur','bauxite','uranium','sam','water','crude-oil','nitrogen-gas','leaves','wood','mycelia'].map(k=>ITEM_BY_KEY[k]).filter(x=>x!==undefined);
-const resourcesFluid=new Set(['water','crude-oil','nitrogen-gas']);
 const aliases={'motor modular':'modular engine','placa de circuito':'circuit board','silicio':'silicon','sílica':'silica','fio veloz':'quickwire','caterio':'caterium','conector de alta velocidade':'high-speed connector','computador':'computer','supercomputador':'supercomputer','lingote':'ingot','combustivel':'fuel','combustível':'fuel','combustivel diluido':'diluted fuel','combustível diluído':'diluted fuel','borracha':'rubber','plastico':'plastic','plástico':'plastic','parafuso':'screw','barra de ferro':'iron rod','placa de ferro':'iron plate','motor':'motor','quadro modular':'modular frame','limitador de ia':'ai limiter','carvão':'coal','ferro':'iron','cobre':'copper','refinaria':'refinery','montador':'assembler','fabricante':'manufacturer','misturador':'blender','turbocombustivel':'turbofuel','petróleo':'oil','água':'water','minério':'ore'};
 const normalize=s=>String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim();
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -797,23 +796,13 @@ const clone=o=>JSON.parse(JSON.stringify(o));
 const id=()=>Math.random().toString(36).slice(2,9)+Date.now().toString(36).slice(-5);
 const itemName=i=>items[i]?.name||'Produto';
 function itemIcon(item){let n=itemName(item).toLowerCase();if(/water|acid|solution|oil|fuel|gas|residue|biofuel/.test(n))return '💧';if(/iron|steel|beam|plate|rod|ingot|scrap/.test(n))return '🔩';if(/copper|caterium|wire|cable|sheet/.test(n))return '🟠';if(/computer|circuit|ai |connector|quantum|oscillator/.test(n))return '💻';if(/motor|rotor|stator|frame|engine/.test(n))return '⚙️';if(/coal|sulfur|quartz|bauxite|ore|sam|limestone/.test(n))return '⛏️';if(/plastic|rubber|polymer/.test(n))return '🧱';return '📦'}
-document.addEventListener('error',e=>{const im=e.target;if(!(im instanceof HTMLImageElement)||!im.matches('.game-icon-image'))return;
- // Alternate public host: the primary GitHub Pages URL may be blocked by a local-file WebView.
- if(!im.dataset.triedMirror){im.dataset.triedMirror='1';im.src=GAME_ICON_MIRROR+encodeURIComponent(im.dataset.gameIcon+'.png');return;}
- im.classList.remove('loaded');im.hidden=true;
-},true);
-document.addEventListener('load',e=>{const im=e.target;if(!(im instanceof HTMLImageElement)||!im.matches('.game-icon-image'))return;
- im.classList.add('loaded');const name=im.dataset.gameIcon;
- if(name&&!gameIconCache[name]&&(im.src.startsWith(GAME_ICON_BASE)||im.src.startsWith(GAME_ICON_MIRROR)))cacheGameIcon(name,im.src);
-},true);
 const projectKey='factory_flow_mobile_projects_v2',activeKey='factory_flow_mobile_active_v2';
-let projects=[],project,history=[],future=[],selected=new Set(),pending=null,gesture=null,activePointers=new Map(),camera={x:50,y:90,z:0.9},calculated=null,dragline=null,pickerContext=null,toastTimer=null,historyTimer=null,lastTap=null;
+let projects=[],project,history=[],future=[],selected=new Set(),pending=null,gesture=null,activePointers=new Map(),camera={x:50,y:90,z:0.9},calculated=null,dragline=null,pickerContext=null,lastTap=null;
 function save(){project.cameras[project.current]=clone(camera);try{localStorage.setItem(projectKey,JSON.stringify(projects));localStorage.setItem(activeKey,project.id);}catch(e){toast('Salvamento local indisponível. Exporte um arquivo JSON!',true)}}
 const boardNodes=()=>project.nodes.filter(n=>n.board===project.current);
 const boardEdges=()=>project.edges.filter(e=>e.board===project.current);
 const recOf=n=>n.recipe||recs[n.rid];
 function portItem(n,io,ix){return ports(n)[io==='in'?'ins':'outs'][ix]}
-const baseRate=(r,io,item)=>{const port=r[io].find(x=>x.item===item);return port?port.qty*60/r.duration:0};
 // Em fontes: modo fisico usa SOMENTE equipamentos explicitamente configurados
 // a 100%. Modo manual nao tem restricao de mk/pureza nem equipamentos implicitos.
 function isManualSource(n){return n.sourceMode==='manual';}
@@ -833,22 +822,14 @@ function validLink(a,b){
  if(f.index<0||f.index>=fo.length||t.index<0||t.index>=ti.length)return false;
  const item=fo[f.index],required=ti[t.index];
  if(item!=null&&required!=null&&item!==required)return false;
- return true; // par já conectado é válido como ação de alternância/desconexão
+ return true;
 }
 function deleteSelected(){if(!selected.size){toast('Selecione uma máquina primeiro.');return}mutate(()=>{for(let nid of selected){let n=nBy(nid);if(n?.boardId){const ids=new Set([n.boardId]);let changed=true;while(changed){changed=false;for(let b of project.boards)if(ids.has(b.parent)&&!ids.has(b.id)){ids.add(b.id);changed=true}}project.nodes=project.nodes.filter(x=>!ids.has(x.board));project.boards=project.boards.filter(x=>!ids.has(x.id));} }project.nodes=project.nodes.filter(n=>!selected.has(n.id));const live=new Set(project.nodes.map(n=>n.id));project.edges=project.edges.filter(e=>live.has(e.from)&&live.has(e.to));});selected.clear();render();toast('Item(ns) excluído(s)')}
-// Network icons from KirkMcDonald/Satisfactory Calculator (game art owned by Coffee Stain); inline pictograms are original offline fallbacks.
-// These URLs are optional visual assets; planning functionality works without a network connection.
-const GAME_ICON_BASE='https://kirkmcdonald.github.io/satisfactory-calculator/images/';
-const GAME_ICON_MIRROR='https://raw.githubusercontent.com/KirkMcDonald/satisfactory-calculator/master/images/';
-const GAME_ICON_RENAMES={'Screw':'Screw','Non-fissile Uranium':'Non-fissile Uranium'};
 const GAME_ICON_NAMES=new Set(`AI Expansion Server|AI Limiter|Adaptive Control Unit|Alclad Aluminum Sheet|Alien DNA Capsule|Alien Power Matrix|Alien Protein|Alumina Solution|Aluminum Casing|Aluminum Ingot|Aluminum Scrap|Assembly Director System|Automated Wiring|Ballistic Warp Drive|Battery|Bauxite|Biomass|Black Powder|Blue Power Slug|Cable|Caterium Ingot|Caterium Ore|Circuit Board|Cluster Nobelisk|Coal|Compacted Coal|Computer|Concrete|Cooling System|Copper Ingot|Copper Ore|Copper Powder|Copper Sheet|Crude Oil|Crystal Oscillator|Dark Matter Crystal|Dark Matter Residue|Diamonds|Dissolved Silica|Electromagnetic Control Rod|Empty Canister|Empty Fluid Tank|Encased Industrial Beam|Encased Plutonium Cell|Encased Uranium Cell|Excited Photonic Matter|Explosive Rebar|Fabric|Fuel|Fused Modular Frame|Ficsite Ingot|Ficsite Trigon|Ficsonium Fuel Rod|Ficsonium|Gas Filter|Gas Nobelisk|Hatcher Remains|Heat Sink|Heavy Modular Frame|Heavy Oil Residue|High-Speed Connector|Hog Remains|Homing Rifle Ammo|Iodine Infused Filter|Ionized Fuel|Iron Ingot|Iron Ore|Iron Plate|Iron Rebar|Iron Rod|Leaves|Limestone|Liquid Biofuel|Magnetic Field Generator|Modular Engine|Modular Frame|Motor|Mycelia|Neural-Quantum Processor|Nitric Acid|Nitrogen Gas|Nobelisk|Non-fissile Uranium|Nuclear Pasta|Nuke Nobelisk|Packaged Alumina Solution|Packaged Fuel|Packaged Heavy Oil Residue|Packaged Ionized Fuel|Packaged Liquid Biofuel|Packaged Nitric Acid|Packaged Nitrogen Gas|Packaged Oil|Packaged Rocket Fuel|Packaged Sulfuric Acid|Packaged Turbofuel|Packaged Water|Petroleum Coke|Plastic|Plutonium Fuel Rod|Plutonium Pellet|Plutonium Waste|Polymer Resin|Portable Miner|Power Shard|Pressure Conversion Cube|Pulse Nobelisk|Purple Power Slug|Quartz Crystal|Quickwire|Radio Control Unit|Raw Quartz|Reanimated SAM|Reinforced Iron Plate|Rifle Ammo|Rocket Fuel|Rotor|Rubber|SAM Fluctuator|SAM|Screw|Shatter Rebar|Silica|Singularity Cell|Smart Plating|Smokeless Powder|Solid Biofuel|Spitter Remains|Stator|Steel Beam|Steel Ingot|Steel Pipe|Stinger Remains|Stun Rebar|Sulfur|Sulfuric Acid|Supercomputer|Superposition Oscillator|Thermal Propulsion Rocket|Time Crystal|Turbo Motor|Turbo Rifle Ammo|Turbofuel|Uranium Fuel Rod|Uranium Waste|Uranium|Versatile Framework|Water|Wire|Wood|Yellow Power Slug`.split('|'));
 // Índices do atlas já incorporado ao HTML, sem requisições externas.
 const SAT_ATLAS_EXTRA='Alien Carapace|Alien Organs|Assembler|Beacon|Biofuel|Blender|Cartridge|Color Cartridge|Constructor|Converter|Conveyor Belt|Conveyor Belt Mk.2|Conveyor Belt Mk.3|Conveyor Belt Mk.4|Conveyor Belt Mk.5|Conveyor Belt Mk.6|Flower Petals|Foundry|Manufacturer|Miner|Miner MK1|Miner MK2|Miner MK3|Nuclear Power Plant|Oil Extractor|Packager|Particle Accelerator|Pipeline Mk.1|Pipeline Mk.2|Quantum Encoder|Refinery|Resource Well Extractor|Smelter|Somersloop|Water Extractor'.split('|');
 const SAT_ATLAS_POS=new Map([...new Set([...GAME_ICON_NAMES,...SAT_ATLAS_EXTRA])].sort().map((name,index)=>[name,index]));
 const SAT_ATLAS_COLS=16,SAT_ATLAS_TILE=36;
-const gameIconCacheKey='factory_flow_official_icons_cache_v1';
-let gameIconCache={};try{gameIconCache=JSON.parse(localStorage.getItem(gameIconCacheKey)||'{}')||{}}catch{}
-const gameIconPending=new Set();
 // High-contrast self-contained pictograms: display immediately when offline.
 // The image drawn on top remains the original game icon when the network permits it.
 function offlineItemSvg(item){
@@ -875,7 +856,7 @@ function offlineItemSvg(item){
 }
 function gameIconMarkup(item){
  if(item==null||!items[item])return `<span class="game-item-icon"><span class="fallback">${offlineItemSvg(item)}</span></span>`;
- const name=GAME_ICON_RENAMES[itemName(item)]||itemName(item),index=SAT_ATLAS_POS.get(name);
+ const name=itemName(item),index=SAT_ATLAS_POS.get(name);
  const fb=`<span class="fallback">${offlineItemSvg(item)}</span>`;
  if(index==null)return `<span class="game-item-icon">${fb}</span>`;
  const x=index%SAT_ATLAS_COLS*SAT_ATLAS_TILE,y=Math.floor(index/SAT_ATLAS_COLS)*SAT_ATLAS_TILE;
@@ -883,19 +864,6 @@ function gameIconMarkup(item){
 }
 function nodeIcon(n){return n.type==='recipe'?gameIconMarkup(recOf(n)?.outs?.[0]?.item):n.type==='source'?gameIconMarkup(n.item):(toolset.find(x=>x.key===n.type)?.icon||'⚙️')}
 function nodeIconText(n){return n.type==='recipe'?itemIcon(recOf(n)?.outs?.[0]?.item):n.type==='source'?itemIcon(n.item):(toolset.find(x=>x.key===n.type)?.icon||'⚙️')}
-// Browser cache: after an online load, attempt to retain small WebP copies for later offline use.
-// If the image host does not permit canvas export, the icon still displays online and retains its fallback.
-let cacheSaveTimer=null;
-function cacheGameIcon(name,source){
- if(!name||gameIconCache[name]||gameIconPending.has(name)||!navigator.onLine)return;
- gameIconPending.add(name);
- try{
-  const im=new Image(); im.crossOrigin='anonymous';
-  im.onload=()=>{
-   try{const can=document.createElement('canvas');can.width=48;can.height=48;const ctx=can.getContext('2d');ctx.drawImage(im,0,0,48,48);const data=can.toDataURL('image/webp',0.79);if(data.length<14000){gameIconCache[name]=data;clearTimeout(cacheSaveTimer);cacheSaveTimer=setTimeout(()=>{try{localStorage.setItem(gameIconCacheKey,JSON.stringify(gameIconCache))}catch{}},600)}}catch{}finally{gameIconPending.delete(name)}
-  };im.onerror=()=>gameIconPending.delete(name);im.src=source;
- }catch{gameIconPending.delete(name)}
-}
 
 // Infer a terminal demand when a user deliberately specifies raw-material
 // availability but no downstream production target. Without this step, a terminal
@@ -928,7 +896,6 @@ function syncVisibleViewport(){
 function btn(text,action,cls=''){return `<button class="bbutton ${cls}" data-action="${action}">${text}</button>`}
 function field(label,id,value='',type='text',hint=''){return `<div class="field"><label for="${id}">${label}</label><input id="${id}" type="${type}" value="${esc(value)}" ${type==='number'?'step="any" inputmode="decimal"':''}/>${hint?`<small>${hint}</small>`:''}</div>`}
 function selectField(label,id,options,current){return `<div class="field"><label for="${id}">${label}</label><select id="${id}">${options.map(([v,t])=>`<option value="${esc(v)}" ${String(v)===String(current)?'selected':''}>${esc(t)}</option>`).join('')}</select></div>`}
-function findPickerItem(name,mode,ctx){const term=normalize(name);if(!term)return true;let full=normalize(name+' '+(mode==='recipe'?machines[ctx.cat]:''));let alternate=Object.entries(aliases).filter(([k])=>normalize(k).includes(term)).map(([,v])=>normalize(v));return full.includes(term)||alternate.some(a=>full.includes(a));}
 // A troca de receita sempre pertence ao produto principal do bloco atual.
 // A interface de criação livre continua mostrando o catálogo completo.
 function replacementProduct(context){
@@ -967,14 +934,14 @@ function findCompatibleNewPort(n,link){let pp=ports(n);let io=link.io==='in'?'ou
 function customRecipeSheet(){pickerContext=null;const opts=items.map(o=>`<option value="${o.id}">${esc(o.name)}</option>`).join('');
  let inputFields=[1,2,3,4].map(i=>`<div class="twocol"><div class="field"><label>Entrada ${i}</label><select id="customInItem${i}"><option value="">— nenhuma —</option>${opts}</select></div>${field('Qtd./ciclo','customInQty'+i,1,'number')}</div>`).join('');
  let outputFields=[1,2].map(i=>`<div class="twocol"><div class="field"><label>Saída ${i}</label><select id="customOutItem${i}"><option value="">— nenhuma —</option>${opts}</select></div>${field('Qtd./ciclo','customOutQty'+i,1,'number')}</div>`).join('');
- showSheet('Receita personalizada','Defina sua própria receita com duração, entradas e saídas',`<form id="customForm">${field('Nome','customName','Minha receita')}${selectField('Máquina','customMachine',cats.map((x,i)=>[i,x]),3)}${field('Duração por ciclo (s)','customTime',6,'number')}<div class="info">Entradas e saídas são quantidades por ciclo, não por minuto.</div>${inputFields}${outputFields}</form>`,btn('Cancelar','close')+btn('Criar receita','saveCustom','pri'));
+ showSheet('Receita personalizada','Defina sua própria receita com duração, entradas e saídas',`<form id="customForm">${field('Nome','customName','Minha receita')}${selectField('Máquina','customMachine',cats.map((x,i)=>[i,x]).filter(([i])=>i<11||i===14),3)}${field('Duração por ciclo (s)','customTime',6,'number')}<div class="info">Entradas e saídas são quantidades por ciclo, não por minuto.</div>${inputFields}${outputFields}</form>`,btn('Cancelar','close')+btn('Criar receita','saveCustom','pri'));
  $('customOutItem1').value=6;
 }
 function saveCustom(){let ins=[],outs=[];for(let i=1;i<=4;i++){let s=$('customInItem'+i).value;if(s!==''){let q=num($('customInQty'+i).value);if(!(q>0))return toast('Quantidade de entrada inválida',true);ins.push({item:+s,qty:q});}}
  for(let i=1;i<=2;i++){let s=$('customOutItem'+i).value;if(s!==''){let q=num($('customOutQty'+i).value);if(!(q>0))return toast('Quantidade de saída inválida',true);outs.push({item:+s,qty:q});}}
  let duration=num($('customTime').value),name=$('customName').value.trim();if(!name||!outs.length||!(duration>0))return toast('Defina nome, tempo e pelo menos uma saída.',true);
  let recipe={name,cat:Number($('customMachine').value),duration,ins,outs,alt:false};let pos=toWorld(currentRect().left+currentRect().width/2,currentRect().top+currentRect().height/2);
- mutate(()=>{project.customRecipes=project.customRecipes||[];project.customRecipes.push(recipe);project.nodes.push({...createNode({kind:'util',key:'note'},pos.x,pos.y),type:'recipe',recipe,limit:null});});selected=new Set([project.nodes.at(-1).id]);closeSheet();render();toast('Receita personalizada criada');}
+ mutate(()=>{project.customRecipes=project.customRecipes||[];project.customRecipes.push(recipe);project.nodes.push({id:id(),board:project.current,x:Math.round(pos.x),y:Math.round(pos.y),title:'',clock:100,limit:null,target:null,portCaps:{},type:'recipe',recipe:clone(recipe),sloops:0});});selected=new Set([project.nodes.at(-1).id]);closeSheet();render();toast('Receita personalizada criada');}
 function readOptional(id){let el=$(id);if(!el||!el.value.trim())return null;let x=num(el.value);if(!Number.isFinite(x)||x<0)throw Error('Valor inválido em '+(el.previousElementSibling?.textContent||id));return x}
 function portDemandToPrimary(n,info,rate){
  if(n.type!=='recipe')return rate;
@@ -1017,7 +984,7 @@ function locatorSheet(){
  q.addEventListener('input',populate);populate();
 }
 function openMenu(){showSheet('Ferramentas do projeto','Ações, edição, salvamento e configurações',
- `<div class="actions">${btn('▤ Projetos','projects')}${btn('⚙ Configurações','settings')}${btn('ⓘ Gestos e ajuda','help')}${btn('⌕ Localizar bloco','locator')}</div><div class="actions">${btn('⤓ Exportar JSON','export')}${btn('⤒ Importar JSON / .sfmd','import')}${btn('▧ Exportar PNG','png')}</div><div class="actions">${btn('▦ Selecionar todos','selectAll')}${btn('⧉ Copiar seleção','copy')}${btn('↗ Colar seleção','paste')}${btn('🗑 Apagar seleção','delete','danger')}</div><div class="actions">${btn('▥ Salvar modelo','saveTemplate')}${btn('▤ Inserir modelo','insertTemplate')}${btn('📋 Exportar resumo CSV','csv')}</div><div class="actions">${btn('🏭 Gerar cadeia automática','generator','pri')}${btn('＋ Plano vazio','new')}${btn('✎ Renomear','rename')}</div>`,btn('Fechar','close'))}
+ `<div class="actions">${btn('⚙ Configurações','settings')}${btn('ⓘ Gestos e ajuda','help')}${btn('⌕ Localizar bloco','locator')}</div><div class="actions">${btn('⤓ Exportar JSON','export')}${btn('⤒ Importar JSON / .sfmd','import')}${btn('▧ Exportar PNG','png')}</div><div class="actions">${btn('▦ Selecionar todos','selectAll')}${btn('⧉ Copiar seleção','copy')}${btn('↗ Colar seleção','paste')}${btn('🗑 Apagar seleção','delete','danger')}</div><div class="actions">${btn('⤴ Salvar modelo','saveTemplate')}${btn('⤵ Inserir modelo','insertTemplate')}${btn('📋 Exportar resumo CSV','csv')}</div><div class="actions">${btn('🏭 Gerar cadeia automática','generator','pri')}</div>`,btn('Fechar','close'))}
 function creditsSheet(){showSheet('Créditos e licença','Dados de referência e direitos autorais',`<div class="info">Factory Flow é um projeto não oficial e independente. Não é afiliado a Coffee Stain Studios nem ao Satisfactory Modeler da Steam.<p>Dados de referência: <a href="https://github.com/KirkMcDonald/satisfactory-calculator" target="_blank" rel="noopener" style="color:#8addd8">KirkMcDonald/satisfactory-calculator</a> (Apache 2.0). Receitas e nomes do jogo © Coffee Stain Studios. Catálogo incorporado como referência, sem garantia de atualização para o último patch.</p></div><pre style="font-size:10px;color:#a6b8c8;white-space:pre-wrap;line-height:1.45;max-height:52dvh;overflow:auto">${esc($('licenseText').textContent)}</pre>`,btn('Fechar','close'))}
 function projectsSheet(){let list=projects.map(p=>`<div class="line"><span><b style="color:#ebf4ff">${esc(p.name)}</b><div class="muted">${p.nodes.length} nós · ${new Date(p.created||Date.now()).toLocaleDateString('pt-BR')}${p.id===project.id?' · aberto':''}</div></span><button class="bbutton ${p.id===project.id?'good':''}" data-openproject="${esc(p.id)}">${p.id===project.id?'Atual':'Abrir'}</button></div>`).join('');
  showSheet('Meus projetos',`${projects.length} planos salvos neste dispositivo`,list+`<div class="actions">${btn('＋ Criar projeto','new','pri')}${btn('⧉ Duplicar atual','duplicateProject')}${btn('✎ Renomear','rename')}${btn('🗑 Excluir atual','deleteProject','danger')}</div><div class="info">Estes projetos ficam no armazenamento do navegador (localStorage). Em arquivos HTML abertos pelo app Arquivos do iPhone, a persistência pode variar. Exporte o JSON regularmente.</div>`,btn('Fechar','close'));
@@ -1043,24 +1010,40 @@ function renameProject(){
 }
 function doRename(){let name=$('renameValue').value.trim();if(!name)return toast('Digite um nome.',true);mutate(()=>project.name=name);closeSheet()}
 let clipboard=null;
-function copySelection(){if(!selected.size)return toast('Selecione nós primeiro.',true);const picked=project.nodes.filter(n=>selected.has(n.id));clipboard={nodes:clone(picked),edges:clone(boardEdges().filter(e=>selected.has(e.from)&&selected.has(e.to)))};toast(picked.length+' blocos copiados');}
-function pasteSelection(){if(!clipboard?.nodes.length)return toast('Nada copiado.');let map={};let nodes=clone(clipboard.nodes).map(n=>{let old=n.id;n.id=id();n.x+=80;n.y+=75;n.board=project.current;map[old]=n.id;if(n.boardId)n.boardId=null;return n});let edges=clone(clipboard.edges).map(e=>({...e,id:id(),board:project.current,from:map[e.from],to:map[e.to]})).filter(e=>e.from&&e.to);
- mutate(()=>{project.nodes.push(...nodes);project.edges.push(...edges)});selected=new Set(nodes.map(n=>n.id));render();toast('Seleção colada')}
+// Inclui as áreas internas (outposts aninhados) dos contêineres selecionados.
+function collectSubtree(picked){const boards=[],inner=[],edges=[],seen=new Set(),queue=picked.filter(n=>n.boardId).map(n=>n.boardId);
+ while(queue.length){const bid=queue.shift();if(seen.has(bid))continue;seen.add(bid);const b=project.boards.find(x=>x.id===bid);if(b)boards.push(clone(b));
+  for(const n of project.nodes)if(n.board===bid){inner.push(n);if(n.boardId)queue.push(n.boardId);}for(const e of project.edges)if(e.board===bid)edges.push(e);}
+ return{boards,inner,edges};}
+function copySelection(){if(!selected.size)return toast('Selecione nós primeiro.',true);const picked=project.nodes.filter(n=>selected.has(n.id)&&n.board===project.current);const sub=collectSubtree(picked);
+ clipboard={nodes:clone([...picked,...sub.inner]),edges:clone([...boardEdges().filter(e=>selected.has(e.from)&&selected.has(e.to)),...sub.edges]),boards:sub.boards};toast(picked.length+' blocos copiados');}
+function pasteSelection(){if(!clipboard?.nodes.length)return toast('Nada copiado.');const bmap={},map={};for(const b of clipboard.boards||[])bmap[b.id]=id();
+ const nodes=clone(clipboard.nodes).map(n=>{const old=n.id;n.id=id();map[old]=n.id;if(n.board in bmap)n.board=bmap[n.board];else{n.board=project.current;n.x+=80;n.y+=75;}if(n.boardId)n.boardId=bmap[n.boardId]||null;return n});
+ const boards=(clipboard.boards||[]).map(b=>({...b,id:bmap[b.id],parent:bmap[b.parent]||project.current}));
+ const edges=clone(clipboard.edges).map(e=>{const x={...e,id:id(),board:bmap[e.board]||project.current,from:map[e.from],to:map[e.to]};delete x.tpn;delete x.fpn;if(e.tpn&&map[e.tpn])x.tpn=map[e.tpn];if(e.fpn&&map[e.fpn])x.fpn=map[e.fpn];return x;}).filter(e=>e.from&&e.to);
+ mutate(()=>{project.boards.push(...boards);project.nodes.push(...nodes);project.edges.push(...edges)});selected=new Set(nodes.filter(n=>n.board===project.current).map(n=>n.id));render();toast('Seleção colada')}
 function duplicateSelection(){copySelection();pasteSelection();closeSheet()}
-function saveTemplate(){if(!selected.size)return toast('Selecione blocos para salvar como modelo.',true);copySelection();let name=prompt('Nome do modelo:','Meu módulo');if(!name)return;let v=[];try{v=JSON.parse(localStorage.getItem('factory_flow_templates_v1')||'[]')}catch{}v.push({name,created:Date.now(),...clone(clipboard)});try{localStorage.setItem('factory_flow_templates_v1',JSON.stringify(v));toast('Modelo salvo no dispositivo')}catch{toast('Falha ao salvar modelo local',true)}}
-function insertTemplate(){let list=[];try{list=JSON.parse(localStorage.getItem('factory_flow_templates_v1')||'[]')}catch{}
- showSheet('Modelos salvos',`${list.length} modelos no dispositivo`,list.map((t,i)=>`<button class="pickitem" data-template="${i}"><span class="pic">▥</span><span class="picktext"><b class="picktitle">${esc(t.name)}</b><div class="picksub">${t.nodes?.length||0} blocos</div></span></button>`).join('')||'<div class="emptylist">Nenhum modelo salvo. Selecione blocos e use “Salvar modelo”.</div>',btn('Fechar','close'));
- $('sheetBody').querySelectorAll('[data-template]').forEach(b=>b.addEventListener('click',()=>{clipboard={nodes:list[+b.dataset.template].nodes,edges:list[+b.dataset.template].edges};pasteSelection();closeSheet()}));}
+const TEMPLATE_KEY='factory_flow_templates_v1';
+function readTemplates(){try{const v=JSON.parse(localStorage.getItem(TEMPLATE_KEY)||'[]');return Array.isArray(v)?v:[]}catch{return[]}}
+function writeTemplates(v){try{localStorage.setItem(TEMPLATE_KEY,JSON.stringify(v));return true}catch{toast('Falha ao salvar modelo local',true);return false}}
+function saveTemplate(){if(!selected.size)return toast('Selecione blocos para salvar como modelo.',true);copySelection();const pending=clone(clipboard);
+ showSheet('Salvar modelo',`${pending.nodes.filter(n=>!(pending.boards||[]).some(b=>b.id===n.board)).length} bloco(s) selecionado(s)`,field('Nome do modelo','templateName','Meu módulo'),btn('Cancelar','close')+btn('Salvar modelo','saveTemplateConfirm','pri'));window.__templateDraft=pending;}
+function saveTemplateConfirm(){const name=$('templateName')?.value.trim();if(!name)return toast('Digite um nome.',true);const v=readTemplates();v.push({name:name.slice(0,80),created:Date.now(),...window.__templateDraft});if(writeTemplates(v)){closeSheet();toast('Modelo salvo no dispositivo');}}
+function insertTemplate(){const list=readTemplates();
+ showSheet('Modelos salvos',`${list.length} modelos no dispositivo`,list.map((t,i)=>`<div style="display:flex;gap:6px;align-items:stretch;margin-bottom:6px"><button class="pickitem" data-template="${i}"><span class="pic">⤵</span><span class="picktext"><b class="picktitle">${esc(t.name)}</b><div class="picksub">${t.nodes?.length||0} blocos · toque para inserir</div></span></button><button class="bbutton danger" data-deltemplate="${i}" aria-label="Excluir modelo">🗑</button></div>`).join('')||'<div class="emptylist">Nenhum modelo salvo. Selecione blocos e use “Salvar modelo”.</div>',btn('Fechar','close'));
+ $('sheetBody').querySelectorAll('[data-template]').forEach(b=>b.addEventListener('click',()=>{const t=list[+b.dataset.template];clipboard={nodes:t.nodes||[],edges:t.edges||[],boards:t.boards||[]};pasteSelection();closeSheet()}));
+ $('sheetBody').querySelectorAll('[data-deltemplate]').forEach(b=>b.addEventListener('click',()=>{const v=readTemplates();const t=v[+b.dataset.deltemplate];if(!t)return;v.splice(+b.dataset.deltemplate,1);if(writeTemplates(v)){toast('Modelo excluído: '+t.name);insertTemplate();}}));}
 function enterBoard(n){let node=n||nBy([...selected][0]);if(!node?.boardId)return;project.cameras[project.current]=clone(camera);project.current=node.boardId;selected.clear();pending=null;loadCamera();recompute(true);render();save();closeSheet();}
 function goBoard(bid){if(!project.boards.some(b=>b.id===bid))return;project.cameras[project.current]=clone(camera);project.current=bid;selected.clear();pending=null;loadCamera();recompute(true);render();save()}
 function safeName(s){return String(s||'factory').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-zA-Z0-9_-]+/g,'_').slice(0,64)}
 async function offerFile(blob,filename){let file=new File([blob],filename,{type:blob.type||'application/octet-stream'});
  if(navigator.canShare&&navigator.canShare({files:[file]})&&navigator.share){try{await navigator.share({files:[file],title:filename});return}catch(e){if(e?.name==='AbortError')return}}
  let url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=filename;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),4000);}
-function exportJSON(){let data={format:'factory-flow-mobile',version:1,exported:new Date().toISOString(),project:clone(project)};offerFile(new Blob([JSON.stringify(data,null,2)],{type:'application/json'}),safeName(project.name)+'.factory.json');toast('Backup JSON preparado');}
+function exportJSON(){let data={format:'factory-flow-mobile',version:1,app:APP_VERSION,catalog:{recipes:recs.length,items:items.length},exported:new Date().toISOString(),project:clone(project)};offerFile(new Blob([JSON.stringify(data,null,2)],{type:'application/json'}),safeName(project.name)+'.factory.json');toast('Backup JSON preparado');}
 function importAny(){closeSheet();$('importFile').value='';$('importFile').click()}
-function openNodeActions(n){selected=new Set([n.id]);render();showSheet('Ações do bloco',nodeTitle(n),`<div class="actions">${btn('⚙ Editar','inspect')}${btn('⧉ Duplicar','duplicate')}${btn('🗑 Excluir','delete','danger')}${n.boardId?btn('▣ Abrir','enterBoard'):''}</div>`,btn('Fechar','close'))}
-function onAction(action){switch(action){case'close':return closeSheet();case'projects':return projectsSheet();case'locator':return locatorSheet();case'generator':return generatorSheet();case'runGenerator':return runGenerator();case'settings':return openSettings();case'help':return helpSheet();case'credits':return creditsSheet();case'applySettings':return applySettings();case'export':return exportJSON();case'csv':return exportCSV();case'png':return exportPNG();case'import':return importAny();case'new':return newProject();case'duplicateProject':return duplicateProject();case'deleteProject':return deleteProject();case'confirmDeleteProject':return confirmDeleteProject();case'alerts':return openAlerts();case'rename':return renameProject();case'renameSave':return doRename(); case'selectAll':selected=new Set(boardNodes().map(n=>n.id));render();closeSheet();return toast(selected.size+' nós selecionados');case'copy':copySelection();return closeSheet();case'paste':pasteSelection();return closeSheet();case'duplicate':duplicateSelection();return closeSheet();case'delete':closeSheet();return deleteSelected();case'inspect':closeSheet();return inspectNode();case'enterBoard':return enterBoard();case'replaceRecipe':{let n=nBy([...selected][0]);closeSheet();return openPicker(null,null,n.id)}case'saveNode':return saveNodeEdit();case'clearPort':return storePort(true);case'savePort':return storePort(false);case'makeCustom':return customRecipeSheet();case'saveCustom':return saveCustom();case'saveTemplate':return saveTemplate();case'insertTemplate':return insertTemplate();case'saveEdge':return saveEdge();case'recalc':return forceRecalc();case'deleteEdge':{let edgeId=window.__deleteEdge;mutate(()=>{let e=project.edges.find(x=>x.id===edgeId);project.edges=project.edges.filter(x=>x.id!==edgeId);if(e){purgeOrphanUtilityItem(nBy(e.from));purgeOrphanUtilityItem(nBy(e.to));}});closeSheet();return toast('Conexão removida');}default:toast('Comando desconhecido',true)}}
+// Toque longo / clique direito em um nó abre direto o editor (antes havia uma sheet que só repetia Editar/Duplicar/Excluir).
+function openNodeActions(n){if(n)inspectNode(n.id)}
+function onAction(action){switch(action){case'close':return closeSheet();case'projects':return projectsSheet();case'locator':return locatorSheet();case'generator':return generatorSheet();case'runGenerator':return runGenerator();case'settings':return openSettings();case'help':return helpSheet();case'credits':return creditsSheet();case'applySettings':return applySettings();case'export':return exportJSON();case'csv':return exportCSV();case'png':return exportPNG();case'import':return importAny();case'new':return newProject();case'duplicateProject':return duplicateProject();case'deleteProject':return deleteProject();case'confirmDeleteProject':return confirmDeleteProject();case'alerts':return openAlerts();case'rename':return renameProject();case'renameSave':return doRename(); case'selectAll':selected=new Set(boardNodes().map(n=>n.id));render();closeSheet();return toast(selected.size+' nós selecionados');case'copy':copySelection();return closeSheet();case'paste':pasteSelection();return closeSheet();case'duplicate':duplicateSelection();return closeSheet();case'delete':closeSheet();return deleteSelected();case'inspect':closeSheet();return inspectNode();case'enterBoard':return enterBoard();case'replaceRecipe':{let n=nBy([...selected][0]);closeSheet();return openPicker(null,null,n.id)}case'saveNode':return saveNodeEdit();case'clearPort':return storePort(true);case'savePort':return storePort(false);case'makeCustom':return customRecipeSheet();case'saveCustom':return saveCustom();case'saveTemplate':return saveTemplate();case'saveTemplateConfirm':return saveTemplateConfirm();case'insertTemplate':return insertTemplate();case'saveEdge':return saveEdge();case'recalc':return forceRecalc();case'deleteEdge':{let edgeId=window.__deleteEdge;mutate(()=>{let e=project.edges.find(x=>x.id===edgeId);project.edges=project.edges.filter(x=>x.id!==edgeId);if(e){purgeOrphanUtilityItem(nBy(e.from));purgeOrphanUtilityItem(nBy(e.to));}});closeSheet();return toast('Conexão removida');}default:toast('Comando desconhecido',true)}}
 function findPortElement(el){let p=el?.closest?.('.port');if(!p)return null;return{nid:p.dataset.node,io:p.dataset.io,index:+p.dataset.index}}
 function samePort(a,b){return a&&b&&a.nid===b.nid&&a.io===b.io&&a.index===b.index}
 function pointerPortTap(p){if(pending){if(samePort(pending,p)){pending=null;render();return;}if(pending.io!==p.io){let had=connect(pending,p);if(had)return;}pending=p;render();return;}pending=p;render();}
@@ -1087,11 +1070,7 @@ function spawnAtEnd(port,clientX,clientY,choice=null){
  fresh.y=Math.round(place.y-(65+9+targetPort.index*38+16));
  if(project.settings.snap){fresh.x=Math.round(fresh.x/32)*32;fresh.y=Math.round(fresh.y/32)*32;}
  if(fresh.type==='source'){
-  const metrics=calculated?.nodes[port.nid];
-  const requested=Math.max(0,Number(port.io==='in'?metrics?.neededIns[port.index]:metrics?.requestedOuts[port.index])||0);
-  // A fonte criada por arraste é abstrata: não aplica Mk, pureza nem clock.
-  // Fontes nao mineraveis continuam sendo entradas externas fixas.
-  const canAuto=sourceMachineOptions(fresh.item).length>0;
+  // A fonte criada por arraste começa automática; o editor permite trocar por extratora física.
   fresh.sourceMode='auto';fresh.sourceMachine='external';fresh.sourceCount=1;fresh.clock=100;
   fresh.limit=null;fresh.autoSupply=false;
  }
@@ -1153,7 +1132,7 @@ function startLongPress(g){
  g.timer=setTimeout(()=>{
   if(!gesture||gesture!==g||g.moved||activePointers.size!==1)return;
   if(g.type==='port'){
-   if(g.portAction==='connect'){g.armed=true;return;}
+   if(g.portAction==='connect')return;
    g.longDone=true;return;
   }
   g.longDone=true;
@@ -1197,6 +1176,7 @@ function beginPinch(){
  if(gesture?.timer)clearTimeout(gesture.timer);
  if(gesture?.type==='node'&&gesture.nodeStart){
   const n=nBy(gesture.nid);if(n){n.x=gesture.nodeStart.x;n.y=gesture.nodeStart.y;}
+  for(const s0 of gesture.group||[]){const m=nBy(s0.id);if(m){m.x=s0.x;m.y=s0.y;}}
  }
  dragline=null;
  const pp=[...activePointers.values()].slice(0,2),mid={x:(pp[0].x+pp[1].x)/2,y:(pp[0].y+pp[1].y)/2},rect=currentRect();
@@ -1219,7 +1199,7 @@ function viewportDown(e){
  if(activePointers.size>=2){if(activePointers.size===2)beginPinch();return;}
  const port=findPortElement(e.target),nodeEl=e.target.closest('.node'),nid=nodeEl?.dataset.node;
  gesture={type:port?'port':nid?'node':'background',pointerId:e.pointerId,start:{x:e.clientX,y:e.clientY},last:{x:e.clientX,y:e.clientY},startCamera:{x:camera.x,y:camera.y},port,nid,portAction:port?(e.target.closest('.port-dot')?'connect':'edit'):null,moved:false,longDone:false,timer:null};
- if(nid){let n=nBy(nid);gesture.nodeStart={x:n.x,y:n.y};}
+ if(nid){let n=nBy(nid);gesture.nodeStart={x:n.x,y:n.y};if(selected.has(nid)&&selected.size>1)gesture.group=[...selected].map(k=>nBy(k)).filter(m=>m&&m.board===project.current).map(m=>({id:m.id,x:m.x,y:m.y}));}
  startLongPress(gesture);
 }
 function viewportMove(e){
@@ -1243,11 +1223,11 @@ function viewportMove(e){
  }else if(g.type==='node'){
   let n=nBy(g.nid);if(!n)return;
   const dx=(e.clientX-g.start.x)/camera.z,dy=(e.clientY-g.start.y)/camera.z;
-  let x=g.nodeStart.x+dx,y=g.nodeStart.y+dy;
-  if(project.settings.snap){x=Math.round(x/32)*32;y=Math.round(y/32)*32;}
-  n.x=x;n.y=y;
-  const dom=$('world').querySelector(`[data-node="${CSS.escape(n.id)}"]`);
-  if(dom){dom.style.left=x+'px';dom.style.top=y+'px';}drawWires();
+  const moves=g.group||[{id:n.id,x:g.nodeStart.x,y:g.nodeStart.y}];
+  for(const s0 of moves){const m=nBy(s0.id);if(!m)continue;let x=s0.x+dx,y=s0.y+dy;
+   if(project.settings.snap){x=Math.round(x/32)*32;y=Math.round(y/32)*32;}
+   m.x=x;m.y=y;const dom=$('world').querySelector(`[data-node="${CSS.escape(m.id)}"]`);if(dom){dom.style.left=x+'px';dom.style.top=y+'px';}}
+  drawWires();
  }else if(g.type==='port'){
   const n=nBy(g.port.nid),p=portPosition(n,g.port.io,g.port.index),r=currentRect();
   dragline={start:p,endX:e.clientX-r.left,endY:e.clientY-r.top};drawWires();
@@ -1275,8 +1255,8 @@ function viewportUp(e){
  }
  if(g.moved){
   if(g.type==='node'){
-   let n=nBy(g.nid),from=g.nodeStart,to={x:n.x,y:n.y};n.x=from.x;n.y=from.y;
-   mutate(()=>{let node=nBy(g.nid);node.x=to.x;node.y=to.y});selected=new Set([g.nid]);render();
+   const moves=g.group||[{id:g.nid,x:g.nodeStart.x,y:g.nodeStart.y}];const to=moves.map(s0=>{const m=nBy(s0.id);const p={id:s0.id,x:m?.x,y:m?.y};if(m){m.x=s0.x;m.y=s0.y;}return p;});
+   mutate(()=>{for(const p of to){const m=nBy(p.id);if(m){m.x=p.x;m.y=p.y;}}});if(!g.group)selected=new Set([g.nid]);render();
   }else if(g.type==='background')save();
   else if(g.type==='port')releasePortDrag(g,e.clientX,e.clientY);
   return;
@@ -1303,7 +1283,7 @@ function viewportCancel(e){
  if(gesture?.type==='pinch'){
   if(activePointers.size>=2)beginPinch();else {resumeSinglePan();save();}
  }else{
-  if(gesture?.type==='node'&&gesture.nodeStart){let n=nBy(gesture.nid);if(n){n.x=gesture.nodeStart.x;n.y=gesture.nodeStart.y;}}
+  if(gesture?.type==='node'&&gesture.nodeStart){let n=nBy(gesture.nid);if(n){n.x=gesture.nodeStart.x;n.y=gesture.nodeStart.y;}for(const s0 of gesture.group||[]){const m=nBy(s0.id);if(m){m.x=s0.x;m.y=s0.y;}}}
   gesture=null;dragline=null;updateCamera();
  }
 }
@@ -1329,7 +1309,7 @@ function setupEvents(){const vp=$('viewport');vp.addEventListener('pointerdown',
  window.addEventListener('resize',()=>{updateCamera();syncVisibleViewport()});if(window.visualViewport){visualViewport.addEventListener('resize',syncVisibleViewport);visualViewport.addEventListener('scroll',syncVisibleViewport)}document.addEventListener('keydown',e=>{if(!$('overlay').classList.contains('hidden')){if(e.key==='Escape')closeSheet();return}let typing=['INPUT','TEXTAREA','SELECT'].includes(document.activeElement?.tagName);if(typing)return;const mod=e.ctrlKey||e.metaKey,k=e.key.toLowerCase();if(mod&&k==='z'){e.preventDefault();return e.shiftKey?redo():undo()}if(mod&&k==='y'){e.preventDefault();return redo()}if(mod&&k==='s'){e.preventDefault();return exportJSON()}if(mod&&k==='c'){e.preventDefault();return copySelection()}if(mod&&k==='v'){e.preventDefault();return pasteSelection()}if(mod&&k==='a'){e.preventDefault();selected=new Set(boardNodes().map(n=>n.id));return render()}if(e.key==='Delete'||e.key==='Backspace'){e.preventDefault();return deleteSelected()}if(e.key==='Escape'){pending=null;selected.clear();render()}});
 }
 /* ================= v0.4 · núcleo ================= */
-const APP_VERSION='0.4.4';
+const APP_VERSION='0.4.5';
 const NODE_W=246,Z_MIN=0.01,Z_MAX=4;
 const BELT_CAPS=[60,120,270,480,780,1200],PIPE_CAPS=[300,600];
 // Slots de Somersloop por categoria; fontes abstratas e geradores: 0.
@@ -1461,17 +1441,27 @@ function inferTargets(G,order){
  for(const n of G.nodes)if(isFixed(n.target)&&n.type!=='source'){if(n.type==='recipe')targetRec.add(root(n.id));else blocked.add(root(n.id));}
  const anchors=new Set(),anchored=new Set();
  for(const n of G.nodes)if(n.type==='source'&&!isAutoSource(n)&&!targetRec.has(root(n.id))){anchors.add(n.id);anchored.add(root(n.id));}
- for(const nid of order){const n=G.byId.get(nid);if(n.type==='source'&&isAutoSource(n)&&!anchored.has(root(nid))&&!targetRec.has(root(nid))){anchors.add(nid);anchored.add(root(nid));}}
+ // v0.4.5: sem fonte fixa, TODAS as fontes automáticas do componente ancoram (antes só a primeira
+ // na ordem topológica, o que fazia o resultado depender da ordem de criação dos nós).
+ for(const n of G.nodes)if(n.type==='source'&&isAutoSource(n)&&!anchored.has(root(n.id))&&!targetRec.has(root(n.id)))anchors.add(n.id);
  const arrived=new Map(G.nodes.map(n=>[n.id,[]])),inferred=new Map();
+ // Quanto o destino de uma ligação aceita: tier da esteira, limite da porta e teto de máquinas/vazão.
+ const edgeAccept=e=>{const t=G.byId.get(e.to);let c=Math.min(e.cap,pcap(t,'in',e.ti));if(t.type==='recipe'&&isFixed(t.limit)){const R=rr(t);if(R&&R.ins[e.ti]>0)c=Math.min(c,R.ins[e.ti]*t.limit);}else if(PASS_TYPES.has(t.type)&&isFixed(t.limit))c=Math.min(c,t.limit);return c;};
+ const portAccept=es=>es.reduce((a,e)=>a+edgeAccept(e),0);
  for(const nid of order){
   const n=G.byId.get(nid);if(blocked.has(root(nid)))continue;const inp=arrived.get(nid),outE=G.out.get(nid),pp=calcPorts(n);const outs=[];
   if(n.type==='source')outs[0]=anchors.has(nid)?(isAutoSource(n)?sourceReference(n):sourceCap(n)):0;
   else if(n.type==='recipe'){const R=rr(n);if(!R)continue;const f=[];R.ins.forEach((q,i)=>{const a=inp[i]||0;if(a>1e-9&&q>1e-9)f.push(a/q)});
    let cnt=isFixed(n.target)&&R.outs[0]>0&&!R.r.gen?n.target/R.outs[0]:(f.length?Math.min(...f):0);if(isFixed(n.limit))cnt=Math.min(cnt,n.limit);
    R.outs.forEach((q,j)=>outs[j]=cnt*q);if(!outE.length&&cnt>1e-9)inferred.set(nid,outs[0]||0);}
-  else if(PASS_TYPES.has(n.type)){let tot=inp.reduce((a,b)=>a+(b||0),0);if(isFixed(n.limit))tot=Math.min(tot,n.limit);const used=[...new Set(outE.map(e=>e.fi))];for(const j of used)outs[j]=tot/used.length;if(!outE.length&&tot>1e-9)inferred.set(nid,tot);}
+  else if(PASS_TYPES.has(n.type)){let tot=inp.reduce((a,b)=>a+(b||0),0);if(isFixed(n.limit))tot=Math.min(tot,n.limit);const used=[...new Set(outE.map(e=>e.fi))].sort((a,b)=>a-b);
+   // v0.4.5: a estimativa segue o tipo do divisor (prioridade, pesos, transbordo) como o fluxo real.
+   if(n.type==='priority_splitter'){let left=tot;for(const j of used){const g=Math.min(left,portAccept(G.outP.get(nid)[j]||[]));outs[j]=g;left-=g;}}
+   else if(n.type==='splitter'&&used.length>1){const w=Array.isArray(n.weights)&&n.weights.some(x=>x>0)?used.map(j=>Number(n.weights[j])>0?Number(n.weights[j]):0):null;const{res}=waterfill(tot,used.map(j=>portAccept(G.outP.get(nid)[j]||[])),w);used.forEach((j,k)=>outs[j]=res[k]);}
+   else for(const j of used)outs[j]=tot/used.length;
+   if(!outE.length&&tot>1e-9)inferred.set(nid,tot);}
   else if((n.type==='output'||n.type==='sink')&&!isFixed(n.target)){const tot=inp.reduce((a,b)=>a+(b||0),0);if(tot>1e-9)inferred.set(nid,tot);}
-  for(let j=0;j<pp.outs.length;j++){const es=G.outP.get(nid)[j]||[];for(const e of es){const arr=arrived.get(e.to);arr[e.ti]=(arr[e.ti]||0)+(outs[j]||0)/es.length;}}
+  for(let j=0;j<pp.outs.length;j++){const es=G.outP.get(nid)[j]||[];if(!es.length)continue;const share=es.length===1?[outs[j]||0]:waterfill(outs[j]||0,es.map(edgeAccept)).res;es.forEach((e,k)=>{const arr=arrived.get(e.to);arr[e.ti]=(arr[e.ti]||0)+(share[k]||0);});}
  }
  return inferred;
 }
@@ -1788,9 +1778,12 @@ function recomputeCore(t0,mode){
    c.power=r.gen?0:(full*machinePower(r,R.clock,R.amp)+(last>1e-7?machinePower(r,last*R.clock,R.amp):0));
    c.gen=r.gen?r.gen*R.clock*c.machines*st.u:0;
    c.sloops=R.sl*c.built;c.shards=c.built?(Math.max(0,c.built-1)*shardsFor(R.clock*100)+shardsFor(c.lastClock)):0;
+   const alertsBefore=alerts.length;
    r.ins.forEach((p,i)=>{const need=c.neededIns[i]||0,got=c.previewIns?.[i]||0;
     if(need>got+eps){const linked=inE.some(e=>e.ti===i);
      push('problem',n,nodeTitle(n),itemName(p.item),`Disponível ${fmt(got)}/${fmt(need)} por minuto · faltam ${fmt(need-got)}/min. `+(linked?'A fonte ligada é insuficiente para esta entrada.':'Nenhuma máquina ou recurso conectado a esta entrada.'));}});
+   // v0.4.5: meta fixa abaixo do fluxo real sempre gera alerta (a disponibilidade planejada ignora a contrapressão).
+   if(!r.gen&&isFixed(n.target)&&R.outs[0]>1e-12){const got=c.actualOuts[0]||0;if(got<n.target-Math.max(eps,n.target*1e-6)&&!alerts.slice(alertsBefore).some(a=>a.sev==='problem'))push('problem',n,nodeTitle(n),itemName(r.outs[0].item),`Meta ${fmt(n.target)}/min, fluxo real ${fmt(got)}/min. `+((st.uOut??1)<1-1e-4?'Uma saída não escoa tudo (consumo a jusante, esteira ou limite de porta).':'Confira entradas, limites e metas a montante.'));}
    if(c.wanted>c.machines+1e-5)push('warn',n,nodeTitle(n),itemName(r.outs[0]?.item),`Demanda a jusante pede ${fmt(c.wanted)} máquinas equivalentes, mas a meta/limite fixa ${fmt(c.machines)}.`);
    if(st.uOut<Math.min(1,st.uIn)-1e-4)push('warn',n,nodeTitle(n),'Saída bloqueada',`As máquinas rodam a ${fmt(st.u*100,1)}% porque uma saída não escoa (consumo a jusante, esteira ou limite de porta). No jogo, a produção para quando o buffer enche.`);
    r.outs.forEach((p,j)=>{if(j===0&&r.outs.length>0&&!r.gen)return;const amt=c.previewOuts?.[j]||0;if(amt>eps&&!outE.some(e=>e.fi===j))push('warn',n,nodeTitle(n),itemName(p.item),`Subproduto sem destino: ${fmt(amt)}/min. No jogo, a máquina trava quando este buffer enche. Ligue a um consumidor, armazenamento ou AWESOME Sink.`);});
@@ -1810,7 +1803,7 @@ function recomputeCore(t0,mode){
   }
  }
  for(const e of G.edges){const w=edgeWarn[e.id];if(!w)continue;const f=G.byId.get(e.from);
-  push('warn',f,nodeTitle(f),itemName(edgeItem(e.src)),w.kind==='over'?`Conexão com ${fmt(Math.max(A.get(e.id),W.get(e.id)))}/min acima do máximo de ${fmt(w.cap)}/min (${edgeIsFluid(e.src)?'cano':'esteira'} mais rápido liberado). Use mais de uma linha.`:`A conexão escolhida limita a ${fmt(w.cap)}/min, mas o plano pede ${fmt(W.get(e.id))}/min.`);}
+  push('warn',f,nodeTitle(f),itemName(edgeItem(e.src)),w.kind==='over'?`Conexão com ${fmt(Math.max(A.get(e.id),W.get(e.id)))}/min acima do máximo de ${fmt(w.cap)}/min (${edgeIsFluid(e.src)?'cano mais rápido liberado':'esteira mais rápida liberada'}). Use mais de uma linha.`:`A conexão escolhida limita a ${fmt(w.cap)}/min, mas o plano pede ${fmt(W.get(e.id))}/min.`);}
  if(cyclic&&(!sizingConverged||!flowConverged))alerts.push({sev:'problem',nid:null,board:null,title:'Ciclo sem convergência',material:'',detail:'A solução iterativa não estabilizou. Confira insumos externos, metas e limites: fluxos cíclicos não devem ser considerados válidos sem convergência.'});
  if(cyclic&&sizingConverged&&flowConverged){
   const terminal=G.nodes.some(n=>['output','sink','storage','depot','port_out'].includes(n.type)&&G.inc.get(n.id).length);
@@ -1874,6 +1867,7 @@ function normalizeProject(){
   }else if(v.type!=='note'&&!isContainer(v)){const it=resolveItem(v.ikey,v.item);v.item=it;if(it!=null)v.ikey=items[it].key;else delete v.ikey;}
   if(v.type==='source'){
    if(!['auto','node','manual'].includes(v.sourceMode)){const physical=minerBase({...v,clock:100});const fixed=isFixed(v.limit);const matches=fixed&&Math.abs(v.limit-physical)<1e-6;v.sourceMode=v.sourceMachine==='external'||(fixed&&!matches)?'manual':v.autoSupply?'auto':'node';}
+   if(v.sourceMode==='node'&&!sourceMachineOptions(v.item).some(([k])=>k===v.sourceMachine)){const d=defaultSourceMachine(v.item);if(EXTRACTORS[d])v.sourceMachine=d;else v.sourceMode='auto';}
    if(v.sourceMode==='manual')v.limit=isFiniteNum(v.limit)?Math.max(0,v.limit):0;else v.limit=null;
    v.sourceCount=Number.isInteger(v.sourceCount)&&v.sourceCount>0?v.sourceCount:1;v.purity=[.5,1,2].includes(v.purity)?v.purity:1;v.autoSupply=false;
   }
@@ -1910,17 +1904,19 @@ function undo(){if(!history.length)return;future.push(JSON.stringify(project));r
 function redo(){if(!future.length)return;history.push(JSON.stringify(project));restoreSnapshot(future.pop());}
 function connect(a,b){if(!validLink(a,b)){toast('Portas incompatíveis.',true);return false;}const f=a.io==='out'?a:b,t=a.io==='in'?a:b;
  const existing=project.edges.find(e=>e.from===f.nid&&e.fi===f.index&&e.to===t.nid&&e.ti===t.index);
- if(existing){mutate(()=>{project.edges=project.edges.filter(e=>e.id!==existing.id);purgeOrphanUtilityItem(nBy(f.nid));purgeOrphanUtilityItem(nBy(t.nid));});pending=null;dragline=null;toast('Conexão desfeita');return true;}
+ if(existing){pending=null;dragline=null;render();toast('Essas portas já estão ligadas. Toque na conexão para desconectar.');return true;}
  mutate(()=>{const fn=nBy(f.nid),tn=nBy(t.nid),item=portItem(fn,'out',f.index)??portItem(tn,'in',t.index);setPortItem(fn,'out',f.index,item);setPortItem(tn,'in',t.index,item);project.edges.push({id:id(),board:fn.board,from:fn.id,fi:f.index,to:tn.id,ti:t.index});});
  pending=null;dragline=null;toast('Conexão criada');return true}
 function purgeOrphanUtilityItem(n){if(!n||n.type==='recipe'||n.type==='source'||isContainer(n)||n.type==='port_in'||n.type==='port_out')return;const connected=project.edges.some(e=>e.from===n.id||e.to===n.id);if(!connected)n.item=null}
 function forceRecalc(){recompute(true);render();toast('Cálculo atualizado');}
 
 /* ================= v0.4 · renderização ================= */
-function nodeTitle(n){return n.title||({recipe:recOf(n)?.name,source:itemName(n.item),splitter:'Divisor',priority_splitter:'Divisor com transbordo',merger:'Combinador',priority_merger:'Combinador prioritário',storage:'Armazenamento',depot:'Depósito dimensional',sink:'AWESOME Sink',output:'Destino / meta',outpost:'Outpost',blueprint:'Blueprint',note:'Anotação',port_in:'Entrada do outpost',port_out:'Saída do outpost'}[n.type]||'Nó')}
+const PURITY_NAMES={0.5:'impuro',1:'normal',2:'puro'};
+function extractorLabel(n){const ex=EXTRACTORS[n.sourceMachine];if(!ex)return'Extratora';const cnt=n.sourceCount||1;return`${ex.name}${cnt>1?' ×'+cnt:''}${ex.purity?' · '+(PURITY_NAMES[n.purity]||'normal'):''} · ${fmt(n.clock||100,0)}% · até ${fmt(sourceCap(n))}/min`;}
+function nodeTitle(n){return n.title||({recipe:recOf(n)?.name,source:itemName(n.item),splitter:'Divisor',priority_splitter:'Divisor prioritário',merger:'Combinador',priority_merger:'Combinador prioritário',storage:'Armazenamento',depot:'Depósito dimensional',sink:'AWESOME Sink',output:'Destino / meta',outpost:'Outpost',blueprint:'Blueprint',note:'Anotação',port_in:'Entrada do outpost',port_out:'Saída do outpost'}[n.type]||'Nó')}
 function nodeSubtitle(n){
  if(n.type==='recipe'){const r=recOf(n);if(!r)return'Receita';if(r.gen)return`${machines[r.cat]} · ⚡ ${fmt(r.gen,0)} MW cada`;return machines[r.cat]+(r.alt?' • alternativa':'')+(r.pw?` • ${fmt(r.pwMin,0)}–${fmt(r.pwMax,0)} MW`:'');}
- if(n.type==='source')return isManualSource(n)?'Entrada fixa · '+fmt(n.limit??0)+'/min':'Entrada automática · referência 120/min';
+ if(n.type==='source'){if(isManualSource(n))return'Entrada fixa · '+fmt(n.limit??0)+'/min';if(isAutoSource(n))return'Entrada automática · acompanha a demanda';return extractorLabel(n);}
  if(n.type==='note')return'Nota';
  if(isContainer(n)){const io=outpostIO(n);return`${pl(io.ins.length,'entrada','entradas')} · ${pl(io.outs.length,'saída','saídas')} · 2 toques abre`;}
  if(n.type==='port_in')return'Recebe do plano de fora';
@@ -1981,8 +1977,8 @@ function renderNode(n,lod='full',AS=null){
   const stalled=io==='out'&&n.type==='recipe'&&need>.001&&actual<need-.001;
   let label;
   if(project.settings.calc==='none')label='—';
-  else if(io==='in'&&need>.001)label=(ok?'✓ ':'⚠ ')+fmt(available)+' / '+fmt(need)+'/m';
-  else if(stalled)label=fmt(need)+'/m previsto';
+  else if(io==='in'&&need>.001)label=(ok?'✓ ':'⚠ ')+fmt(available)+' / '+fmt(need)+'/min';
+  else if(stalled)label=fmt(need)+'/min previsto';
   else label=fmt(io==='out'?Math.max(available,actual):available)+'/min';
   const detail=io==='in'?`Disponibilidade planejada ${fmt(available)}/${fmt(need)} por minuto.`:
     `Meta ${fmt(need)}/min; capacidade alimentada ${fmt(available)}/min; fluxo contínuo atual ${fmt(actual)}/min.`;
@@ -2009,7 +2005,7 @@ function render(){
 }
 function wireCurve(a,b){const z=Math.max(.15,Math.min(1.6,camera.z));return Math.min(175*z,Math.max(35*z,Math.abs(b.x-a.x)*.42));}
 const bez=(p0,p1,p2,p3,t)=>{const u=1-t;return u*u*u*p0+3*u*u*t*p1+3*u*t*t*p2+t*t*t*p3;};
-function edgeLabel(e){const f=calculated.edgePreviewFlows?.[e.id]??calculated.edgeFlows[e.id]??0,w=calculated.edgeWants[e.id]||0,warn=calculated.edgeWarn?.[e.id];let t=fmt(f)+' / '+fmt(w)+'/m';if(Number(e.tier)>=1)t+=' · Mk.'+e.tier;if(warn)t='⚠ '+t;return t;}
+function edgeLabel(e){const f=calculated.edgePreviewFlows?.[e.id]??calculated.edgeFlows[e.id]??0,w=calculated.edgeWants[e.id]||0,warn=calculated.edgeWarn?.[e.id];let t=fmt(f)+' / '+fmt(w)+'/min';if(Number(e.tier)>=1)t+=' · Mk.'+e.tier;if(warn)t='⚠ '+t;return t;}
 function drawWires(){
  const el=$('wires'),r=currentRect(),dpr=Math.min(2,window.devicePixelRatio||1);
  if(el.width!==Math.round(r.width*dpr)||el.height!==Math.round(r.height*dpr)){el.width=Math.round(r.width*dpr);el.height=Math.round(r.height*dpr);}
@@ -2049,7 +2045,7 @@ function edgeEditor(e){
 function saveEdge(){const eid=window.__editEdge,v=$('edgeTier')?.value;mutate(()=>{const e=project.edges.find(x=>x.id===eid);if(e){if(v&&v!=='auto')e.tier=Number(v);else delete e.tier;}});closeSheet();toast('Conexão atualizada');}
 
 /* ================= v0.4 · interface ================= */
-const toolset=[{key:'splitter',name:'Divisor',icon:'↗',desc:'1 entrada / 3 saídas · divide por igual com transbordo (proporções opcionais)'},{key:'priority_splitter',name:'Divisor com transbordo',icon:'⬈',desc:'Saída 1 primeiro, depois 2 e 3 (overflow do Smart Splitter)'},{key:'merger',name:'Combinador',icon:'⇥',desc:'3 entradas / 1 saída · puxa por igual'},{key:'priority_merger',name:'Combinador prioritário',icon:'⇢',desc:'Entrada 1 tem prioridade, depois 2 e 3'},{key:'storage',name:'Armazenamento',icon:'📦',desc:'Passagem; sem saída ligada, recebe tudo'},{key:'depot',name:'Depósito dimensional',icon:'🗃️',desc:'Armazenamento/suprimento lógico'},{key:'sink',name:'AWESOME Sink',icon:'♻️',desc:'Recebe excedentes; meta opcional'},{key:'output',name:'Destino / meta',icon:'🎯',desc:'Requer uma vazão final'},{key:'outpost',name:'Outpost / área',icon:'▣',desc:'Subprojeto com entradas e saídas ligadas ao plano de fora'},{key:'blueprint',name:'Blueprint',icon:'▥',desc:'Subprojeto para uma unidade lógica'},{key:'port_in',name:'Entrada do outpost',icon:'⇲',desc:'Vira uma porta de entrada no bloco do outpost'},{key:'port_out',name:'Saída do outpost',icon:'⇱',desc:'Vira uma porta de saída no bloco do outpost'},{key:'note',name:'Nota',icon:'📝',desc:'Texto livre sobre o projeto'}];
+const toolset=[{key:'splitter',name:'Divisor',icon:'↗',desc:'1 entrada / 3 saídas · divide por igual; o que uma saída não aceita vai para as outras'},{key:'priority_splitter',name:'Divisor prioritário (overflow)',icon:'⬈',desc:'Saída 1 primeiro, depois 2 e 3 (Smart Splitter com Overflow)'},{key:'merger',name:'Combinador',icon:'⇥',desc:'3 entradas / 1 saída · puxa por igual'},{key:'priority_merger',name:'Combinador prioritário',icon:'⇢',desc:'Entrada 1 tem prioridade, depois 2 e 3'},{key:'storage',name:'Armazenamento',icon:'📦',desc:'Passagem; sem saída ligada, recebe tudo'},{key:'depot',name:'Depósito dimensional',icon:'🗃️',desc:'Estoque lógico com saída. No jogo o Uploader só recebe: para isso use Armazenamento ou Sink'},{key:'sink',name:'AWESOME Sink',icon:'♻️',desc:'Recebe excedentes; meta opcional'},{key:'output',name:'Destino / meta',icon:'🎯',desc:'Requer uma vazão final'},{key:'outpost',name:'Outpost / área',icon:'▣',desc:'Subprojeto com entradas e saídas ligadas ao plano de fora'},{key:'blueprint',name:'Blueprint',icon:'▥',desc:'Subprojeto (igual ao outpost; mantido para projetos antigos)',hidden:true},{key:'port_in',name:'Entrada do outpost',icon:'⇲',desc:'Vira uma porta de entrada no bloco do outpost'},{key:'port_out',name:'Saída do outpost',icon:'⇱',desc:'Vira uma porta de saída no bloco do outpost'},{key:'note',name:'Nota',icon:'📝',desc:'Texto livre sobre o projeto'}];
 const insideOutpost=()=>project.current!=='root'&&project.nodes.some(n=>isContainer(n)&&n.boardId===project.current);
 // Busca: frases inteiras do dicionário, depois palavra a palavra (PT → EN), ignorando preposições.
 const PT_TOKENS={ferro:'iron',cobre:'copper',aco:'steel',lingote:'ingot',lingotes:'ingot',placa:'plate',placas:'plate',chapa:'sheet',chapas:'sheet',parafuso:'screw',parafusos:'screw',barra:'rod',barras:'rod',vergalhao:'rebar',fio:'wire',fios:'wire',cabo:'cable',cabos:'cable',viga:'beam',vigas:'beam',cano:'pipe',canos:'pipe',tubo:'pipe',tubos:'pipe',concreto:'concrete',calcario:'limestone',carvao:'coal',minerio:'ore',agua:'water',petroleo:'crude',oleo:'oil',plastico:'plastic',borracha:'rubber',reforcada:'reinforced',reforcado:'reinforced',quadro:'frame',estrutura:'frame',pesada:'heavy',pesado:'heavy',revestida:'encased',revestido:'encased',estator:'stator',computador:'computer',supercomputador:'supercomputer',circuito:'circuit',quartzo:'quartz',cristal:'crystal',oscilador:'oscillator',enxofre:'sulfur',bauxita:'bauxite',aluminio:'aluminum',sucata:'scrap',solucao:'solution',uranio:'uranium',plutonio:'plutonium',nitrogenio:'nitrogen',acido:'acid',sulfurico:'sulfuric',nitrico:'nitric',combustivel:'fuel',biocombustivel:'biofuel',resina:'resin',polimero:'polymer',coque:'coke',residuo:'residue',embalado:'packaged',embalada:'packaged',vazio:'empty',vazia:'empty',lata:'canister',galao:'canister',tanque:'tank',bateria:'battery',dissipador:'heat sink',calor:'heat',refrigeracao:'cooling',controle:'control',unidade:'unit',limitador:'limiter',conector:'connector',velocidade:'speed',tecido:'fabric',filtro:'filter',biomassa:'biomass',folhas:'leaves',madeira:'wood',micelio:'mycelia',silicio:'silica',polvora:'powder',diamante:'diamond',diamantes:'diamonds',tempo:'time',materia:'matter',escura:'dark',fragmento:'shard',lesma:'slug',fundidora:'smelter',fundicao:'foundry',refinaria:'refinery',construtora:'constructor',montadora:'assembler',fabricante:'manufacturer',misturador:'blender',acelerador:'accelerator',particulas:'particle',embaladora:'packager',conversor:'converter',codificador:'encoder',quantico:'quantum',motor:'motor',modular:'modular',rotor:'rotor',turbo:'turbo',radio:'radio'};
@@ -2068,7 +2064,7 @@ function pickerTabCandidates(tab,context){
   for(const r of recs){
    if(changing&&(r.outs[0]?.item!==product||(!original.recipe&&r.id===original.rid)))continue;
    if(isIn&&!r.outs.some(x=>x.item===chosen))continue;if(isOut&&!r.ins.some(x=>x.item===chosen))continue;
-   const sub=r.gen?`${machines[r.cat]} • ⚡ ${fmt(r.gen,0)} MW • consome ${r.ins.map(p=>itemName(p.item)+' '+fmt(p.qty*60/r.duration)+'/m').join(', ')}`:machines[r.cat]+(r.manual?' • fabricação manual':isIn&&r.outs[0]?.item!==chosen?' • subproduto':'')+' • '+r.outs.map(p=>itemName(p.item)+' '+fmt(p.qty*60/r.duration)+'/m').join(', ');
+   const sub=r.gen?`${machines[r.cat]} • ⚡ ${fmt(r.gen,0)} MW • consome ${r.ins.map(p=>itemName(p.item)+' '+fmt(p.qty*60/r.duration)+'/min').join(', ')}`:machines[r.cat]+(r.manual?' • fabricação manual':isIn&&r.outs[0]?.item!==chosen?' • subproduto':'')+' • '+r.outs.map(p=>itemName(p.item)+' '+fmt(p.qty*60/r.duration)+'/min').join(', ');
    list.push({kind:'recipe',rid:r.id,name:r.name,sub,icon:machineIcons[r.cat],alt:r.alt,cat:r.cat});
   }
   for(const[ix,r]of(project.customRecipes||[]).entries()){
@@ -2077,11 +2073,12 @@ function pickerTabCandidates(tab,context){
    list.push({kind:'custom',idx:ix,name:r.name,sub:'Receita personalizada • '+machines[r.cat],icon:machineIcons[r.cat]||'⚙️',alt:false,cat:r.cat});
   }
  }
- if(!changing&&(tab==='resources'||tab==='all'))for(const item of sourceItems){if(isOut||isIn&&item!==chosen)continue;list.push({kind:'source',item,name:itemName(item),sub:'Fonte de recurso • automática (120/min inicial) ou vazão fixa',icon:itemIcon(item)});}
+ if(!changing&&(tab==='resources'||tab==='all'))for(const item of sourceItems){if(isOut||isIn&&item!==chosen)continue;list.push({kind:'source',item,name:itemName(item),sub:'Fonte de recurso • automática, extratora (Mk/pureza/clock) ou vazão fixa',icon:itemIcon(item)});}
  if(!changing&&(tab==='utils'||tab==='all')){const inside=insideOutpost();
-  for(const u of toolset){if((u.key==='port_in'||u.key==='port_out')&&!inside)continue;
+  for(const u of toolset){if(u.hidden||(u.key==='port_in'||u.key==='port_out')&&!inside)continue;
    if(context?.link){if(isIn&&!['merger','splitter','priority_splitter','priority_merger','storage','depot','port_in'].includes(u.key))continue;if(isOut&&!['sink','output','splitter','merger','priority_merger','priority_splitter','storage','depot','port_out'].includes(u.key))continue;}
    list.push({kind:'util',key:u.key,name:u.name,sub:u.desc,icon:u.icon});}}
+ if(tab==='all'&&!context?.link&&!changing){const rank={source:0,util:1};list.sort((a,b)=>(rank[a.kind]??2)-(rank[b.kind]??2));}
  if(isIn&&!changing)list.sort((a,b)=>{const score=c=>{if(c.kind==='recipe'){const r=recs[c.rid];return r?.outs?.[0]?.item===chosen?0:100;}return c.kind==='source'?10:200;};return score(a)-score(b);});
  return list;
 }
@@ -2089,7 +2086,7 @@ function refreshPicker(){
  if(!pickerContext)return;
  for(const el of document.querySelectorAll('#pickTabs [data-tab]'))el.classList.toggle('active',el.dataset.tab===pickerContext.tab);
  const match=queryMatcher(pickerContext.query);
- const list=pickerTabCandidates(pickerContext.tab,pickerContext).filter(v=>match(normalize(v.name+' '+v.sub))).slice(0,200);
+ const list=pickerTabCandidates(pickerContext.tab,pickerContext).filter(v=>match(normalize(v.name+' '+v.sub))).slice(0,500);
  $('pickerList').innerHTML=list.length?list.map(v=>`<button class="pickitem" data-pick="${esc([v.kind,v.rid??v.idx??v.item??v.key].join(':'))}"><span class="pic">${v.kind==='recipe'?gameIconMarkup(recs[v.rid]?.outs?.[0]?.item??recs[v.rid]?.ins?.[0]?.item):v.kind==='source'?gameIconMarkup(v.item):v.icon}</span><span class="picktext"><span class="picktitle">${esc(v.name)}</span><div class="picksub">${esc(v.sub)}</div></span>${v.alt?'<span class="picktag">ALT</span>':''}</button>`).join(''):
  `<div class="emptylist">${pickerContext.replaceId?'Não há outras receitas cadastradas para este produto.':'Nenhum item corresponde ao filtro. Experimente outro termo ou outra aba.'}</div>`;
 }
@@ -2123,6 +2120,7 @@ function rankRecipes(item,{avoid=new Set(),allowAlt=false}={}){
   if(/^Unpackage /i.test(r.name))s-=80;if(r.cat===9)s-=20;if(r.ins.some(x=>x.item===item))s-=300;if(r.ins.some(x=>avoid.has(x.item)))s-=150;return{r,s};}).sort((a,b)=>b.s-a.s||a.r.id-b.r.id);
 }
 function bestRecipeForItem(item){return rankRecipes(item)[0]?.r||null;}
+function planText(c,clock){const b=c.built||0;if(!b)return'nenhuma máquina';if(Math.abs((c.lastClock||0)-clock)<0.05)return`${b} ${b===1?'máquina':'máquinas'} a ${fmt(clock)}%`;return(b>1?`${b-1} ${b===2?'máquina':'máquinas'} a ${fmt(clock)}% + `:'')+`1 a ${fmt(c.lastClock,1)}%`;}
 function inspectNode(nid=null){const n=nBy(nid||[...selected][0]);if(!n)return toast('Toque em um bloco para selecioná-lo.');selected=new Set([n.id]);render();const c=calculated.nodes[n.id]||emptyCalcState();const r=n.type==='recipe'?recOf(n):null;
  let body=field('Título opcional','editTitle',n.title||'');
  if(r&&r.gen){
@@ -2130,30 +2128,33 @@ function inspectNode(nid=null){const n=nBy(nid||[...selected][0]);if(!n)return t
   body+=`<div class="info">${esc(machines[r.cat])} • ${fmt(r.gen,0)} MW por gerador a 100%. Consumo por gerador: ${r.ins.map(x=>fmt(x.qty*60/r.duration)+' '+itemName(x.item)).join(' · ')}/min${r.outs.length?'<br>Resíduo: '+r.outs.map(x=>fmt(x.qty*60/r.duration)+' '+itemName(x.item)).join(' · ')+'/min':''}. Overclock de gerador é linear.</div>`;
   body+=`<div class="twocol">${field('Potência desejada (MW)','editTarget',n.target??'','text','Em branco: usa o máximo de geradores ou 1.')}${field('Máximo de geradores','editLimit',n.limit??'','text','Em branco: sem teto.')}</div>${field('Clock (%)','editClock',n.clock||100,'number','1% a 250%.')}`;
  }else if(r){const R=rr(n),slots=sloopSlots(r);
-  body+=`<div class="metricgrid"><div class="metric"><strong>${fmt(c.wanted)}</strong><span>Máquinas equivalentes necessárias</span></div><div class="metric"><strong>${c.built||0}</strong><span>Máquinas para construir</span></div></div><div class="info">Plano: <b>${Math.max(0,(c.built||0)-1)} máquina(s) a ${fmt(n.clock||100)}%</b>${c.built?' + 1 a '+fmt(c.lastClock,1)+'%':''}. Uso real: <b>${fmt((c.util||0)*100,1)}%</b>${c.machines+1e-5<c.wanted?'<br><b>⚠ A meta/limite impede atender toda a demanda.</b>':''}${c.shards?`<br>Power Shards: <b>${c.shards}</b>`:''}${c.sloops?` · Somersloops: <b>${c.sloops}</b>`:''}</div>`;
+  body+=`<div class="metricgrid"><div class="metric"><strong>${fmt(c.wanted)}</strong><span>Máquinas equivalentes necessárias</span></div><div class="metric"><strong>${c.built||0}</strong><span>Máquinas para construir</span></div></div><div class="info">Plano: <b>${planText(c,n.clock||100)}</b>. Uso real: <b>${fmt((c.util||0)*100,1)}%</b>${c.machines+1e-5<c.wanted?'<br><b>⚠ A meta/limite impede atender toda a demanda.</b>':''}${c.shards?`<br>Power Shards: <b>${c.shards}</b>`:''}${c.sloops?` · Somersloops: <b>${c.sloops}</b>`:''}</div>`;
   body+=`<div class="info">${esc(machines[r.cat])} • ${fmt(r.duration)} s/ciclo${r.pw?` • ${fmt(r.pwMin,0)}–${fmt(r.pwMax,0)} MW (média ${fmt(r.pw,0)})`:''}. Taxas por máquina com clock e Somersloops atuais:<br>${R?R.ins.map((q,i)=>'↓ '+fmt(q)+' '+itemName(r.ins[i].item)).join(' · ')||'Sem entradas':''}<br>${R?R.outs.map((q,i)=>'↑ '+fmt(q)+' '+itemName(r.outs[i].item)).join(' · '):''}</div>`;
   body+=`<div class="twocol">${field('Meta da saída principal (/min)','editTarget',n.target??'','text','Valor fixo. Em branco: calcula pela demanda.')}${field('Máximo de máquinas','editLimit',n.limit??'','text','Em branco: sem teto.')}</div><div class="twocol">${field('Clock (%)','editClock',n.clock||100,'number','1% a 250%. Até 3 Power Shards.')}${slots?selectField('Somersloops por máquina','editSloops',Array.from({length:slots+1},(_,k)=>[k,k?`${k} de ${slots} · +${fmt(100*k/slots,0)}% produção`:'Nenhum']),n.sloops||0):'<div class="field"><label>Somersloops</label><small>Esta máquina não aceita amplificação.</small></div>'}</div>`;
  }else if(n.type==='source'){
   const itemOpts=[...new Set([...sourceItems,n.item])].map(i=>[i,itemName(i)]);
-  body+=`${selectField('Recurso','editItem',itemOpts,n.item)}${selectField('Tipo de entrada','editSourceMode',[['auto','Automático · acompanha a demanda (120/min como referência inicial)'],['manual','Vazão fixa · defina em itens ou m³/min']],n.sourceMode==='manual'?'manual':'auto')}`;
-  body+=`<div id="sourceManual">${field('Disponibilidade fixa (/min)','editManualRate',n.sourceMode==='manual'?(n.limit??0):120,'text','Ao fixar este valor, ele passa a limitar a cadeia. Não cria mineradoras nem aplica overclock.')}</div>`;
-  body+=`<div class="info">As fontes são entradas abstratas de materiais: sem equipamento, pureza ou consumo elétrico. No automático, 120/min serve apenas para iniciar uma fábrica sem metas.</div>`;
+  const mode=['auto','node','manual'].includes(n.sourceMode)?n.sourceMode:'auto',mopts=sourceMachineOptions(n.item),mach=mopts.some(([k])=>k===n.sourceMachine)?n.sourceMachine:defaultSourceMachine(n.item);
+  body+=`${selectField('Recurso','editItem',itemOpts,n.item)}${selectField('Tipo de entrada','editSourceMode',[['auto','Automático · acompanha a demanda'],['node','Extratora física · Mk, pureza e clock'],['manual','Vazão fixa · defina em itens ou m³/min']],mode)}`;
+  body+=`<div id="sourceNode">${selectField('Extratora','editSourceMachine',mopts,mach)}<div class="twocol">${selectField('Pureza do nó','editPurity',[[0.5,'Impuro'],[1,'Normal'],[2,'Puro']],[.5,1,2].includes(n.purity)?n.purity:1)}${field('Nº de nós (extratoras)','editSourceCount',n.sourceCount||1,'number')}</div>${field('Clock (%)','editSourceClock',mode==='node'?(n.clock||100):100,'number','1% a 250%. Oferta = taxa base × pureza × nós × clock; a energia das extratoras entra no consumo.')}</div>`;
+  body+=`<div id="sourceManual">${field('Disponibilidade fixa (/min)','editManualRate',n.sourceMode==='manual'?(n.limit??0):120,'text','Ao fixar este valor, ele passa a limitar a cadeia. Não cria extratoras nem consome energia.')}</div>`;
+  body+=`<div class="info"><b>Automático</b>: entrada abstrata sem limite e sem energia (sem metas, a fábrica parte de 120/min por fonte). <b>Extratora física</b>: limita a oferta ao que os equipamentos entregam e soma o consumo deles. <b>Vazão fixa</b>: limita sem equipamento.</div>`;
  }else if(n.type==='note'){body+=`<div class="field"><label>Conteúdo da nota</label><textarea id="editNote">${esc(n.note||'')}</textarea></div>`;}
  else if(isContainer(n)){const io=outpostIO(n);body+=`<div class="info">Abra a área (2 toques) e adicione <b>Entrada do outpost</b> e <b>Saída do outpost</b>. Cada uma vira uma porta neste bloco e o cálculo atravessa os dois planos.<br>Portas atuais: ${io.ins.length?io.ins.map(p=>'⇲ '+esc(itemName(p.item))).join(', '):'nenhuma entrada'}; ${io.outs.length?io.outs.map(p=>'⇱ '+esc(itemName(p.item))).join(', '):'nenhuma saída'}.</div>`;}
  else{const iopts=[["","Detectar pela conexão"],...items.map(it=>[it.id,it.name])];
   body+=selectField('Material desta estrutura','editItem',iopts,n.item??'');
   if(['output','sink','depot'].includes(n.type))body+=field('Demanda alvo (/min)','editTarget',n.target??'','text',n.type==='sink'?'Sem meta: o Sink só recebe excedentes.':'Destino sem meta recebe o que chegar.');
   if(['splitter','merger','storage','depot','priority_splitter','priority_merger','port_in','port_out'].includes(n.type))body+=field('Teto de vazão (/min)','editLimit',n.limit??'','text');
-  if(n.type==='splitter'){const w=n.weights||[];body+=`<div class="info">Proporções opcionais (ex.: 1, 1, 2). Em branco: divide por igual e o que uma saída não aceita transborda para as outras, como no jogo.</div><div class="twocol">${field('Saída 1','editW0',w[0]??'','text')}${field('Saída 2','editW1',w[1]??'','text')}</div>${field('Saída 3','editW2',w[2]??'','text')}`;}
+  if(n.type==='splitter'){const w=n.weights||[];body+=`<div class="info">Proporções de planejamento (ex.: 1, 1, 2), não existem no divisor do jogo. Em branco: divide por igual e o que uma saída não aceita transborda para as outras, como no jogo.</div><div class="twocol">${field('Saída 1','editW0',w[0]??'','text')}${field('Saída 2','editW1',w[1]??'','text')}</div>${field('Saída 3','editW2',w[2]??'','text')}`;}
   if(n.type==='priority_splitter')body+='<div class="info orange">A saída 1 recebe tudo o que aceitar; o excedente vai para a 2 e depois para a 3. No jogo, equivale ao Smart Splitter com "Overflow".</div>';
   if(n.type==='priority_merger')body+='<div class="info">Quando a saída não escoa tudo, a entrada 1 tem prioridade, depois a 2 e a 3.</div>';
  }
  body+=`<div class="actions">${r?btn('⇄ Trocar receita','replaceRecipe'):''}${isContainer(n)?btn('↗ Abrir área','enterBoard'):''}${btn('⧉ Duplicar','duplicate')}${btn('🗑 Excluir','delete','danger')}</div>`;
  showSheet(nodeTitle(n),'Ajustes do nó • taxas em itens ou m³ por minuto',`<form id="editForm">${body}</form>`,btn('Cancelar','close')+btn('Salvar alterações','saveNode','pri'));
  $('editForm').addEventListener('submit',e=>{e.preventDefault();saveNodeEdit()});
- if(n.type==='source')$('editSourceMode').addEventListener('change',updateSourceEditor),updateSourceEditor();
+ if(n.type==='source'){$('editSourceMode').addEventListener('change',updateSourceEditor);$('editItem').addEventListener('change',refreshSourceMachines);refreshSourceMachines();updateSourceEditor();}
 }
-function updateSourceEditor(){const wrap=$('sourceManual');if(wrap)wrap.hidden=$('editSourceMode')?.value!=='manual';}
+function updateSourceEditor(){const m=$('editSourceMode')?.value,man=$('sourceManual'),nod=$('sourceNode');if(man)man.hidden=m!=='manual';if(nod)nod.hidden=m!=='node';}
+function refreshSourceMachines(){const sel=$('editSourceMachine');if(!sel)return;const it=Number($('editItem').value),opts=sourceMachineOptions(it),cur=sel.value;sel.innerHTML=opts.map(([v,t])=>`<option value="${esc(v)}">${esc(t)}</option>`).join('');sel.value=opts.some(([k])=>k===cur)?cur:defaultSourceMachine(it);const nodeOpt=$('editSourceMode').querySelector('option[value="node"]');if(nodeOpt)nodeOpt.disabled=!opts.length;if(!opts.length&&$('editSourceMode').value==='node'){$('editSourceMode').value='auto';updateSourceEditor();}}
 function saveNodeEdit(){const n=nBy([...selected][0]);if(!n)return;const change={};try{
  change.title=$('editTitle')?.value.trim()||'';
  if(n.type==='recipe'){change.target=readOptional('editTarget');change.limit=readOptional('editLimit');change.clock=readOptional('editClock')??100;if($('editSloops'))change.sloops=Number($('editSloops').value)||0;}
@@ -2161,7 +2162,10 @@ function saveNodeEdit(){const n=nBy([...selected][0]);if(!n)return;const change=
   change.item=Number($('editItem').value);change.ikey=items[change.item]?.key;
   change.sourceMode=$('editSourceMode').value;change.sourceMachine='external';change.purity=1;
   change.sourceCount=1;change.autoSupply=false;change.clock=100;
-  if(change.sourceMode==='manual'){
+  if(change.sourceMode==='node'){
+   const m=$('editSourceMachine')?.value;if(!EXTRACTORS[m]||!sourceMachineOptions(change.item).some(([k])=>k===m))throw Error('Escolha uma extratora compatível com o recurso.');
+   change.sourceMachine=m;change.purity=Number($('editPurity').value)||1;change.sourceCount=num($('editSourceCount').value);change.clock=readOptional('editSourceClock')??100;change.limit=null;
+  }else if(change.sourceMode==='manual'){
    change.limit=readOptional('editManualRate');
    if(change.limit===null)throw Error('Informe a disponibilidade da entrada fixa.');
   }else change.limit=null;
@@ -2205,8 +2209,17 @@ function summarySheet(){const s=calculated.stats,ns=boardNodes();
  const stored=ns.filter(n=>['storage','depot','sink'].includes(n.type)).map(n=>`<div class="line"><span>${esc(nodeTitle(n))} · ${esc(itemName(n.item))}</span><b>${fmt(calculated.nodes[n.id]?.actualIns?.[0]||0)}/min</b></div>`).join('');
  const gens=s.gen>1e-6?`<div class="metric"><strong style="color:var(--green)">+${fmt(s.gen,1)}</strong><span>Geração (MW)</span></div><div class="metric"><strong style="color:${s.gen-s.power<0?'#ff9e92':'#a3e8c2'}">${fmt(s.gen-s.power,1)}</strong><span>Saldo (MW)</span></div>`:'';
  const sub=project.boards.find(b=>b.id===project.current)?.name||'';
+ const byType=new Map(),bal=new Map(),addBal=(it,k,v)=>{if(it==null||!(v>1e-6))return;const o=bal.get(it)||{p:0,c:0};o[k]+=v;bal.set(it,o);};
+ for(const n of ns){const c=calculated.nodes[n.id]||emptyCalcState();
+  if(n.type==='recipe'){const r=recOf(n);if(!r)continue;const key=machines[r.cat]+(r.gen?' (gerador)':'');const t=byType.get(key)||{eq:0,built:0,pw:0,gen:0};t.eq+=c.machines||0;t.built+=c.built||0;t.pw+=c.power||0;t.gen+=c.gen||0;byType.set(key,t);
+   r.outs.forEach((p,j)=>addBal(p.item,'p',c.actualOuts?.[j]||0));r.ins.forEach((p,i)=>addBal(p.item,'c',c.actualIns?.[i]||0));}
+  else if(n.type==='source'){addBal(n.item,'p',c.actualOuts?.[0]||0);if(!isAutoSource(n)&&!isManualSource(n)){const ex=EXTRACTORS[n.sourceMachine];if(ex){const t=byType.get(ex.name)||{eq:0,built:0,pw:0,gen:0};t.eq+=c.machines||0;t.built+=c.built||0;t.pw+=c.power||0;byType.set(ex.name,t);}}}}
+ const typeRows=[...byType].sort((a,b)=>b[1].built-a[1].built).map(([k,t])=>`<div class="line"><span>${esc(k)}<div class="muted">${fmt(t.eq)} equivalentes${t.gen>1e-6?` · +${fmt(t.gen,1)} MW`:` · ${fmt(t.pw,1)} MW`}</div></span><b>${fmt(t.built,0)}</b></div>`).join('')||'<p class="muted">Nenhuma máquina nesta área.</p>';
+ const balRows=[...bal].sort((a,b)=>itemName(+a[0]).localeCompare(itemName(+b[0]))).map(([it,o])=>{const d=o.p-o.c;return`<div class="line"><span>${esc(itemName(+it))}<div class="muted">produz ${fmt(o.p)} · consome ${fmt(o.c)}</div></span><b style="color:${d<-0.01?'#ff9e92':d>0.01?'#a3e8c2':'#c7d7e4'}">${d>0.01?'+':''}${fmt(d)}/min</b></div>`}).join('')||'<p class="muted">Sem fluxo calculado.</p>';
  showSheet('Resumo de produção',sub,`<div class="metricgrid"><div class="metric"><strong>${fmt(s.need)}</strong><span>Máquinas equivalentes necessárias</span></div><div class="metric"><strong>${fmt(s.planned,0)}</strong><span>Máquinas para construir</span></div><div class="metric"><strong>${fmt(s.power,1)}</strong><span>Consumo planejado (MW)</span></div>${gens}<div class="metric"><strong>${s.shards}</strong><span>Power Shards</span></div><div class="metric"><strong>${s.sloops}</strong><span>Somersloops</span></div><div class="metric"><strong>${s.shortages}</strong><span>Pendências</span></div></div>
+  <h3 style="font-size:14px;margin:20px 0 7px">Máquinas por tipo (para construir)</h3>${typeRows}
   <h3 style="font-size:14px;margin:20px 0 7px">Metas e saídas finais (fluxo real)</h3>${targets||'<div class="muted">Sem metas finais explícitas; o fluxo pode ser calculado pela oferta inicial.</div>'}${stored?'<h3 style="font-size:14px;margin:20px 0 7px">Armazenamento e Sink</h3>'+stored:''}<h3 style="font-size:14px;margin:20px 0 7px">Recursos utilizados</h3>${sources}
+  <h3 style="font-size:14px;margin:20px 0 7px">Balanço por item (fluxo real)</h3><small class="muted">Saldo positivo segue para destinos, armazenamento, Sink ou fica sem uso.</small>${balRows}
   ${project.boards.length>1?`<div class="info">Projeto inteiro (todas as áreas): consumo ${fmt(s.projectPower,1)} MW${s.projectGen>1e-6?` · geração ${fmt(s.projectGen,1)} MW`:''}.</div>`:''}<div class="info">Consumo planejado inclui máquinas de energia variável pela média do ciclo, Somersloops e o multiplicador de energia${project.settings.powerMul!==1?` (${fmt(project.settings.powerMul)}×)`:''}. Fontes automáticas ou manuais não entram no consumo.</div>`,btn('Exportar CSV','csv')+btn('Fechar','close'))}
 function openSettings(){const s=project.settings;showSheet('Configurações','Preferências do editor e do cálculo',
  `<div class="toggle"><span>Alinhar nós à grade</span><input type="checkbox" id="sSnap" ${s.snap?'checked':''}></div><div class="toggle"><span>Mostrar grade</span><input type="checkbox" id="sGrid" ${s.grid?'checked':''}></div><div class="toggle"><span>Mostrar números nas conexões</span><input type="checkbox" id="sLabels" ${s.showLabels!==false?'checked':''}></div><div style="padding-top:14px">${selectField('Modo de cálculo','sCalc',[['auto','Automático · recalcula a cada mudança'],['manual','Manual · recalcula ao tocar em Recalcular'],['none','Sem cálculo · editor visual']],s.calc)}
@@ -2215,7 +2228,7 @@ function openSettings(){const s=project.settings;showSheet('Configurações','Pr
  <div class="info">Os multiplicadores reproduzem as opções de Game Modes da 1.2: o de custo multiplica os ingredientes das receitas de produção; o de energia multiplica o consumo das máquinas.</div>${selectField('Precisão visual','sDecimal',[[0,'Sem decimais'],[1,'1 decimal'],[2,'2 decimais'],[3,'3 decimais']],s.decimals??2)}</div>`,btn('Cancelar','close')+btn('Aplicar','applySettings','pri'))}
 function applySettings(){mutate(()=>{const s=project.settings;s.snap=$('sSnap').checked;s.grid=$('sGrid').checked?32:0;s.showLabels=$('sLabels').checked;s.calc=$('sCalc').value;s.decimals=Number($('sDecimal').value);s.maxBelt=Number($('sBelt').value);s.maxPipe=Number($('sPipe').value);s.recipeCostMul=Number($('sCost').value);s.powerMul=Number($('sPow').value);});recompute(true);render();closeSheet();toast('Preferências salvas')}
 function helpSheet(){showSheet('Controles no celular','Pensado para toque, sem mouse ou teclado',
- `<div class="line"><span>Toque longo no fundo</span><b>Adicionar nó</b></div><div class="line"><span>Toque em duas portas ligadas</span><b>Desfazer somente essa conexão</b></div><div class="line"><span>Toque em uma porta livre e outra compatível</span><b>Criar conexão</b></div><div class="line"><span>Arraste a bolinha de uma porta</span><b>Conectar / criar máquina</b></div><div class="line"><span>Segure o valor numérico</span><b>Limitar vazão da porta</b></div><div class="line"><span>Toque em uma conexão</span><b>Tier da esteira / desconectar</b></div><div class="line"><span>Toque em um nó</span><b>Selecionar</b></div><div class="line"><span>Toque duplo em um nó</span><b>Editar / abrir área</b></div><div class="line"><span>Arraste um nó ou o fundo</span><b>Mover / navegar</b></div><div class="line"><span>Dois dedos (pinça)</span><b>Zoom de 1% a 400%</b></div><div class="line"><span>Enquadrar</span><b>Ver a fábrica inteira</b></div>
+ `<div class="line"><span>Toque longo no fundo</span><b>Adicionar nó</b></div><div class="line"><span>Toque em uma porta livre e outra compatível</span><b>Criar conexão</b></div><div class="line"><span>Arraste a bolinha de uma porta</span><b>Conectar / criar máquina</b></div><div class="line"><span>Segure o valor numérico</span><b>Limitar vazão da porta</b></div><div class="line"><span>Toque em uma conexão</span><b>Tier da esteira / desconectar</b></div><div class="line"><span>Toque em um nó</span><b>Selecionar</b></div><div class="line"><span>Toque duplo em um nó</span><b>Editar / abrir área</b></div><div class="line"><span>Toque longo em um nó</span><b>Editar</b></div><div class="line"><span>Arraste um nó ou o fundo</span><b>Mover (toda a seleção) / navegar</b></div><div class="line"><span>Dois dedos (pinça)</span><b>Zoom de 1% a 400%</b></div><div class="line"><span>Enquadrar</span><b>Ver a fábrica inteira</b></div>
  <div class="info">Cálculo v${APP_VERSION}: dimensiona máquinas por metas, limites e balanço de materiais. Circuitos de reciclagem convergentes são estimados em regime estacionário, não simulam partida/estoques e não equivalem à otimização global do Modeler Steam. Uma saída pode alimentar várias máquinas.</div>
  <div class="info">Zoom distante mostra versões simplificadas dos blocos para manter a fluidez em fábricas grandes. Toque em <b>Enquadrar</b> para ver tudo.</div>
  <div class="info">Outposts: dentro da área, adicione <b>Entrada do outpost</b> e <b>Saída do outpost</b>; elas viram portas no bloco do lado de fora.<br><br>Ferramenta independente, não oficial. Taxas de um catálogo de referência com ajustes da wiki oficial; confira mudanças do seu patch.</div>`,btn('Licenças','credits')+btn('Entendi','close','pri'))}
@@ -2290,9 +2303,14 @@ function importProjectText(text,filename){if(text.length>8*1024*1024)throw Error
   if(!p.nodes.length)throw Error('Nenhuma receita reconhecida neste .sfmd.');p._importNotes=`${p.nodes.length} receitas importadas, ${guessed} itens desconhecidos. As conexões .sfmd não são reconstruídas nesta versão.`;
  }else throw Error('Formato incompatível. Importe um backup JSON do Factory Flow ou um .sfmd do Modeler.');
  if(!p||!Array.isArray(p.nodes)||!Array.isArray(p.edges)||p.nodes.length>5000||p.edges.length>20000)throw Error('Estrutura inválida ou maior que o limite suportado.');
+ // Arquivos antigos sem rkey dependem da posição da receita no catálogo: confere as ligações.
+ const legacy=p.nodes.filter(n=>n?.type==='recipe'&&!n.recipe&&!n.rkey&&Number.isInteger(n.rid));
+ if(legacy.length){const byId=new Map(p.nodes.map(n=>[n.id,n]));const outItem=(n,i)=>n?.type==='recipe'&&!n.recipe&&recs[n.rid]?recs[n.rid].outs[i]?.item:n?.type==='source'?n.item:null,inItem=(n,i)=>n?.type==='recipe'&&!n.recipe&&recs[n.rid]?recs[n.rid].ins[i]?.item:null;
+  const bad=p.edges.filter(e=>{const a=outItem(byId.get(e.from),e.fi),b=inItem(byId.get(e.to),e.ti);return a!=null&&b!=null&&a!==b;}).length;
+  if(bad)p._importNotes=`Arquivo de versão anterior sem chaves de receita: ${legacy.length} receita(s) foram associadas pela posição no catálogo e ${bad} ligação(ões) não combinam com os itens. Confira as receitas destacadas antes de usar os números.`;}
  p=sanitizeProject(clone(p));p.id=id();p.name=String(p.name||'Projeto importado').slice(0,100);p.created=Date.now();p.current='root';p.cameras=p.cameras||{};const notes=p._importNotes;delete p._importNotes;
- projects.unshift(p);project=p;history=[];future=[];selected.clear();pending=null;normalizeProject();loadCamera();recompute(true);render();save();closeSheet();if(data?.Data)fitBoard();toast('Arquivo importado'+(notes?' (sem conexões)':''));
- if(notes)showSheet('Importação parcial',p.name,`<div class="info orange">${esc(notes)}<br>Recrie as ligações manualmente ou use o arquivo de backup desta ferramenta para preservar a topologia.</div>`,btn('Entendi','close'));
+ projects.unshift(p);project=p;history=[];future=[];selected.clear();pending=null;normalizeProject();loadCamera();recompute(true);render();save();closeSheet();if(data?.Data)fitBoard();toast('Arquivo importado'+(notes&&data?.Data?' (sem conexões)':''));
+ if(notes)showSheet(data?.Data?'Importação parcial':'Confira a importação',p.name,`<div class="info orange">${esc(notes)}${data?.Data?'<br>Recrie as ligações manualmente ou use o arquivo de backup desta ferramenta para preservar a topologia.':''}</div>`,btn('Entendi','close'));
 }
 
 loadAll();recompute(true);setupEvents();render();
