@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="pt-BR"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover, user-scalable=no"/>
 <meta name="theme-color" content="#0a1018"/><meta name="apple-mobile-web-app-capable" content="yes"/><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
-<title>Factory Flow v0.4.5 — Satisfactory Mobile Modeler</title>
+<title>Factory Flow v0.4.6 — Satisfactory Mobile Modeler</title>
 <style>
 :root{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#e8f0f9;background:#0b121a;--bg:#0b121a;--panel:#15202d;--panel2:#1e2e3f;--border:#304357;--muted:#8e9fb2;--orange:#ffb74d;--aqua:#5ddbd2;--warn:#ff7e72;--green:#72d6a3;--blue:#72b5ff;--top:calc(57px + env(safe-area-inset-top,0px));--bottom:calc(72px + env(safe-area-inset-bottom,0px));}
 *{box-sizing:border-box}html,body{width:100%;height:100%;margin:0;overflow:hidden;overscroll-behavior:none}button,input,select,textarea{font:inherit}button{cursor:pointer;-webkit-tap-highlight-color:transparent}button:focus-visible,input:focus-visible{outline:2px solid var(--orange);outline-offset:2px}body{-webkit-touch-callout:none}
@@ -963,14 +963,14 @@ function portEditor(info){
  const item=portItem(n,info.io,info.index),key=info.io+info.index,old=n.portCaps?.[key],c=calculated?.nodes[n.id];
  const actual=info.io==='in'?c?.actualIns?.[info.index]:c?.actualOuts?.[info.index];
  const required=info.io==='in'?c?.neededIns?.[info.index]:c?.requestedOuts?.[info.index];
- const canDemand=n.type==='recipe'||n.type==='source'&&info.io==='out'||['output','sink'].includes(n.type);
- const explicit=n.type==='source'&&info.io==='out'?(isManualSource(n)?n.limit:null):primaryToPortDemand(n,info);
+ const canDemand=n.type==='recipe'||n.type==='source'&&info.io==='out'||['output','sink'].includes(n.type)||(n.type==='storage'&&info.io==='in');
+ const explicit=n.type==='source'&&info.io==='out'?(isManualSource(n)?n.limit:null):n.type==='storage'&&info.io==='in'?n.target:primaryToPortDemand(n,info);
  const demandField=canDemand?field(n.type==='source'?'Oferta manual fixa (/min)':'Quantidade desejada (/min)','portDesired',explicit??'','text',
-  n.type==='source'?'Em branco: fonte automática (ou volta ao modo fixo anterior). Valor preenchido: fixa esta oferta sem mudar equipamentos.':`Deixe vazio para usar cálculo automático. Referência atual: ${fmt(required||0)}/min.`):'';
+  n.type==='source'?'Em branco: fonte automática. Valor preenchido: limita a oferta por minuto.':`Deixe vazio para usar cálculo automático. Referência atual: ${fmt(required||0)}/min.`):'';
  const explain=n.type==='recipe'?'A quantidade desejada trava a produção desta receita. Se outra máquina pedir mais, aparecerá uma pendência de capacidade.':'A quantidade desejada define a meta ou a disponibilidade deste material.';
  showSheet('Editar vazão da porta',`${info.io==='in'?'Entrada':'Saída'} · ${itemName(item)}`,
   `<div class="info">Vazão entregue: <b>${fmt(actual||0)}/min</b> · Necessidade: <b>${fmt(required||0)}/min</b>.<br>${canDemand?explain+'<br>':''}O limite físico restringe o fluxo nesta porta; não aumenta a capacidade das máquinas.</div>${demandField}${field('Limite máximo desta porta (/min)','portLimit',old??'','text','Em branco = sem limite. Aceita 1,5 ou 3/2.')}`,
-  btn('Remover limite','clearPort')+btn('Salvar valores','savePort','pri'));
+  btn(n.type==='storage'&&info.io==='in'?'Limpar meta e limite':'Remover limite','clearPort')+btn('Salvar valores','savePort','pri'));
 }
 function locatorSheet(){
  showSheet('Localizar bloco',`${boardNodes().length} blocos nesta área`,
@@ -1309,7 +1309,7 @@ function setupEvents(){const vp=$('viewport');vp.addEventListener('pointerdown',
  window.addEventListener('resize',()=>{updateCamera();syncVisibleViewport()});if(window.visualViewport){visualViewport.addEventListener('resize',syncVisibleViewport);visualViewport.addEventListener('scroll',syncVisibleViewport)}document.addEventListener('keydown',e=>{if(!$('overlay').classList.contains('hidden')){if(e.key==='Escape')closeSheet();return}let typing=['INPUT','TEXTAREA','SELECT'].includes(document.activeElement?.tagName);if(typing)return;const mod=e.ctrlKey||e.metaKey,k=e.key.toLowerCase();if(mod&&k==='z'){e.preventDefault();return e.shiftKey?redo():undo()}if(mod&&k==='y'){e.preventDefault();return redo()}if(mod&&k==='s'){e.preventDefault();return exportJSON()}if(mod&&k==='c'){e.preventDefault();return copySelection()}if(mod&&k==='v'){e.preventDefault();return pasteSelection()}if(mod&&k==='a'){e.preventDefault();selected=new Set(boardNodes().map(n=>n.id));return render()}if(e.key==='Delete'||e.key==='Backspace'){e.preventDefault();return deleteSelected()}if(e.key==='Escape'){pending=null;selected.clear();render()}});
 }
 /* ================= v0.4 · núcleo ================= */
-const APP_VERSION='0.4.5';
+const APP_VERSION='0.4.6';
 const NODE_W=246,Z_MIN=0.01,Z_MAX=4;
 const BELT_CAPS=[60,120,270,480,780,1200],PIPE_CAPS=[300,600];
 // Slots de Somersloop por categoria; fontes abstratas e geradores: 0.
@@ -1537,7 +1537,7 @@ function sizeDemandPlan(G,order,cyclic,inferred,terminalNodes=new Set(),terminal
    }else if(PASS_TYPES.has(n.type)){
     let wanted=reqOut.reduce((a,b)=>a+b,0);
     if(!outE.length){const inf=terminalNodes.has(nid)?(terminalGoals.get(nid)??0):inferred.get(nid);if(inf>0)wanted=Math.max(wanted,inf);}
-    if(n.type==='depot'&&isFixed(n.target))wanted=Math.max(wanted,n.target);
+    if((n.type==='depot'||n.type==='storage')&&isFixed(n.target))wanted=Math.max(wanted,n.target);
     c.wanted=wanted;allocate(inE,wanted);
     c.neededIns={};pp.ins.forEach((_,i)=>{let s=0;for(const e of iP[i]||[])s+=W.get(e.id);c.neededIns[i]=s;});
     c.requestedOuts=Object.fromEntries(reqOut.map((v,j)=>[j,v]));
@@ -1557,7 +1557,7 @@ function reserveSpareResources(G,order,cyclic,inferred){
  const parent=new Map(G.nodes.map(n=>[n.id,n.id]));
  const root=x=>{while(parent.get(x)!==x){parent.set(x,parent.get(parent.get(x)));x=parent.get(x);}return x;};
  for(const e of G.edges){let a=root(e.from),b=root(e.to);if(a!==b)parent.set(b,a);}
- const explicit=new Set(G.nodes.filter(n=>isFixed(n.target)&&(n.type==='recipe'||n.type==='output'||n.type==='sink'||n.type==='depot')).map(n=>root(n.id)));
+ const explicit=new Set(G.nodes.filter(n=>isFixed(n.target)&&(n.type==='recipe'||n.type==='output'||n.type==='sink'||n.type==='depot'||n.type==='storage')).map(n=>root(n.id)));
  if(!explicit.size)return null; // Cadeias sem meta conservam a inferência normal.
  const candidate=G.nodes.filter(n=>explicit.has(root(n.id))&&!isFixed(n.target)&&!inferred.has(n.id)&&!G.out.get(n.id).length&&
    ((n.type==='recipe'&&!rr(n)?.r?.gen&&rr(n)?.outs?.[0]>1e-12)||n.type==='output'||n.type==='sink'||['storage','depot','port_out'].includes(n.type))&&G.inc.get(n.id).length);
@@ -1796,8 +1796,12 @@ function recomputeCore(t0,mode){
    c.shards=virtual?0:n.sourceCount*shardsFor(n.clock||100);
    if(c.referenceExceeded)push('warn',n,nodeTitle(n),'Referência física insuficiente',`Demanda planejada ${fmt(flow)}/min; ${nodeSubtitle(n)} entrega ${fmt(sourceReference(n))}/min. A entrada automática atende o plano, mas isso não representa uma extratora capaz dessa taxa.`);
    if(!virtual&&(c.requestedOuts[0]||0)>sourceCap(n)+eps)push('problem',n,nodeTitle(n),itemName(n.item),`A extração fixa entrega ${fmt(sourceCap(n))}/min, mas o plano pede ${fmt(c.requestedOuts[0])}/min.`);
-  }else if(n.type==='output'){
-   const need=c.neededIns[0]||0,got=c.actualIns[0]||0;if(need>got+eps)push('problem',n,nodeTitle(n),itemName(n.item),`Destino recebe ${fmt(got)}/${fmt(need)} por minuto · faltam ${fmt(need-got)}/min.`);
+  }else if(n.type==='output'||n.type==='storage'||n.type==='depot'){
+   if(isFixed(n.target)){
+    const requested=n.target,got=c.actualIns[0]||0;
+    if(got<requested-Math.max(eps,requested*1e-6))
+     push('problem',n,nodeTitle(n),itemName(n.item),`Meta de recebimento: ${fmt(requested)}/min; entregue ${fmt(got)}/min · faltam ${fmt(requested-got)}/min.`);
+   }
   }else if(n.type==='port_in'){
    const need=c.wanted||0;if(!inE.length&&need>eps)push('problem',n,nodeTitle(n),itemName(n.item),`Esta entrada do outpost pede ${fmt(need)}/min, mas a porta correspondente não está ligada no plano de fora.`);
   }
@@ -1829,7 +1833,7 @@ function recomputeCore(t0,mode){
 
 /* ================= v0.4 · projeto, migração e segurança ================= */
 const DEFAULT_SETTINGS={snap:false,grid:32,calc:'auto',decimals:2,showLabels:true,maxBelt:6,maxPipe:2,recipeCostMul:1,powerMul:1};
-function emptyProject(name='Nova fábrica'){return{id:id(),schema:4,name,created:Date.now(),boards:[{id:'root',name:'Plano principal',parent:null}],current:'root',nodes:[],edges:[],cameras:{root:{x:60,y:95,z:0.9}},settings:{...DEFAULT_SETTINGS}}}
+function emptyProject(name='Nova fábrica'){return{id:id(),schema:5,name,created:Date.now(),boards:[{id:'root',name:'Plano principal',parent:null}],current:'root',nodes:[],edges:[],cameras:{root:{x:60,y:95,z:0.9}},settings:{...DEFAULT_SETTINGS}}}
 // IDs vindos de arquivos importados viram atributos HTML: só aceitamos [A-Za-z0-9_-].
 function sanitizeProject(p){
  if(!p||typeof p!=='object')throw Error('Projeto inválido.');
@@ -1846,6 +1850,9 @@ function sanitizeProject(p){
 }
 function resolveItem(key,num){if(typeof key==='string'&&ITEM_BY_KEY[key]!=null)return ITEM_BY_KEY[key];return Number.isInteger(num)&&items[num]?num:null;}
 function normalizeProject(){
+ // v0.4.6: arquivos antigos: o valor digitado na entrada do armazenamento era
+ // um teto e não uma meta. Promover a meta para recuperar a intenção do usuário.
+ const upgradeStoragePortGoal=(Number(project.schema)||0)<5;
  project.boards=Array.isArray(project.boards)&&project.boards.length?project.boards:[{id:'root',name:'Plano principal',parent:null}];
  if(!project.boards.some(b=>b.id==='root'))project.boards.unshift({id:'root',name:'Plano principal',parent:null});
  project.current=project.boards.some(b=>b.id===project.current)?project.current:'root';
@@ -1866,10 +1873,20 @@ function normalizeProject(){
    const r=recOf(v),slots=sloopSlots(r);v.sloops=slots?Math.max(0,Math.min(slots,Math.round(Number(v.sloops)||0))):0;
   }else if(v.type!=='note'&&!isContainer(v)){const it=resolveItem(v.ikey,v.item);v.item=it;if(it!=null)v.ikey=items[it].key;else delete v.ikey;}
   if(v.type==='source'){
-   if(!['auto','node','manual'].includes(v.sourceMode)){const physical=minerBase({...v,clock:100});const fixed=isFixed(v.limit);const matches=fixed&&Math.abs(v.limit-physical)<1e-6;v.sourceMode=v.sourceMachine==='external'||(fixed&&!matches)?'manual':v.autoSupply?'auto':'node';}
-   if(v.sourceMode==='node'&&!sourceMachineOptions(v.item).some(([k])=>k===v.sourceMachine)){const d=defaultSourceMachine(v.item);if(EXTRACTORS[d])v.sourceMachine=d;else v.sourceMode='auto';}
-   if(v.sourceMode==='manual')v.limit=isFiniteNum(v.limit)?Math.max(0,v.limit):0;else v.limit=null;
-   v.sourceCount=Number.isInteger(v.sourceCount)&&v.sourceCount>0?v.sourceCount:1;v.purity=[.5,1,2].includes(v.purity)?v.purity:1;v.autoSupply=false;
+   // Recursos são abstrações de vazão: automático ou teto manual, nunca equipamentos.
+   // Um projeto antigo com extratora física vira uma vazão fixa equivalente.
+   if(v.sourceMode==='node'){
+    const physicalCap=sourceCap({...v,sourceMode:'node'});
+    v.sourceMode='manual';v.limit=Math.max(0,physicalCap);
+   }else if(v.sourceMode!=='manual'&&v.sourceMode!=='auto'){
+    v.sourceMode=isFixed(v.limit)?'manual':'auto';
+   }
+   v.limit=v.sourceMode==='manual'?(isFixed(v.limit)?Math.max(0,Number(v.limit)):0):null;
+   v.sourceMachine='external';v.purity=1;v.sourceCount=1;v.clock=100;v.autoSupply=false;
+  }
+  if(v.type==='storage'&&upgradeStoragePortGoal&&!isFixed(v.target)&&isFixed(v.portCaps?.in0)){
+   v.target=Number(v.portCaps.in0);
+   delete v.portCaps.in0; // o teto antigo passa a ser demanda de recebimento
   }
   if((v.type==='splitter')&&v.weights!=null){const w=Array.isArray(v.weights)?v.weights.slice(0,3).map(x=>Math.max(0,Number(x)||0)):null;v.weights=w&&w.some(x=>x>0)?w:null;}
   if(v.type==='port_in'||v.type==='port_out')v.order=Number(v.order)||0;
@@ -1886,7 +1903,7 @@ function normalizeProject(){
   if(e.tier!=null&&!(Number(e.tier)>=1&&Number(e.tier)<=6))delete e.tier;
   return true;
  });
- project.schema=4;
+ project.schema=5;
 }
 function loadAll(){
  let firstLaunch=true;
@@ -1904,7 +1921,7 @@ function undo(){if(!history.length)return;future.push(JSON.stringify(project));r
 function redo(){if(!future.length)return;history.push(JSON.stringify(project));restoreSnapshot(future.pop());}
 function connect(a,b){if(!validLink(a,b)){toast('Portas incompatíveis.',true);return false;}const f=a.io==='out'?a:b,t=a.io==='in'?a:b;
  const existing=project.edges.find(e=>e.from===f.nid&&e.fi===f.index&&e.to===t.nid&&e.ti===t.index);
- if(existing){pending=null;dragline=null;render();toast('Essas portas já estão ligadas. Toque na conexão para desconectar.');return true;}
+ if(existing){mutate(()=>{project.edges=project.edges.filter(e=>e.id!==existing.id);});pending=null;dragline=null;toast('Conexão removida');return true;}
  mutate(()=>{const fn=nBy(f.nid),tn=nBy(t.nid),item=portItem(fn,'out',f.index)??portItem(tn,'in',t.index);setPortItem(fn,'out',f.index,item);setPortItem(tn,'in',t.index,item);project.edges.push({id:id(),board:fn.board,from:fn.id,fi:f.index,to:tn.id,ti:t.index});});
  pending=null;dragline=null;toast('Conexão criada');return true}
 function purgeOrphanUtilityItem(n){if(!n||n.type==='recipe'||n.type==='source'||isContainer(n)||n.type==='port_in'||n.type==='port_out')return;const connected=project.edges.some(e=>e.from===n.id||e.to===n.id);if(!connected)n.item=null}
@@ -2133,16 +2150,15 @@ function inspectNode(nid=null){const n=nBy(nid||[...selected][0]);if(!n)return t
   body+=`<div class="twocol">${field('Meta da saída principal (/min)','editTarget',n.target??'','text','Valor fixo. Em branco: calcula pela demanda.')}${field('Máximo de máquinas','editLimit',n.limit??'','text','Em branco: sem teto.')}</div><div class="twocol">${field('Clock (%)','editClock',n.clock||100,'number','1% a 250%. Até 3 Power Shards.')}${slots?selectField('Somersloops por máquina','editSloops',Array.from({length:slots+1},(_,k)=>[k,k?`${k} de ${slots} · +${fmt(100*k/slots,0)}% produção`:'Nenhum']),n.sloops||0):'<div class="field"><label>Somersloops</label><small>Esta máquina não aceita amplificação.</small></div>'}</div>`;
  }else if(n.type==='source'){
   const itemOpts=[...new Set([...sourceItems,n.item])].map(i=>[i,itemName(i)]);
-  const mode=['auto','node','manual'].includes(n.sourceMode)?n.sourceMode:'auto',mopts=sourceMachineOptions(n.item),mach=mopts.some(([k])=>k===n.sourceMachine)?n.sourceMachine:defaultSourceMachine(n.item);
-  body+=`${selectField('Recurso','editItem',itemOpts,n.item)}${selectField('Tipo de entrada','editSourceMode',[['auto','Automático · acompanha a demanda'],['node','Extratora física · Mk, pureza e clock'],['manual','Vazão fixa · defina em itens ou m³/min']],mode)}`;
-  body+=`<div id="sourceNode">${selectField('Extratora','editSourceMachine',mopts,mach)}<div class="twocol">${selectField('Pureza do nó','editPurity',[[0.5,'Impuro'],[1,'Normal'],[2,'Puro']],[.5,1,2].includes(n.purity)?n.purity:1)}${field('Nº de nós (extratoras)','editSourceCount',n.sourceCount||1,'number')}</div>${field('Clock (%)','editSourceClock',mode==='node'?(n.clock||100):100,'number','1% a 250%. Oferta = taxa base × pureza × nós × clock; a energia das extratoras entra no consumo.')}</div>`;
-  body+=`<div id="sourceManual">${field('Disponibilidade fixa (/min)','editManualRate',n.sourceMode==='manual'?(n.limit??0):120,'text','Ao fixar este valor, ele passa a limitar a cadeia. Não cria extratoras nem consome energia.')}</div>`;
-  body+=`<div class="info"><b>Automático</b>: entrada abstrata sem limite e sem energia (sem metas, a fábrica parte de 120/min por fonte). <b>Extratora física</b>: limita a oferta ao que os equipamentos entregam e soma o consumo deles. <b>Vazão fixa</b>: limita sem equipamento.</div>`;
+  const mode=isManualSource(n)?'manual':'auto';
+  body+=`${selectField('Recurso','editItem',itemOpts,n.item)}${selectField('Tipo de entrada','editSourceMode',[['auto','Automático · acompanha demanda'],['manual','Vazão fixa · itens ou m³/min']],mode)}`;
+  body+=`<div id="sourceManual">${field('Oferta fixa (/min)','editManualRate',mode==='manual'?(n.limit??0):120,'text','Defina a vazão sem máquina, pureza, clock nem consumo de energia.')}</div>`;
+  body+=`<div class="info"><b>Automático:</b> acompanha o consumo. Quando a fábrica não tem metas, usa 120/min como referência inicial. <b>Fixo:</b> impõe a disponibilidade máxima informada, sem criar extratoras.</div>`;
  }else if(n.type==='note'){body+=`<div class="field"><label>Conteúdo da nota</label><textarea id="editNote">${esc(n.note||'')}</textarea></div>`;}
  else if(isContainer(n)){const io=outpostIO(n);body+=`<div class="info">Abra a área (2 toques) e adicione <b>Entrada do outpost</b> e <b>Saída do outpost</b>. Cada uma vira uma porta neste bloco e o cálculo atravessa os dois planos.<br>Portas atuais: ${io.ins.length?io.ins.map(p=>'⇲ '+esc(itemName(p.item))).join(', '):'nenhuma entrada'}; ${io.outs.length?io.outs.map(p=>'⇱ '+esc(itemName(p.item))).join(', '):'nenhuma saída'}.</div>`;}
  else{const iopts=[["","Detectar pela conexão"],...items.map(it=>[it.id,it.name])];
   body+=selectField('Material desta estrutura','editItem',iopts,n.item??'');
-  if(['output','sink','depot'].includes(n.type))body+=field('Demanda alvo (/min)','editTarget',n.target??'','text',n.type==='sink'?'Sem meta: o Sink só recebe excedentes.':'Destino sem meta recebe o que chegar.');
+  if(['output','sink','depot','storage'].includes(n.type))body+=field(n.type==='storage'?'Meta de recebimento (/min)':'Demanda alvo (/min)','editTarget',n.target??'','text',n.type==='sink'?'Sem meta: o Sink só recebe excedentes.':'Em branco: recebe a vazão disponível; preenchido: reserva esta demanda na cadeia.');
   if(['splitter','merger','storage','depot','priority_splitter','priority_merger','port_in','port_out'].includes(n.type))body+=field('Teto de vazão (/min)','editLimit',n.limit??'','text');
   if(n.type==='splitter'){const w=n.weights||[];body+=`<div class="info">Proporções de planejamento (ex.: 1, 1, 2), não existem no divisor do jogo. Em branco: divide por igual e o que uma saída não aceita transborda para as outras, como no jogo.</div><div class="twocol">${field('Saída 1','editW0',w[0]??'','text')}${field('Saída 2','editW1',w[1]??'','text')}</div>${field('Saída 3','editW2',w[2]??'','text')}`;}
   if(n.type==='priority_splitter')body+='<div class="info orange">A saída 1 recebe tudo o que aceitar; o excedente vai para a 2 e depois para a 3. No jogo, equivale ao Smart Splitter com "Overflow".</div>';
@@ -2151,10 +2167,9 @@ function inspectNode(nid=null){const n=nBy(nid||[...selected][0]);if(!n)return t
  body+=`<div class="actions">${r?btn('⇄ Trocar receita','replaceRecipe'):''}${isContainer(n)?btn('↗ Abrir área','enterBoard'):''}${btn('⧉ Duplicar','duplicate')}${btn('🗑 Excluir','delete','danger')}</div>`;
  showSheet(nodeTitle(n),'Ajustes do nó • taxas em itens ou m³ por minuto',`<form id="editForm">${body}</form>`,btn('Cancelar','close')+btn('Salvar alterações','saveNode','pri'));
  $('editForm').addEventListener('submit',e=>{e.preventDefault();saveNodeEdit()});
- if(n.type==='source'){$('editSourceMode').addEventListener('change',updateSourceEditor);$('editItem').addEventListener('change',refreshSourceMachines);refreshSourceMachines();updateSourceEditor();}
+ if(n.type==='source'){$('editSourceMode').addEventListener('change',updateSourceEditor);updateSourceEditor();}
 }
-function updateSourceEditor(){const m=$('editSourceMode')?.value,man=$('sourceManual'),nod=$('sourceNode');if(man)man.hidden=m!=='manual';if(nod)nod.hidden=m!=='node';}
-function refreshSourceMachines(){const sel=$('editSourceMachine');if(!sel)return;const it=Number($('editItem').value),opts=sourceMachineOptions(it),cur=sel.value;sel.innerHTML=opts.map(([v,t])=>`<option value="${esc(v)}">${esc(t)}</option>`).join('');sel.value=opts.some(([k])=>k===cur)?cur:defaultSourceMachine(it);const nodeOpt=$('editSourceMode').querySelector('option[value="node"]');if(nodeOpt)nodeOpt.disabled=!opts.length;if(!opts.length&&$('editSourceMode').value==='node'){$('editSourceMode').value='auto';updateSourceEditor();}}
+function updateSourceEditor(){const manual=$('sourceManual');if(manual)manual.hidden=$('editSourceMode')?.value!=='manual';}
 function saveNodeEdit(){const n=nBy([...selected][0]);if(!n)return;const change={};try{
  change.title=$('editTitle')?.value.trim()||'';
  if(n.type==='recipe'){change.target=readOptional('editTarget');change.limit=readOptional('editLimit');change.clock=readOptional('editClock')??100;if($('editSloops'))change.sloops=Number($('editSloops').value)||0;}
@@ -2162,16 +2177,14 @@ function saveNodeEdit(){const n=nBy([...selected][0]);if(!n)return;const change=
   change.item=Number($('editItem').value);change.ikey=items[change.item]?.key;
   change.sourceMode=$('editSourceMode').value;change.sourceMachine='external';change.purity=1;
   change.sourceCount=1;change.autoSupply=false;change.clock=100;
-  if(change.sourceMode==='node'){
-   const m=$('editSourceMachine')?.value;if(!EXTRACTORS[m]||!sourceMachineOptions(change.item).some(([k])=>k===m))throw Error('Escolha uma extratora compatível com o recurso.');
-   change.sourceMachine=m;change.purity=Number($('editPurity').value)||1;change.sourceCount=num($('editSourceCount').value);change.clock=readOptional('editSourceClock')??100;change.limit=null;
-  }else if(change.sourceMode==='manual'){
+  if(change.sourceMode==='manual'){
    change.limit=readOptional('editManualRate');
    if(change.limit===null)throw Error('Informe a disponibilidade da entrada fixa.');
   }else change.limit=null;
+
  }
  if(n.type==='note')change.note=$('editNote').value;
- if(['output','sink','depot'].includes(n.type))change.target=readOptional('editTarget');
+ if(['output','sink','depot','storage'].includes(n.type))change.target=readOptional('editTarget');
  if(['splitter','merger','priority_splitter','priority_merger','storage','depot','sink','output','port_in','port_out'].includes(n.type)){change.item=$('editItem').value===''?null:Number($('editItem').value);change.ikey=change.item==null?undefined:items[change.item]?.key;}
  if(['splitter','merger','priority_splitter','priority_merger','storage','depot','port_in','port_out'].includes(n.type))change.limit=readOptional('editLimit');
  if(n.type==='splitter'){const w=[0,1,2].map(i=>readOptional('editW'+i));change.weights=w.some(x=>x!=null&&x>0)?w.map(x=>x??0):null;}
@@ -2185,9 +2198,10 @@ function storePort(clear=false){
  const info=window.__portEdit,n=info&&nBy(info.nid);if(!n)return;let cap=null,desired=null;
  try{cap=clear?null:readOptional('portLimit');if(!clear&&$('portDesired'))desired=readOptional('portDesired');}catch(e){toast(e.message,true);return;}
  mutate(()=>{const nn=nBy(info.nid);nn.portCaps=nn.portCaps||{};if(cap===null)delete nn.portCaps[info.io+info.index];else nn.portCaps[info.io+info.index]=cap;
+  if(clear&&nn.type==='storage'&&info.io==='in')nn.target=null;
   if(!clear&&$('portDesired')){
    if(nn.type==='source'&&info.io==='out'){if(desired===null){nn.sourceMode=nn.sourceModeBeforeManual||'auto';delete nn.sourceModeBeforeManual;nn.limit=null;}else{if(nn.sourceMode!=='manual')nn.sourceModeBeforeManual=nn.sourceMode;nn.sourceMode='manual';nn.limit=desired;}nn.autoSupply=false;}
-   else if(['output','sink'].includes(nn.type))nn.target=desired;
+   else if(['output','sink'].includes(nn.type)||(nn.type==='storage'&&info.io==='in'))nn.target=desired;
    else if(nn.type==='recipe')nn.target=desired===null?null:portDemandToPrimary(nn,info,desired);
   }});
  closeSheet();toast('Vazão atualizada');
