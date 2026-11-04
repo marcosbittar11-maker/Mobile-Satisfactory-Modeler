@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="pt-BR"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover, user-scalable=no"/>
 <meta name="theme-color" content="#0a1018"/><meta name="apple-mobile-web-app-capable" content="yes"/><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
-<title>Factory Flow v0.4.6 — Satisfactory Mobile Modeler</title>
+<title>Factory Flow v0.4.9 — Satisfactory Mobile Modeler</title>
 <style>
 :root{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#e8f0f9;background:#0b121a;--bg:#0b121a;--panel:#15202d;--panel2:#1e2e3f;--border:#304357;--muted:#8e9fb2;--orange:#ffb74d;--aqua:#5ddbd2;--warn:#ff7e72;--green:#72d6a3;--blue:#72b5ff;--top:calc(57px + env(safe-area-inset-top,0px));--bottom:calc(72px + env(safe-area-inset-bottom,0px));}
 *{box-sizing:border-box}html,body{width:100%;height:100%;margin:0;overflow:hidden;overscroll-behavior:none}button,input,select,textarea{font:inherit}button{cursor:pointer;-webkit-tap-highlight-color:transparent}button:focus-visible,input:focus-visible{outline:2px solid var(--orange);outline-offset:2px}body{-webkit-touch-callout:none}
@@ -1309,7 +1309,7 @@ function setupEvents(){const vp=$('viewport');vp.addEventListener('pointerdown',
  window.addEventListener('resize',()=>{updateCamera();syncVisibleViewport()});if(window.visualViewport){visualViewport.addEventListener('resize',syncVisibleViewport);visualViewport.addEventListener('scroll',syncVisibleViewport)}document.addEventListener('keydown',e=>{if(!$('overlay').classList.contains('hidden')){if(e.key==='Escape')closeSheet();return}let typing=['INPUT','TEXTAREA','SELECT'].includes(document.activeElement?.tagName);if(typing)return;const mod=e.ctrlKey||e.metaKey,k=e.key.toLowerCase();if(mod&&k==='z'){e.preventDefault();return e.shiftKey?redo():undo()}if(mod&&k==='y'){e.preventDefault();return redo()}if(mod&&k==='s'){e.preventDefault();return exportJSON()}if(mod&&k==='c'){e.preventDefault();return copySelection()}if(mod&&k==='v'){e.preventDefault();return pasteSelection()}if(mod&&k==='a'){e.preventDefault();selected=new Set(boardNodes().map(n=>n.id));return render()}if(e.key==='Delete'||e.key==='Backspace'){e.preventDefault();return deleteSelected()}if(e.key==='Escape'){pending=null;selected.clear();render()}});
 }
 /* ================= v0.4 · núcleo ================= */
-const APP_VERSION='0.4.6';
+const APP_VERSION='0.4.9';
 const NODE_W=246,Z_MIN=0.01,Z_MAX=4;
 const BELT_CAPS=[60,120,270,480,780,1200],PIPE_CAPS=[300,600];
 // Slots de Somersloop por categoria; fontes abstratas e geradores: 0.
@@ -1423,12 +1423,56 @@ function buildCalcGraph(){
  return{nodes,byId,edges,out,inc,outP,inP};
 }
 function calcOrder(G){
- const deg=new Map(G.nodes.map(n=>[n.id,0]));for(const e of G.edges)deg.set(e.to,deg.get(e.to)+1);
- const order=[],done=new Set(),q=[];for(const n of G.nodes)if(deg.get(n.id)===0)q.push(n.id);
- let qi=0,cyclic=false;
+ // Evitar que o subproduto de uma receita inverta a cadeia principal durante
+ // a ordenação: encontrar os componentes fortemente conectados (SCC) e
+ // adiar APENAS a ligação interna que devolve uma saída secundária.
+ // Isso não elimina a ligação do cálculo — ela segue no solver iterativo.
+ const seen=new Set(),finish=[];
+ for(const n of G.nodes){
+  if(seen.has(n.id))continue;
+  seen.add(n.id);const stack=[[n.id,0]];
+  while(stack.length){
+   const last=stack[stack.length-1],edges=G.out.get(last[0])||[];
+   if(last[1]>=edges.length){finish.push(last[0]);stack.pop();continue;}
+   const next=edges[last[1]++].to;
+   if(!seen.has(next)){seen.add(next);stack.push([next,0]);}
+  }
+ }
+ const comp=new Map(),size=new Map();let group=0;
+ for(let k=finish.length-1;k>=0;k--){
+  const root=finish[k];if(comp.has(root))continue;
+  const stack=[root];comp.set(root,group);let count=0;
+  while(stack.length){const x=stack.pop();count++;
+   for(const e of G.inc.get(x)||[])if(!comp.has(e.from)){comp.set(e.from,group);stack.push(e.from);}
+  }
+  size.set(group,count);group++;
+ }
+ const deferred=new Set();
+ for(const e of G.edges){const n=G.byId.get(e.from),c=comp.get(e.from);
+  if((size.get(c)>1||e.from===e.to)&&c===comp.get(e.to)&&n?.type==='recipe'&&e.fi>0)deferred.add(e.id);
+ }
+ const dist=new Map(G.nodes.map(n=>[n.id,Infinity])),dq=[];
+ for(const n of G.nodes)if(n.type==='source'&&!isAutoSource(n)){dist.set(n.id,0);dq.push(n.id);}
+ if(!dq.length)for(const n of G.nodes)if(n.type==='source'){dist.set(n.id,0);dq.push(n.id);}
+ for(let j=0;j<dq.length;j++)for(const e of G.out.get(dq[j])||[]){
+  if(deferred.has(e.id))continue;
+  const d=dist.get(dq[j])+1;if(d<dist.get(e.to)){dist.set(e.to,d);dq.push(e.to);}
+ }
+ const deg=new Map(G.nodes.map(n=>[n.id,0]));
+ for(const e of G.edges)if(!deferred.has(e.id))deg.set(e.to,deg.get(e.to)+1);
+ const order=[],done=new Set(),q=[];
+ for(const n of G.nodes)if(deg.get(n.id)===0)q.push(n.id);
+ let qi=0,cyclic=deferred.size>0;
  while(order.length<G.nodes.length){
-  if(qi<q.length){const v=q[qi++];if(done.has(v))continue;done.add(v);order.push(v);for(const e of G.out.get(v)){const d=deg.get(e.to)-1;deg.set(e.to,d);if(d<=0&&!done.has(e.to))q.push(e.to);}}
-  else{cyclic=true;let best=null,bd=Infinity;for(const n of G.nodes)if(!done.has(n.id)&&deg.get(n.id)<bd){bd=deg.get(n.id);best=n.id;}deg.set(best,0);q.push(best);}
+  if(qi<q.length){const v=q[qi++];if(done.has(v))continue;done.add(v);order.push(v);
+   for(const e of G.out.get(v)){if(deferred.has(e.id))continue;const d=deg.get(e.to)-1;deg.set(e.to,d);if(d<=0&&!done.has(e.to))q.push(e.to);}
+  }else{cyclic=true;let best=null,bd=Infinity,bs=Infinity;
+   for(const n of G.nodes)if(!done.has(n.id)){
+    const d=deg.get(n.id),sc=dist.get(n.id);
+    if(d<bd||(d===bd&&(sc<bs||(sc===bs&&String(n.id)<String(best))))){bd=d;bs=sc;best=n.id;}
+   }
+   deg.set(best,0);q.push(best);
+  }
  }
  return{order,cyclic};
 }
@@ -1445,15 +1489,25 @@ function inferTargets(G,order){
  // na ordem topológica, o que fazia o resultado depender da ordem de criação dos nós).
  for(const n of G.nodes)if(n.type==='source'&&isAutoSource(n)&&!anchored.has(root(n.id))&&!targetRec.has(root(n.id)))anchors.add(n.id);
  const arrived=new Map(G.nodes.map(n=>[n.id,[]])),inferred=new Map();
+ // Ignorar na inferência inicial os insumos cuja ligação de retorno vem
+ // de um bloco ainda não processado. Eles serão calculados no solver cíclico,
+ // em vez de subdimensionar a receita pelo estoque de partida do loop.
+ const pos=new Map(order.map((nid,i)=>[nid,i])),feedbackPorts=new Set();
+ if(G.edges.length)for(const e of G.edges)
+  if(pos.get(e.from)>pos.get(e.to))feedbackPorts.add(e.to+'|'+e.ti);
  // Quanto o destino de uma ligação aceita: tier da esteira, limite da porta e teto de máquinas/vazão.
  const edgeAccept=e=>{const t=G.byId.get(e.to);let c=Math.min(e.cap,pcap(t,'in',e.ti));if(t.type==='recipe'&&isFixed(t.limit)){const R=rr(t);if(R&&R.ins[e.ti]>0)c=Math.min(c,R.ins[e.ti]*t.limit);}else if(PASS_TYPES.has(t.type)&&isFixed(t.limit))c=Math.min(c,t.limit);return c;};
  const portAccept=es=>es.reduce((a,e)=>a+edgeAccept(e),0);
  for(const nid of order){
   const n=G.byId.get(nid);if(blocked.has(root(nid)))continue;const inp=arrived.get(nid),outE=G.out.get(nid),pp=calcPorts(n);const outs=[];
   if(n.type==='source')outs[0]=anchors.has(nid)?(isAutoSource(n)?sourceReference(n):sourceCap(n)):0;
-  else if(n.type==='recipe'){const R=rr(n);if(!R)continue;const f=[];R.ins.forEach((q,i)=>{const a=inp[i]||0;if(a>1e-9&&q>1e-9)f.push(a/q)});
+  else if(n.type==='recipe'){const R=rr(n);if(!R)continue;const f=[];R.ins.forEach((q,i)=>{const a=inp[i]||0;if(!feedbackPorts.has(nid+'|'+i)&&a>1e-9&&q>1e-9)f.push(a/q)});
    let cnt=isFixed(n.target)&&R.outs[0]>0&&!R.r.gen?n.target/R.outs[0]:(f.length?Math.min(...f):0);if(isFixed(n.limit))cnt=Math.min(cnt,n.limit);
-   R.outs.forEach((q,j)=>outs[j]=cnt*q);if(!outE.length&&cnt>1e-9)inferred.set(nid,outs[0]||0);}
+   R.outs.forEach((q,j)=>outs[j]=cnt*q);
+   // v0.4.8: um gerador terminal não tem 'outs' de itens: sua meta implícita
+   // precisa ser inferida do combustível que chega, em MW, e não de uma saída
+   // inexistente (que antes resultava em 0 e forçava exatamente 1 gerador).
+   if((!outE.length||(R.outs.length&&!outE.some(e=>e.fi===0)))&&cnt>1e-9)inferred.set(nid,R.r.gen?cnt*R.r.gen*R.clock:(outs[0]||0));}
   else if(PASS_TYPES.has(n.type)){let tot=inp.reduce((a,b)=>a+(b||0),0);if(isFixed(n.limit))tot=Math.min(tot,n.limit);const used=[...new Set(outE.map(e=>e.fi))].sort((a,b)=>a-b);
    // v0.4.5: a estimativa segue o tipo do divisor (prioridade, pesos, transbordo) como o fluxo real.
    if(n.type==='priority_splitter'){let left=tot;for(const j of used){const g=Math.min(left,portAccept(G.outP.get(nid)[j]||[]));outs[j]=g;left-=g;}}
@@ -1496,7 +1550,18 @@ function sizeDemandPlan(G,order,cyclic,inferred,terminalNodes=new Set(),terminal
  // depois o restante entre os fornecedores flexíveis. Sem flexíveis, subprodutos são ampliados.
  function allocate(links,demand){
   if(!links.length)return;
-  if(links.length===1){setW(links[0],demand);return;}
+  if(links.length===1){
+   const e=links[0],f=G.byId.get(e.from);
+   // Subproduto não pode ser 'fabricado a pedido' independentemente da
+   // receita principal. Não dimensionar um loop pedindo mais retorno do
+   // que o produtor gera — isso provocava realimentação infinita.
+   if(providerKind(f,e.fi)==='soft'){
+    const produced=(prod.get(f.id)||[])[e.fi]||0;
+    const elsewhere=(G.outP.get(f.id)[e.fi]||[]).reduce((s,other)=>s+(other.id===e.id?0:W.get(other.id)||0),0);
+    setW(e,Math.min(demand,Math.max(0,produced-elsewhere)));
+   }else setW(e,demand);
+   return;
+  }
   const rows=links.map(e=>{const f=G.byId.get(e.from),kind=providerKind(f,e.fi);let est=Infinity;
    if(kind!=='flex'){const p=(prod.get(f.id)||[])[e.fi]||0;let others=0;for(const o of G.outP.get(f.id)[e.fi]||[])if(o.id!==e.id)others+=W.get(o.id);est=Math.max(0,p-others);}
    return{e,kind,est:Math.min(est,e.cap),give:0};});
@@ -1505,7 +1570,7 @@ function sizeDemandPlan(G,order,cyclic,inferred,terminalNodes=new Set(),terminal
   if(rem>1e-12){
    const flex=rows.filter(r=>r.kind==='flex');
    if(flex.length){const{res,left}=waterfill(rem,flex.map(r=>r.e.cap));flex.forEach((r,i)=>r.give+=res[i]+left/flex.length);}
-   else{const soft=rows.filter(r=>r.kind==='soft'),t=soft.length?soft:rows;for(const r of t)r.give+=rem/t.length;}
+   else{const capped=rows.filter(r=>r.kind==='cap');if(capped.length)for(const r of capped)r.give+=rem/capped.length;}
   }
   for(const r of rows)setW(r.e,r.give);
  }
@@ -1519,13 +1584,22 @@ function sizeDemandPlan(G,order,cyclic,inferred,terminalNodes=new Set(),terminal
     const R=rr(n);if(!R)continue;const r=R.r,lim=isFixed(n.limit)?n.limit:Infinity;
     let demandReq=0;R.outs.forEach((q,j)=>{if(q>1e-12)demandReq=Math.max(demandReq,reqOut[j]/q)});
     const reqs=reqOut.slice();let fixed=null;
-    if(r.gen){if(isFixed(n.target))fixed=n.target/(r.gen*R.clock);else if(!outE.length)fixed=Number.isFinite(lim)?lim:1;}
+    if(r.gen){
+     if(isFixed(n.target))fixed=n.target/(r.gen*R.clock);
+     else if(!outE.length){
+      const inferredMW=inferred.get(nid);
+      fixed=inferredMW!=null&&inferredMW>1e-9?inferredMW/(r.gen*R.clock):(Number.isFinite(lim)?lim:1);
+     }
+    }
     else if(isFixed(n.target)&&R.outs[0]>1e-12){fixed=n.target/R.outs[0];reqs[0]=Math.max(reqs[0],n.target);}
-    else if(!outE.length&&R.outs.length){const inf=terminalNodes.has(nid)?(terminalGoals.get(nid)??0):inferred.get(nid);fixed=inf!=null?inf/R.outs[0]:1;reqs[0]=fixed*R.outs[0];}
+    else if(R.outs.length&&!oP[0]?.length){const inf=terminalNodes.has(nid)?(terminalGoals.get(nid)??0):inferred.get(nid);fixed=inf!=null?inf/R.outs[0]:1;reqs[0]=fixed*R.outs[0];}
     c.wanted=Math.max(fixed??0,demandReq);
     c.machines=Math.max(0,Math.min(fixed!=null?fixed:demandReq,lim));
     if(r.gen&&fixed!=null&&!isFixed(n.target))c.wanted=c.machines;
     c.requestedOuts=Object.fromEntries(reqs.map((v,j)=>[j,v]));
+    // Saídas secundárias são coproduzidas junto com o item principal.
+    // Uma falta de insumos reduz o fluxo EFETIVO, mas não apaga o rendimento PREVISTO.
+    c.plannedOuts=Object.fromEntries(R.outs.map((q,j)=>[j,q*c.machines]));
     prod.set(nid,R.outs.map(q=>q*c.machines));
     R.ins.forEach((q,i)=>{const need=c.machines*q;c.neededIns[i]=need;allocate(iP[i]||[],need);});
    }else if(n.type==='source'){
@@ -1533,7 +1607,11 @@ function sizeDemandPlan(G,order,cyclic,inferred,terminalNodes=new Set(),terminal
     c.requestedOuts={0:req};const per=minerBase({...n,sourceCount:1});
     c.wanted=isManualSource(n)?0:(per>1e-9?req/per:0);c.referenceCapacity=sourceReference(n);c.equivalentRequired=per>1e-9?req/per:0;
    }else if(n.type==='output'||n.type==='sink'){
-    const demand=isFixed(n.target)?n.target:(terminalNodes.has(nid)?(terminalGoals.get(nid)??0):(inferred.get(nid)??0));c.neededIns={0:demand};allocate(inE,demand);
+    // Sink sem meta é um dreno passivo, não um consumidor que aumenta a
+    // produção num loop ao pedir mais subproduto a cada iteração.
+    const defaultDemand=cyclic&&n.type==='sink'?0:(inferred.get(nid)??0);
+    const demand=isFixed(n.target)?n.target:(terminalNodes.has(nid)?(terminalGoals.get(nid)??0):defaultDemand);
+    c.neededIns={0:demand};allocate(inE,demand);
    }else if(PASS_TYPES.has(n.type)){
     let wanted=reqOut.reduce((a,b)=>a+b,0);
     if(!outE.length){const inf=terminalNodes.has(nid)?(terminalGoals.get(nid)??0):inferred.get(nid);if(inf>0)wanted=Math.max(wanted,inf);}
@@ -1756,8 +1834,30 @@ function recomputeCore(t0,mode){
    }
   }
  }else{
-  for(const e of G.edges)previewEdges.set(e.id,A.get(e.id)||0);
-  for(const nid of order){previewIns.set(nid,inFlow(nid));previewOuts.set(nid,Object.values(S.get(nid).actualOuts||{}));}
+  // Loops: a produção efetiva (A) pode ser zero antes de conectar a reposição.
+  // Para que o usuário veja o balanço, mostrar disponibilidade PLANEJADA (W),
+  // incluindo água/subprodutos recuperáveis, sem confundi-la com fluxo real.
+  for(const e of G.edges){
+   const origin=G.byId.get(e.from),dest=G.byId.get(e.to),c=S.get(e.from);
+   let cap=Math.min(e.cap,pcap(origin,'out',e.fi),pcap(dest,'in',e.ti));
+   if(origin.type==='recipe')cap=Math.min(cap,c.plannedOuts?.[e.fi]??0);
+   previewEdges.set(e.id,Math.max(0,Math.min(W.get(e.id)||0,cap)));
+  }
+  // Fontes fixas são capacidades máximas, não fornecedores ilimitados. Uma
+  // mesma saída pode alimentar vários destinos sem multiplicar o fornecimento.
+  for(const n of G.nodes)if(n.type==='source'&&!isAutoSource(n)){
+   const outgoing=G.out.get(n.id)||[];
+   const assigned=outgoing.reduce((s,e)=>s+(previewEdges.get(e.id)||0),0);
+   const capacity=Math.min(sourceCap(n),pcap(n,'out',0));
+   if(assigned>capacity+1e-9&&assigned>0)
+    for(const e of outgoing)previewEdges.set(e.id,(previewEdges.get(e.id)||0)*capacity/assigned);
+  }
+  for(const n of G.nodes){
+   const pp=calcPorts(n),ins=pp.ins.map((_,i)=>Math.min(pcap(n,'in',i),(G.inP.get(n.id)[i]||[]).reduce((sum,e)=>sum+(previewEdges.get(e.id)||0),0)));
+   const outs=pp.outs.map((_,j)=>n.type==='recipe'?Math.min(S.get(n.id).plannedOuts?.[j]??0,pcap(n,'out',j))
+    :(G.outP.get(n.id)[j]||[]).reduce((sum,e)=>sum+(previewEdges.get(e.id)||0),0));
+   previewIns.set(n.id,ins);previewOuts.set(n.id,outs);
+  }
  }
  for(const nid of order){const c=S.get(nid);c.previewIns=Object.fromEntries((previewIns.get(nid)||[]).map((v,i)=>[i,v]));c.previewOuts=Object.fromEntries((previewOuts.get(nid)||[]).map((v,i)=>[i,v]));}
 
@@ -1781,12 +1881,27 @@ function recomputeCore(t0,mode){
    const alertsBefore=alerts.length;
    r.ins.forEach((p,i)=>{const need=c.neededIns[i]||0,got=c.previewIns?.[i]||0;
     if(need>got+eps){const linked=inE.some(e=>e.ti===i);
-     push('problem',n,nodeTitle(n),itemName(p.item),`Disponível ${fmt(got)}/${fmt(need)} por minuto · faltam ${fmt(need-got)}/min. `+(linked?'A fonte ligada é insuficiente para esta entrada.':'Nenhuma máquina ou recurso conectado a esta entrada.'));}});
+     push('problem',n,nodeTitle(n),itemName(p.item),`Disponível ${fmt(got)}/${fmt(need)} por minuto · faltam ${fmt(need-got)}/min. `+(linked?'A fonte ligada é insuficiente para esta entrada.':'Nenhuma máquina ou recurso conectado a esta entrada.'));}
+    // Um retorno de subproduto pode suprir PARTE do consumo, mas não substitui
+    // insumos externos quando o balanço líquido é negativo. Mostre esse balanço
+    // mesmo se o ciclo estiver parado por outra entrada ainda não conectada.
+    const feedback=(G.inP.get(n.id)?.[i]||[]).filter(e=>{
+     const upstream=G.byId.get(e.from),recipe=upstream?.type==='recipe'?rr(upstream):null;
+     return recipe&&e.fi>0&&recipe.outs[e.fi]>0;
+    });
+    if(need>eps&&feedback.length){
+     const plannedReturn=feedback.reduce((acc,e)=>acc+(W.get(e.id)||0),0);
+     const hasOtherProvider=(G.inP.get(n.id)?.[i]||[]).some(e=>!feedback.includes(e));
+     const deficit=Math.max(0,need-plannedReturn);
+     if(deficit>eps&&!hasOtherProvider)
+      push('warn',n,nodeTitle(n),itemName(p.item),`Realimentação prevista: ${fmt(plannedReturn)}/min de subproduto para uma demanda de ${fmt(need)}/min. Reposição externa contínua necessária: ${fmt(deficit)}/min. Adicione uma fonte externa (bomba/extratora) a esta entrada; uma carga inicial isolada não sustenta o ciclo.`);
+    }
+   });
    // v0.4.5: meta fixa abaixo do fluxo real sempre gera alerta (a disponibilidade planejada ignora a contrapressão).
    if(!r.gen&&isFixed(n.target)&&R.outs[0]>1e-12){const got=c.actualOuts[0]||0;if(got<n.target-Math.max(eps,n.target*1e-6)&&!alerts.slice(alertsBefore).some(a=>a.sev==='problem'))push('problem',n,nodeTitle(n),itemName(r.outs[0].item),`Meta ${fmt(n.target)}/min, fluxo real ${fmt(got)}/min. `+((st.uOut??1)<1-1e-4?'Uma saída não escoa tudo (consumo a jusante, esteira ou limite de porta).':'Confira entradas, limites e metas a montante.'));}
    if(c.wanted>c.machines+1e-5)push('warn',n,nodeTitle(n),itemName(r.outs[0]?.item),`Demanda a jusante pede ${fmt(c.wanted)} máquinas equivalentes, mas a meta/limite fixa ${fmt(c.machines)}.`);
    if(st.uOut<Math.min(1,st.uIn)-1e-4)push('warn',n,nodeTitle(n),'Saída bloqueada',`As máquinas rodam a ${fmt(st.u*100,1)}% porque uma saída não escoa (consumo a jusante, esteira ou limite de porta). No jogo, a produção para quando o buffer enche.`);
-   r.outs.forEach((p,j)=>{if(j===0&&r.outs.length>0&&!r.gen)return;const amt=c.previewOuts?.[j]||0;if(amt>eps&&!outE.some(e=>e.fi===j))push('warn',n,nodeTitle(n),itemName(p.item),`Subproduto sem destino: ${fmt(amt)}/min. No jogo, a máquina trava quando este buffer enche. Ligue a um consumidor, armazenamento ou AWESOME Sink.`);});
+   r.outs.forEach((p,j)=>{if(j===0&&r.outs.length>0&&!r.gen)return;const amt=c.plannedOuts?.[j]??c.previewOuts?.[j]??0;if(amt>eps&&!outE.some(e=>e.fi===j))push('warn',n,nodeTitle(n),itemName(p.item),`Subproduto previsto sem destino: ${fmt(amt)}/min. Quando estiver operando, a máquina trava ao encher o buffer. Ligue a um consumidor, armazenamento ou AWESOME Sink.`);});
   }else if(n.type==='source'){
    const virtual=isManualSource(n)||isAutoSource(n),per=minerBase({...n,sourceCount:1}),flow=c.actualOuts[0]||0;
    c.machines=virtual?0:(per>1e-9?flow/per:0);c.built=virtual?0:n.sourceCount;c.sourceCount=c.built;
@@ -1990,15 +2105,20 @@ function renderNode(n,lod='full',AS=null){
   const available=io==='in'?(c.previewIns?.[i]??actual):(c.previewOuts?.[i]??actual);
   let need=io==='in'?(c.neededIns?.[i]||0):(c.requestedOuts?.[i]||0);
   if(n.type==='source'&&io==='out')need=available;
+  // Não confundir demanda de uma CONEXÃO com o rendimento de uma RECEITA.
+  // O segundo produto de Rocket Fuel (Compacted Coal), por exemplo, deve
+  // mostrar 0 / 5,56 previsto até haver Nitric Acid e realimentação contínua.
+  const designed=io==='out'&&n.type==='recipe'?(c.plannedOuts?.[i]??((rr(n)?.outs?.[i]||0)*(c.machines||0))):0;
+  const planAmount=io==='out'&&n.type==='recipe'?Math.max(need,designed):need;
   const cap=n.portCaps?.[io+i],lacking=need>available+.001,ok=io==='in'&&need>.001&&!lacking;
-  const stalled=io==='out'&&n.type==='recipe'&&need>.001&&actual<need-.001;
+  const stalled=io==='out'&&n.type==='recipe'&&planAmount>.001&&actual<planAmount-.001;
   let label;
   if(project.settings.calc==='none')label='—';
   else if(io==='in'&&need>.001)label=(ok?'✓ ':'⚠ ')+fmt(available)+' / '+fmt(need)+'/min';
-  else if(stalled)label=fmt(need)+'/min previsto';
+  else if(stalled)label=fmt(actual)+' / '+fmt(planAmount)+'/min previsto';
   else label=fmt(io==='out'?Math.max(available,actual):available)+'/min';
   const detail=io==='in'?`Disponibilidade planejada ${fmt(available)}/${fmt(need)} por minuto.`:
-    `Meta ${fmt(need)}/min; capacidade alimentada ${fmt(available)}/min; fluxo contínuo atual ${fmt(actual)}/min.`;
+    `Rendimento previsto ${fmt(planAmount)}/min; fluxo contínuo atual ${fmt(actual)}/min. Todo subproduto é gerado junto com a saída principal somente quando há alimentação completa.`;
   return`<div class="port ${io} ${ok?'satisfied':''} ${lacking?'insufficient':''} ${pending?.nid===n.id&&pending?.io===io&&pending?.index===i?'pending':''} ${cap!==undefined?'locked':''}" data-node="${sid}" data-io="${io}" data-index="${i}" title="${esc(itemName(item))}: ${esc(detail)} Toque para conectar; segure para limitar vazão"><span class="port-dot"></span><span class="port-label"><span class="itemname">${esc(item==null?'Material':itemName(item))}</span><span class="qty ${lacking?'empty':''}">${label}</span></span></div>`;}).join('');
  if(n.type==='note')return`<article class="${cls}" data-node="${sid}" style="${pos}"><div class="node-header"><span class="machicon">📝</span><div><div class="node-title">${esc(nodeTitle(n))}</div><div class="node-sub">Nota livre</div></div></div><div class="note-content">${esc(n.note||'Toque para escrever uma anotação.')}</div></article>`;
  if(isContainer(n)&&!p.ins.length&&!p.outs.length)return`<article class="${cls}" data-node="${sid}" style="${pos}"><div class="node-header"><span class="machicon">${nodeIcon(n)}</span><div><div class="node-title">${esc(nodeTitle(n))}</div><div class="node-sub">${esc(sub)}</div></div></div><div class="node-foot"><span>▣ Área aninhada · sem portas</span><span>↗</span></div></article>`;
