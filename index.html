@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="pt-BR"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover, user-scalable=no"/>
 <meta name="theme-color" content="#0a1018"/><meta name="apple-mobile-web-app-capable" content="yes"/><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
-<title>Factory Flow v0.4.9 — Satisfactory Mobile Modeler</title>
+<title>Factory Flow v0.4.10 — Satisfactory Mobile Modeler</title>
 <style>
 :root{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#e8f0f9;background:#0b121a;--bg:#0b121a;--panel:#15202d;--panel2:#1e2e3f;--border:#304357;--muted:#8e9fb2;--orange:#ffb74d;--aqua:#5ddbd2;--warn:#ff7e72;--green:#72d6a3;--blue:#72b5ff;--top:calc(57px + env(safe-area-inset-top,0px));--bottom:calc(72px + env(safe-area-inset-bottom,0px));}
 *{box-sizing:border-box}html,body{width:100%;height:100%;margin:0;overflow:hidden;overscroll-behavior:none}button,input,select,textarea{font:inherit}button{cursor:pointer;-webkit-tap-highlight-color:transparent}button:focus-visible,input:focus-visible{outline:2px solid var(--orange);outline-offset:2px}body{-webkit-touch-callout:none}
@@ -1328,7 +1328,7 @@ function setupEvents(){const vp=$('viewport');vp.addEventListener('pointerdown',
  window.addEventListener('resize',()=>{updateCamera();syncVisibleViewport()});if(window.visualViewport){visualViewport.addEventListener('resize',syncVisibleViewport);visualViewport.addEventListener('scroll',syncVisibleViewport)}document.addEventListener('keydown',e=>{if(!$('overlay').classList.contains('hidden')){if(e.key==='Escape')closeSheet();return}let typing=['INPUT','TEXTAREA','SELECT'].includes(document.activeElement?.tagName);if(typing)return;const mod=e.ctrlKey||e.metaKey,k=e.key.toLowerCase();if(mod&&k==='z'){e.preventDefault();return e.shiftKey?redo():undo()}if(mod&&k==='y'){e.preventDefault();return redo()}if(mod&&k==='s'){e.preventDefault();return exportJSON()}if(mod&&k==='c'){e.preventDefault();return copySelection()}if(mod&&k==='v'){e.preventDefault();return pasteSelection()}if(mod&&k==='a'){e.preventDefault();selected=new Set(boardNodes().map(n=>n.id));return render()}if(e.key==='Delete'||e.key==='Backspace'){e.preventDefault();return deleteSelected()}if(e.key==='Escape'){pending=null;selected.clear();render()}});
 }
 /* ================= v0.4 · núcleo ================= */
-const APP_VERSION='0.4.9';
+const APP_VERSION='0.4.10';
 const NODE_W=246,Z_MIN=0.01,Z_MAX=4;
 const BELT_CAPS=[60,120,270,480,780,1200],PIPE_CAPS=[300,600];
 // Slots de Somersloop por categoria; fontes abstratas e geradores: 0.
@@ -1650,17 +1650,17 @@ function sizeDemandPlan(G,order,cyclic,inferred,terminalNodes=new Set(),terminal
 // as metas explicitamente travadas. É uma análise incremental de consumo, não
 // uma multiplicação artificial da quantidade de mineradoras.
 function reserveSpareResources(G,order,cyclic,inferred){
- if(cyclic||!G.edges.length)return null;
+ if(!G.edges.length)return null;
  const parent=new Map(G.nodes.map(n=>[n.id,n.id]));
  const root=x=>{while(parent.get(x)!==x){parent.set(x,parent.get(parent.get(x)));x=parent.get(x);}return x;};
  for(const e of G.edges){let a=root(e.from),b=root(e.to);if(a!==b)parent.set(b,a);}
  const explicit=new Set(G.nodes.filter(n=>isFixed(n.target)&&(n.type==='recipe'||n.type==='output'||n.type==='sink'||n.type==='depot'||n.type==='storage')).map(n=>root(n.id)));
  if(!explicit.size)return null; // Cadeias sem meta conservam a inferência normal.
- const candidate=G.nodes.filter(n=>explicit.has(root(n.id))&&!isFixed(n.target)&&!inferred.has(n.id)&&!G.out.get(n.id).length&&
+ const candidate=G.nodes.filter(n=>explicit.has(root(n.id))&&!isFixed(n.target)&&!G.out.get(n.id).length&&
    ((n.type==='recipe'&&!rr(n)?.r?.gen&&rr(n)?.outs?.[0]>1e-12)||n.type==='output'||n.type==='sink'||['storage','depot','port_out'].includes(n.type))&&G.inc.get(n.id).length);
  if(!candidate.length)return null;
  const terminals=new Set(candidate.map(n=>n.id)),zero=new Map(candidate.map(n=>[n.id,0]));
- const base=sizeDemandPlan(G,order,false,inferred,terminals,zero);
+ const base=sizeDemandPlan(G,order,cyclic,inferred,terminals,zero);
  const constraints=[];
  const include=(key,cap,quantity)=>{if(Number.isFinite(cap))constraints.push({key,slack:Math.max(0,cap-quantity),value:pass=>quantityFrom(pass,key)});};
  const quantityFrom=(pass,key)=>{
@@ -1668,6 +1668,10 @@ function reserveSpareResources(G,order,cyclic,inferred){
   if(kind==='source')return pass.S.get(id)?.requestedOuts?.[0]||0;
   if(kind==='edge')return pass.W.get(id)||0;
   if(kind==='machine')return pass.S.get(id)?.wanted||0;
+  if(kind==='output'){
+   const colon=id.lastIndexOf(':'),node=id.slice(0,colon),port=Number(id.slice(colon+1));
+   return (G.outP.get(node)?.[port]||[]).reduce((sum,e)=>sum+(pass.W.get(e.id)||0),0);
+  }
   if(kind==='port'){
    const [node,io,idx]=id.split(':');return io==='in'
     ?(pass.S.get(node)?.neededIns?.[Number(idx)]||0)
@@ -1686,6 +1690,17 @@ function reserveSpareResources(G,order,cyclic,inferred){
    const R=rr(n);if(!R)continue;
    const limit=isFixed(n.target)&&R.outs[0]>0?n.target/R.outs[0]:(isFixed(n.limit)?n.limit:Infinity);
    if(Number.isFinite(limit))include('machine|'+n.id,limit,b?.wanted||0);
+   // Além do limite de máquinas, contabiliza o estoque de saídas já
+   // planejado de receitas fixas. Uma máquina upstream com target não
+   // deve ser redimensionada, mas sua produção ainda não consumida
+   // pode alimentar terminais automáticos, inclusive em laços hidráulicos.
+   if(Number.isFinite(limit))R.outs.forEach((q,j)=>{
+    const links=G.outP.get(n.id)?.[j]||[];
+    if(!links.length||q<=0)return;
+    const cap=limit*q;
+    const used=links.reduce((sum,e)=>sum+(base.W.get(e.id)||0),0);
+    include('output|'+n.id+':'+j,cap,used);
+   });
   }else if(PASS_TYPES.has(n.type)&&isFixed(n.limit))include('machine|'+n.id,n.limit,b?.wanted||0);
   const pp=calcPorts(n);
   for(let i=0;i<pp.ins.length;i++)if(isFixed(pcap(n,'in',i)))include('port|'+n.id+':in:'+i,pcap(n,'in',i),b?.neededIns?.[i]||0);
@@ -1695,9 +1710,9 @@ function reserveSpareResources(G,order,cyclic,inferred){
  const proposals=[];
  for(const n of candidate){
   const test=new Map(zero);test.set(n.id,1);
-  const probe=sizeDemandPlan(G,order,false,inferred,terminals,test);
+  const probe=sizeDemandPlan(G,order,cyclic,inferred,terminals,test);
   const gradients=constraints.map(c=>Math.max(0,c.value(probe)-c.value(base)));
-  const influenced=gradients.some((v,i)=>v>1e-9&&constraints[i].key.startsWith('source|'));
+  const influenced=gradients.some((v,i)=>v>1e-9&&(constraints[i].key.startsWith('source|')||constraints[i].key.startsWith('output|')));
   if(!influenced)continue; // Sem fonte física de referência para definir um máximo.
   let upper=100000;
   gradients.forEach((v,i)=>{if(v>1e-9)upper=Math.min(upper,constraints[i].slack/v)});
