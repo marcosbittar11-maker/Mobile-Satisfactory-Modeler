@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="pt-BR"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover, user-scalable=no"/>
 <meta name="theme-color" content="#0a1018"/><meta name="apple-mobile-web-app-capable" content="yes"/><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
-<title>Factory Flow v0.4.11 — Satisfactory Mobile Modeler</title>
+<title>Factory Flow v0.4.12 — Satisfactory Mobile Modeler</title>
 <style>
 :root{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#e8f0f9;background:#0b121a;--bg:#0b121a;--panel:#15202d;--panel2:#1e2e3f;--border:#304357;--muted:#8e9fb2;--orange:#ffb74d;--aqua:#5ddbd2;--warn:#ff7e72;--green:#72d6a3;--blue:#72b5ff;--top:calc(57px + env(safe-area-inset-top,0px));--bottom:calc(72px + env(safe-area-inset-bottom,0px));}
 *{box-sizing:border-box}html,body{width:100%;height:100%;margin:0;overflow:hidden;overscroll-behavior:none}button,input,select,textarea{font:inherit}button{cursor:pointer;-webkit-tap-highlight-color:transparent}button:focus-visible,input:focus-visible{outline:2px solid var(--orange);outline-offset:2px}body{-webkit-touch-callout:none}
@@ -1338,7 +1338,7 @@ function setupEvents(){const vp=$('viewport');vp.addEventListener('pointerdown',
  window.addEventListener('resize',()=>{updateCamera();syncVisibleViewport()});if(window.visualViewport){visualViewport.addEventListener('resize',syncVisibleViewport);visualViewport.addEventListener('scroll',syncVisibleViewport)}document.addEventListener('keydown',e=>{if(!$('overlay').classList.contains('hidden')){if(e.key==='Escape')closeSheet();return}let typing=['INPUT','TEXTAREA','SELECT'].includes(document.activeElement?.tagName);if(typing)return;const mod=e.ctrlKey||e.metaKey,k=e.key.toLowerCase();if(mod&&k==='z'){e.preventDefault();return e.shiftKey?redo():undo()}if(mod&&k==='y'){e.preventDefault();return redo()}if(mod&&k==='s'){e.preventDefault();return exportJSON()}if(mod&&k==='c'){e.preventDefault();return copySelection()}if(mod&&k==='v'){e.preventDefault();return pasteSelection()}if(mod&&k==='a'){e.preventDefault();selected=new Set(boardNodes().map(n=>n.id));return render()}if(e.key==='Delete'||e.key==='Backspace'){e.preventDefault();return deleteSelected()}if(e.key==='Escape'){pending=null;selected.clear();render()}});
 }
 /* ================= v0.4 · núcleo ================= */
-const APP_VERSION='0.4.11';
+const APP_VERSION='0.4.12';
 const NODE_W=246,Z_MIN=0.01,Z_MAX=4;
 const BELT_CAPS=[60,120,270,480,780,1200],PIPE_CAPS=[300,600];
 // Slots de Somersloop por categoria; fontes abstratas e geradores: 0.
@@ -1365,6 +1365,11 @@ function minerBase(n){const ex=EXTRACTORS[n.sourceMachine];if(!ex)return 0;const
 const pl=(n,one,many)=>`${fmt(n,0)} ${Math.abs(n)===1?one:many}`;
 const isFiniteNum=v=>typeof v==='number'&&Number.isFinite(v);
 const isFixed=v=>isFiniteNum(v)&&v>=0;
+// Quantidade EXATA a construir, diferente do teto de maquinas legado (limit).
+// Zero desativa intencionalmente o nó; null mantém dimensionamento automático.
+function desiredMachines(n){return n?.type==='recipe'&&Number.isSafeInteger(n.machineGoal)&&n.machineGoal>=0?n.machineGoal:null;}
+function isAutoWater(n){return isAutoSource(n)&&items[n.item]?.key==='water';}
+function waterExtractorsNeeded(flow){const rate=EXTRACTORS['water-extractor'].rate;return Math.max(0,Math.ceil(Math.max(0,flow||0)/rate-1e-9));}
 
 let topoVersion=0;
 const portOffsetCache=new Map(),nodeHeightCache=new Map();
@@ -1511,7 +1516,7 @@ function inferTargets(G,order){
  const parent=new Map(G.nodes.map(n=>[n.id,n.id]));const root=x=>{while(parent.get(x)!==x){parent.set(x,parent.get(parent.get(x)));x=parent.get(x);}return x;};
  for(const e of G.edges){const a=root(e.from),b=root(e.to);if(a!==b)parent.set(b,a);}
  const blocked=new Set(),targetRec=new Set();
- for(const n of G.nodes)if(isFixed(n.target)&&n.type!=='source'){if(n.type==='recipe')targetRec.add(root(n.id));else blocked.add(root(n.id));}
+ for(const n of G.nodes)if(n.type!=='source'&&(isFixed(n.target)||desiredMachines(n)!==null)){if(n.type==='recipe')targetRec.add(root(n.id));else blocked.add(root(n.id));}
  const anchors=new Set(),anchored=new Set();
  for(const n of G.nodes)if(n.type==='source'&&!isAutoSource(n)&&!targetRec.has(root(n.id))){anchors.add(n.id);anchored.add(root(n.id));}
  // v0.4.5: sem fonte fixa, TODAS as fontes automáticas do componente ancoram (antes só a primeira
@@ -1525,13 +1530,13 @@ function inferTargets(G,order){
  if(G.edges.length)for(const e of G.edges)
   if(pos.get(e.from)>pos.get(e.to))feedbackPorts.add(e.to+'|'+e.ti);
  // Quanto o destino de uma ligação aceita: tier da esteira, limite da porta e teto de máquinas/vazão.
- const edgeAccept=e=>{const t=G.byId.get(e.to);let c=Math.min(e.cap,pcap(t,'in',e.ti));if(t.type==='recipe'&&isFixed(t.limit)){const R=rr(t);if(R&&R.ins[e.ti]>0)c=Math.min(c,R.ins[e.ti]*t.limit);}else if(PASS_TYPES.has(t.type)&&isFixed(t.limit))c=Math.min(c,t.limit);return c;};
+ const edgeAccept=e=>{const t=G.byId.get(e.to);let c=Math.min(e.cap,pcap(t,'in',e.ti));if(t.type==='recipe'&&(isFixed(t.limit)||desiredMachines(t)!==null)){const R=rr(t),max=desiredMachines(t)??t.limit;if(R&&R.ins[e.ti]>0)c=Math.min(c,R.ins[e.ti]*max);}else if(PASS_TYPES.has(t.type)&&isFixed(t.limit))c=Math.min(c,t.limit);return c;};
  const portAccept=es=>es.reduce((a,e)=>a+edgeAccept(e),0);
  for(const nid of order){
   const n=G.byId.get(nid);if(blocked.has(root(nid)))continue;const inp=arrived.get(nid),outE=G.out.get(nid),pp=calcPorts(n);const outs=[];
   if(n.type==='source')outs[0]=anchors.has(nid)?(isAutoSource(n)?sourceReference(n):sourceCap(n)):0;
   else if(n.type==='recipe'){const R=rr(n);if(!R)continue;const f=[];R.ins.forEach((q,i)=>{const a=inp[i]||0;if(!feedbackPorts.has(nid+'|'+i)&&a>1e-9&&q>1e-9)f.push(a/q)});
-   let cnt=isFixed(n.target)&&R.outs[0]>0&&!R.r.gen?n.target/R.outs[0]:(f.length?Math.min(...f):0);if(isFixed(n.limit))cnt=Math.min(cnt,n.limit);
+   let cnt=isFixed(n.target)&&R.outs[0]>0&&!R.r.gen?n.target/R.outs[0]:(f.length?Math.min(...f):0);if(desiredMachines(n)!==null)cnt=desiredMachines(n);else if(isFixed(n.limit))cnt=Math.min(cnt,n.limit);
    R.outs.forEach((q,j)=>outs[j]=cnt*q);
    // v0.4.8: um gerador terminal não tem 'outs' de itens: sua meta implícita
    // precisa ser inferida do combustível que chega, em MW, e não de uma saída
@@ -1572,7 +1577,7 @@ function sizeDemandPlan(G,order,cyclic,inferred,terminalNodes=new Set(),terminal
  const setW=(e,v)=>{const o=W.get(e.id);const d=Math.abs(o-v)/(1+Math.abs(v));if(d>delta)delta=d;W.set(e.id,v);};
  function providerKind(f,fi){
   if(f.type==='source')return isAutoSource(f)?'flex':'cap';
-  if(f.type==='recipe'){if(isFixed(f.target)||isFixed(f.limit))return'cap';return fi>0?'soft':'flex';}
+  if(f.type==='recipe'){if(isFixed(f.target)||isFixed(f.limit)||desiredMachines(f)!==null)return'cap';return fi>0?'soft':'flex';}
   return'flex';
  }
  // Uma entrada com vários fornecedores: primeiro o que já existe (subprodutos, fontes e máquinas fixas),
@@ -1610,7 +1615,7 @@ function sizeDemandPlan(G,order,cyclic,inferred,terminalNodes=new Set(),terminal
    const n=G.byId.get(nid),c=S.get(nid),outE=G.out.get(nid),inE=G.inc.get(nid),pp=calcPorts(n);
    const oP=G.outP.get(nid),iP=G.inP.get(nid);const reqOut=pp.outs.map((_,j)=>{let s=0;for(const e of oP[j]||[])s+=W.get(e.id);return s;});
    if(n.type==='recipe'){
-    const R=rr(n);if(!R)continue;const r=R.r,lim=isFixed(n.limit)?n.limit:Infinity;
+    const R=rr(n);if(!R)continue;const r=R.r,goal=desiredMachines(n),lim=goal??(isFixed(n.limit)?n.limit:Infinity);
     let demandReq=0;R.outs.forEach((q,j)=>{if(q>1e-12)demandReq=Math.max(demandReq,reqOut[j]/q)});
     const reqs=reqOut.slice();let fixed=null;
     if(r.gen){
@@ -1622,9 +1627,11 @@ function sizeDemandPlan(G,order,cyclic,inferred,terminalNodes=new Set(),terminal
     }
     else if(isFixed(n.target)&&R.outs[0]>1e-12){fixed=n.target/R.outs[0];reqs[0]=Math.max(reqs[0],n.target);}
     else if(R.outs.length&&!oP[0]?.length){const inf=terminalNodes.has(nid)?(terminalGoals.get(nid)??0):inferred.get(nid);fixed=inf!=null?inf/R.outs[0]:1;reqs[0]=fixed*R.outs[0];}
-    c.wanted=Math.max(fixed??0,demandReq);
-    c.machines=Math.max(0,Math.min(fixed!=null?fixed:demandReq,lim));
-    if(r.gen&&fixed!=null&&!isFixed(n.target))c.wanted=c.machines;
+    // Uma quantidade escolhida é uma CAPACIDADE exata, mesmo se faltam insumos.
+    // 'wanted' ainda guarda a demanda para avisar conflitos/insuficiência.
+    c.wanted=Math.max(goal!==null&&!isFixed(n.target)?0:(fixed??0),demandReq,goal??0);
+    c.machines=goal!==null?goal:Math.max(0,Math.min(fixed!=null?fixed:demandReq,lim));
+    if(r.gen&&fixed!=null&&!isFixed(n.target)&&goal===null)c.wanted=c.machines;
     c.requestedOuts=Object.fromEntries(reqs.map((v,j)=>[j,v]));
     // Saídas secundárias são coproduzidas junto com o item principal.
     // Uma falta de insumos reduz o fluxo EFETIVO, mas não apaga o rendimento PREVISTO.
@@ -1635,6 +1642,9 @@ function sizeDemandPlan(G,order,cyclic,inferred,terminalNodes=new Set(),terminal
     const req=outE.length?reqOut[0]:(isAutoSource(n)?sourceReference(n):sourceCap(n));
     c.requestedOuts={0:req};const per=minerBase({...n,sourceCount:1});
     c.wanted=isManualSource(n)?0:(per>1e-9?req/per:0);c.referenceCapacity=sourceReference(n);c.equivalentRequired=per>1e-9?req/per:0;
+    // Entradas automáticas são fluxos virtuais, mas água precisa de extratores
+    // concretos no jogo: estimar a quantidade física a 100% (120 m³/min cada).
+    c.waterExtractorsRequired=isAutoWater(n)?waterExtractorsNeeded(req):0;
    }else if(n.type==='output'||n.type==='sink'){
     // Sink sem meta é um dreno passivo, não um consumidor que aumenta a
     // produção num loop ao pedir mais subproduto a cada iteração.
@@ -1664,9 +1674,9 @@ function reserveSpareResources(G,order,cyclic,inferred){
  const parent=new Map(G.nodes.map(n=>[n.id,n.id]));
  const root=x=>{while(parent.get(x)!==x){parent.set(x,parent.get(parent.get(x)));x=parent.get(x);}return x;};
  for(const e of G.edges){let a=root(e.from),b=root(e.to);if(a!==b)parent.set(b,a);}
- const explicit=new Set(G.nodes.filter(n=>isFixed(n.target)&&(n.type==='recipe'||n.type==='output'||n.type==='sink'||n.type==='depot'||n.type==='storage')).map(n=>root(n.id)));
+ const explicit=new Set(G.nodes.filter(n=>(isFixed(n.target)||desiredMachines(n)!==null)&&(n.type==='recipe'||n.type==='output'||n.type==='sink'||n.type==='depot'||n.type==='storage')).map(n=>root(n.id)));
  if(!explicit.size)return null; // Cadeias sem meta conservam a inferência normal.
- const candidate=G.nodes.filter(n=>explicit.has(root(n.id))&&!isFixed(n.target)&&!G.out.get(n.id).length&&
+ const candidate=G.nodes.filter(n=>explicit.has(root(n.id))&&!isFixed(n.target)&&desiredMachines(n)===null&&!G.out.get(n.id).length&&
    ((n.type==='recipe'&&!rr(n)?.r?.gen&&rr(n)?.outs?.[0]>1e-12)||n.type==='output'||n.type==='sink'||['storage','depot','port_out'].includes(n.type))&&G.inc.get(n.id).length);
  if(!candidate.length)return null;
  const terminals=new Set(candidate.map(n=>n.id)),zero=new Map(candidate.map(n=>[n.id,0]));
@@ -1698,7 +1708,7 @@ function reserveSpareResources(G,order,cyclic,inferred){
    // Uma meta de produto fixa restringe o que outras ramificações podem retirar
    // deste mesmo nó; o teto de máquinas também é respeitado.
    const R=rr(n);if(!R)continue;
-   const limit=isFixed(n.target)&&R.outs[0]>0?n.target/R.outs[0]:(isFixed(n.limit)?n.limit:Infinity);
+   const limit=desiredMachines(n)??(isFixed(n.target)&&R.outs[0]>0?n.target/R.outs[0]:(isFixed(n.limit)?n.limit:Infinity));
    if(Number.isFinite(limit))include('machine|'+n.id,limit,b?.wanted||0);
    // Além do limite de máquinas, contabiliza o estoque de saídas já
    // planejado de receitas fixas. Uma máquina upstream com target não
@@ -1726,7 +1736,7 @@ function reserveSpareResources(G,order,cyclic,inferred){
   if(!influenced)continue; // Sem fonte física de referência para definir um máximo.
   let upper=100000;
   gradients.forEach((v,i)=>{if(v>1e-9)upper=Math.min(upper,constraints[i].slack/v)});
-  if(n.type==='recipe'&&isFixed(n.limit)){const R=rr(n);upper=Math.min(upper,n.limit*R.outs[0]);}
+  if(n.type==='recipe'&&(isFixed(n.limit)||desiredMachines(n)!==null)){const R=rr(n);upper=Math.min(upper,(desiredMachines(n)??n.limit)*R.outs[0]);}
   if(upper>1e-8&&Number.isFinite(upper))proposals.push({n,gradients,max:Math.max(0,upper),amount:0});
  }
  if(!proposals.length)return {terminals,goals:zero};
@@ -1943,17 +1953,25 @@ function recomputeCore(t0,mode){
    });
    // v0.4.5: meta fixa abaixo do fluxo real sempre gera alerta (a disponibilidade planejada ignora a contrapressão).
    if(!r.gen&&isFixed(n.target)&&R.outs[0]>1e-12){const got=c.actualOuts[0]||0;if(got<n.target-Math.max(eps,n.target*1e-6)&&!alerts.slice(alertsBefore).some(a=>a.sev==='problem'))push('problem',n,nodeTitle(n),itemName(r.outs[0].item),`Meta ${fmt(n.target)}/min, fluxo real ${fmt(got)}/min. `+((st.uOut??1)<1-1e-4?'Uma saída não escoa tudo (consumo a jusante, esteira ou limite de porta).':'Confira entradas, limites e metas a montante.'));}
-   if(c.wanted>c.machines+1e-5)push('warn',n,nodeTitle(n),itemName(r.outs[0]?.item),`Demanda a jusante pede ${fmt(c.wanted)} máquinas equivalentes, mas a meta/limite fixa ${fmt(c.machines)}.`);
+   if(c.wanted>c.machines+1e-5)push('warn',n,nodeTitle(n),itemName(r.outs[0]?.item),`Demanda a jusante pede ${fmt(c.wanted)} máquinas equivalentes, mas a configuração fixa ${fmt(c.machines)}.`);
+   const goal=desiredMachines(n);
+   if(goal!==null&&isFixed(n.target)){
+    const outputRate=r.gen?r.gen*R.clock:R.outs[0];
+    if(outputRate>1e-9&&n.target>goal*outputRate+eps)push('problem',n,nodeTitle(n),itemName(r.outs[0]?.item),`Meta ${fmt(n.target)} ${r.gen?'MW':'/min'} excede as ${fmt(goal,0)} máquinas configuradas (capacidade ${fmt(goal*outputRate)}). A quantidade manual tem prioridade e a meta não pode ser atingida sem alterar o clock, a quantidade ou a meta.`);
+   }
    if(st.uOut<Math.min(1,st.uIn)-1e-4)push('warn',n,nodeTitle(n),'Saída bloqueada',`As máquinas rodam a ${fmt(st.u*100,1)}% porque uma saída não escoa (consumo a jusante, esteira ou limite de porta). No jogo, a produção para quando o buffer enche.`);
    r.outs.forEach((p,j)=>{if(j===0&&r.outs.length>0&&!r.gen)return;const amt=c.plannedOuts?.[j]??c.previewOuts?.[j]??0;if(amt>eps&&!outE.some(e=>e.fi===j))push('warn',n,nodeTitle(n),itemName(p.item),`Subproduto previsto sem destino: ${fmt(amt)}/min. Quando estiver operando, a máquina trava ao encher o buffer. Ligue a um consumidor, armazenamento ou AWESOME Sink.`);});
   }else if(n.type==='source'){
    const virtual=isManualSource(n)||isAutoSource(n),per=minerBase({...n,sourceCount:1}),flow=c.actualOuts[0]||0;
-   c.machines=virtual?0:(per>1e-9?flow/per:0);c.built=virtual?0:n.sourceCount;c.sourceCount=c.built;
-   const refCap=isAutoSource(n)?sourceReference(n):sourceCap(n);c.utilization=refCap>1e-9?100*flow/refCap:0;
+   const waterAuto=isAutoWater(n),waterCount=waterAuto?waterExtractorsNeeded(c.requestedOuts[0]||0):0;
+   c.waterExtractorsRequired=waterCount;
+   c.machines=waterAuto?(c.requestedOuts[0]||0)/EXTRACTORS['water-extractor'].rate:(virtual?0:(per>1e-9?flow/per:0));
+   c.built=waterAuto?waterCount:(virtual?0:n.sourceCount);c.sourceCount=c.built;
+   const refCap=isAutoSource(n)?sourceReference(n):sourceCap(n);c.utilization=waterAuto?(waterCount?100*flow/(waterCount*EXTRACTORS['water-extractor'].rate):0):(refCap>1e-9?100*flow/refCap:0);
    c.referenceExceeded=isAutoSource(n)&&n.sourceMachine!=='external'&&flow>sourceReference(n)+eps;
-   c.power=virtual||flow<=1e-9?0:extractorPower(n);c.lastClock=0;
+   c.power=waterAuto?waterCount*EXTRACTORS['water-extractor'].power*(project.settings.powerMul||1):(virtual||flow<=1e-9?0:extractorPower(n));c.lastClock=0;
    c.shards=virtual?0:n.sourceCount*shardsFor(n.clock||100);
-   if(c.referenceExceeded)push('warn',n,nodeTitle(n),'Referência física insuficiente',`Demanda planejada ${fmt(flow)}/min; ${nodeSubtitle(n)} entrega ${fmt(sourceReference(n))}/min. A entrada automática atende o plano, mas isso não representa uma extratora capaz dessa taxa.`);
+   if(c.referenceExceeded&&!waterAuto)push('warn',n,nodeTitle(n),'Referência física insuficiente',`Demanda planejada ${fmt(flow)}/min; ${nodeSubtitle(n)} entrega ${fmt(sourceReference(n))}/min. A entrada automática atende o plano, mas isso não representa uma extratora capaz dessa taxa.`);
    if(!virtual&&(c.requestedOuts[0]||0)>sourceCap(n)+eps)push('problem',n,nodeTitle(n),itemName(n.item),`A extração fixa entrega ${fmt(sourceCap(n))}/min, mas o plano pede ${fmt(c.requestedOuts[0])}/min.`);
   }else if(n.type==='output'||n.type==='storage'||n.type==='depot'){
    if(isFixed(n.target)){
@@ -2026,6 +2044,7 @@ function normalizeProject(){
   const v={...n,board:n.board||'root',portCaps:n.portCaps&&typeof n.portCaps==='object'?n.portCaps:{},clock:Math.max(1,Math.min(250,Number(n.clock)||100))};
   for(const k of['target','limit'])if(v[k]!=null&&!isFiniteNum(Number(v[k])))v[k]=null;else if(v[k]!=null)v[k]=Number(v[k]);
   if(v.type==='recipe'){
+   v.machineGoal=isFixed(Number(v.machineGoal))&&v.machineGoal!==null&&Number.isSafeInteger(Number(v.machineGoal))?Number(v.machineGoal):null;
    if(v.recipe){for(const p of[...(v.recipe.ins||[]),...(v.recipe.outs||[])]){const it=resolveItem(p.key,p.item);p.item=it;if(it!=null)p.key=items[it].key;}}
    else if(v.rkey&&RECIPE_BY_KEY[v.rkey])v.rid=RECIPE_BY_KEY[v.rkey].id;
    else if(Number.isInteger(v.rid)&&recs[v.rid])v.rkey=recs[v.rid].key;
@@ -2092,7 +2111,7 @@ function extractorLabel(n){const ex=EXTRACTORS[n.sourceMachine];if(!ex)return'Ex
 function nodeTitle(n){return n.title||({recipe:recOf(n)?.name,source:itemName(n.item),splitter:'Divisor',priority_splitter:'Divisor prioritário',merger:'Combinador',priority_merger:'Combinador prioritário',storage:'Armazenamento',depot:'Depósito dimensional',sink:'AWESOME Sink',output:'Destino / meta',outpost:'Outpost',blueprint:'Blueprint',note:'Anotação',port_in:'Entrada do outpost',port_out:'Saída do outpost'}[n.type]||'Nó')}
 function nodeSubtitle(n){
  if(n.type==='recipe'){const r=recOf(n);if(!r)return'Receita';if(r.gen)return`${machines[r.cat]} · ⚡ ${fmt(r.gen,0)} MW cada`;return machines[r.cat]+(r.alt?' • alternativa':'')+(r.pw?` • ${fmt(r.pwMin,0)}–${fmt(r.pwMax,0)} MW`:'');}
- if(n.type==='source'){if(isManualSource(n))return'Entrada fixa · '+fmt(n.limit??0)+'/min';if(isAutoSource(n))return'Entrada automática · acompanha a demanda';return extractorLabel(n);}
+ if(n.type==='source'){if(isManualSource(n))return'Entrada fixa · '+fmt(n.limit??0)+'/min';if(isAutoWater(n))return'Água automática · extratores de 120 m³/min';if(isAutoSource(n))return'Entrada automática · acompanha a demanda';return extractorLabel(n);}
  if(n.type==='note')return'Nota';
  if(isContainer(n)){const io=outpostIO(n);return`${pl(io.ins.length,'entrada','entradas')} · ${pl(io.outs.length,'saída','saídas')} · 2 toques abre`;}
  if(n.type==='port_in')return'Recebe do plano de fora';
@@ -2140,9 +2159,9 @@ function renderNode(n,lod='full',AS=null){
  const p=ports(n),sub=nodeSubtitle(n);let footer='';
  if(n.type==='recipe'&&a?.gen){footer=`<span><span class="machinecount">${fmt(c.machines)}</span> <span class="machineclock">geradores · ${c.built} constr.</span></span><span class="limitflag" style="color:var(--green)">+${fmt(c.gen,1)} MW</span>`;}
  else if(n.type==='recipe'){const constrained=c.machines+1e-5<c.wanted,R=rr(n),sl=R?.sl||0,util=c.util;
-  const right=c.machines>1e-9&&util<.999?`<span class="limitflag" style="color:#ff9e92">${fmt(util*100,0)}% em uso</span>`:`<span class="limitflag">últ. ${fmt(c.lastClock,1)}%</span>`;
+  const right=c.machines>1e-9&&util<.999?`<span class="limitflag" style="color:#ff9e92">${fmt(util*100,0)}% em uso</span>`:`<span class="limitflag">${desiredMachines(n)!==null?'fixo · ':''}últ. ${fmt(c.lastClock,1)}%</span>`;
   footer=`<span><span class="machinecount">${fmt(c.machines)}</span> <span class="machineclock">equiv. · ${c.built} máq.${sl?` · ◆${sl}`:''}${constrained?' ⚠ limite':''}</span></span>${right}`;}
- else if(n.type==='source')footer=isAutoSource(n)?`<span><span class="machinecount">${fmt(c.actualOuts[0]||0)}</span> <span class="machineclock">/min · automático</span></span><span class="limitflag">ref. ${fmt(sourceReference(n))}${c.referenceExceeded?' ⚠':''}</span>`:isManualSource(n)?`<span><span class="machinecount">${fmt(c.actualOuts[0]||0)}</span> <span class="machineclock">/min · entrada fixa</span></span><span class="limitflag">teto ${fmt(sourceCap(n))}</span>`:`<span><span class="machinecount">${fmt(c.actualOuts[0]||0)}</span> <span class="machineclock">/min · ${n.sourceCount||1} extr.</span></span><span class="limitflag">uso ${fmt(c.utilization||0,1)}%</span>`;
+ else if(n.type==='source')footer=isAutoWater(n)?`<span><span class="machinecount">${fmt(c.waterExtractorsRequired||0,0)}</span> <span class="machineclock">extr. água · 100%</span></span><span class="limitflag">${fmt(c.requestedOuts[0]||0)}/min · ${fmt(c.power,0)} MW</span>`:isAutoSource(n)?`<span><span class="machinecount">${fmt(c.actualOuts[0]||0)}</span> <span class="machineclock">/min · automático</span></span><span class="limitflag">ref. ${fmt(sourceReference(n))}${c.referenceExceeded?' ⚠':''}</span>`:isManualSource(n)?`<span><span class="machinecount">${fmt(c.actualOuts[0]||0)}</span> <span class="machineclock">/min · entrada fixa</span></span><span class="limitflag">teto ${fmt(sourceCap(n))}</span>`:`<span><span class="machinecount">${fmt(c.actualOuts[0]||0)}</span> <span class="machineclock">/min · ${n.sourceCount||1} extr.</span></span><span class="limitflag">uso ${fmt(c.utilization||0,1)}%</span>`;
  else footer=`<span class="node-selecthint">${isContainer(n)?'Abrir com 2 toques':'Toque para editar'}</span><span class="limitflag">${n.target!=null?'Meta '+fmt(n.target):''}</span>`;
  const rows=(list,io)=>list.map((item,i)=>{
   const actual=io==='in'?(c.actualIns?.[i]||0):(c.actualOuts?.[i]||0);
@@ -2272,7 +2291,7 @@ function refreshPicker(){
  `<div class="emptylist">${pickerContext.replaceId?'Não há outras receitas cadastradas para este produto.':'Nenhum item corresponde ao filtro. Experimente outro termo ou outra aba.'}</div>`;
 }
 function createNode(item,x,y){
- const base={id:id(),board:project.current,x:Math.round(x),y:Math.round(y),title:'',clock:100,limit:null,target:null,portCaps:{}};
+ const base={id:id(),board:project.current,x:Math.round(x),y:Math.round(y),title:'',clock:100,limit:null,target:null,machineGoal:null,portCaps:{}};
  if(item.kind==='recipe'){const r=recs[item.rid];return{...base,type:'recipe',rid:item.rid,rkey:r?.key,sloops:0};}
  if(item.kind==='custom')return{...base,type:'recipe',recipe:clone(project.customRecipes[item.idx]),sloops:0};
  if(item.kind==='source')return{...base,type:'source',item:item.item,ikey:items[item.item]?.key,sourceMachine:'external',purity:1,sourceCount:1,sourceMode:'auto',limit:null,autoSupply:false};
@@ -2307,17 +2326,20 @@ function inspectNode(nid=null){const n=nBy(nid||[...selected][0]);if(!n)return t
  if(r&&r.gen){
   body+=`<div class="metricgrid"><div class="metric"><strong>${fmt(c.machines)}</strong><span>Geradores equivalentes</span></div><div class="metric"><strong>${fmt(c.gen,1)}</strong><span>MW gerados (com o combustível que chega)</span></div></div>`;
   body+=`<div class="info">${esc(machines[r.cat])} • ${fmt(r.gen,0)} MW por gerador a 100%. Consumo por gerador: ${r.ins.map(x=>fmt(x.qty*60/r.duration)+' '+itemName(x.item)).join(' · ')}/min${r.outs.length?'<br>Resíduo: '+r.outs.map(x=>fmt(x.qty*60/r.duration)+' '+itemName(x.item)).join(' · ')+'/min':''}. Overclock de gerador é linear.</div>`;
-  body+=`<div class="twocol">${field('Potência desejada (MW)','editTarget',n.target??'','text','Em branco: usa o máximo de geradores ou 1.')}${field('Máximo de geradores','editLimit',n.limit??'','text','Em branco: sem teto.')}</div>${field('Clock (%)','editClock',n.clock||100,'number','1% a 250%.')}`;
+  body+=`<div class="twocol">${field('Potência desejada (MW)','editTarget',n.target??'','text','Em branco: usa o máximo de geradores ou 1.')}${field('Quantidade desejada de geradores','editMachineGoal',n.machineGoal??'','text','Inteiro exato. Em branco: cálculo automático pela potência desejada.')}</div>${field('Clock (%)','editClock',n.clock||100,'number','1% a 250%.')}`;
+  if(isFixed(n.limit)&&desiredMachines(n)===null)body+=`<div class="info orange">Projeto antigo: teto de ${fmt(n.limit)} geradores preservado. Defina uma quantidade exata para substituí-lo, ou salve este editor para remover o teto antigo.</div>`;
  }else if(r){const R=rr(n),slots=sloopSlots(r);
-  body+=`<div class="metricgrid"><div class="metric"><strong>${fmt(c.wanted)}</strong><span>Máquinas equivalentes necessárias</span></div><div class="metric"><strong>${c.built||0}</strong><span>Máquinas para construir</span></div></div><div class="info">Plano: <b>${planText(c,n.clock||100)}</b>. Uso real: <b>${fmt((c.util||0)*100,1)}%</b>${c.machines+1e-5<c.wanted?'<br><b>⚠ A meta/limite impede atender toda a demanda.</b>':''}${c.shards?`<br>Power Shards: <b>${c.shards}</b>`:''}${c.sloops?` · Somersloops: <b>${c.sloops}</b>`:''}</div>`;
+  body+=`<div class="metricgrid"><div class="metric"><strong>${fmt(c.wanted)}</strong><span>Máquinas equivalentes necessárias</span></div><div class="metric"><strong>${c.built||0}</strong><span>Máquinas para construir</span></div></div><div class="info">Plano: <b>${planText(c,n.clock||100)}</b>. Uso real: <b>${fmt((c.util||0)*100,1)}%</b>${c.machines+1e-5<c.wanted?'<br><b>⚠ A quantidade ou o limite impede atender toda a demanda.</b>':''}${c.shards?`<br>Power Shards: <b>${c.shards}</b>`:''}${c.sloops?` · Somersloops: <b>${c.sloops}</b>`:''}</div>`;
   body+=`<div class="info">${esc(machines[r.cat])} • ${fmt(r.duration)} s/ciclo${r.pw?` • ${fmt(r.pwMin,0)}–${fmt(r.pwMax,0)} MW (média ${fmt(r.pw,0)})`:''}. Taxas por máquina com clock e Somersloops atuais:<br>${R?R.ins.map((q,i)=>'↓ '+fmt(q)+' '+itemName(r.ins[i].item)).join(' · ')||'Sem entradas':''}<br>${R?R.outs.map((q,i)=>'↑ '+fmt(q)+' '+itemName(r.outs[i].item)).join(' · '):''}</div>`;
-  body+=`<div class="twocol">${field('Meta da saída principal (/min)','editTarget',n.target??'','text','Valor fixo. Em branco: calcula pela demanda.')}${field('Máximo de máquinas','editLimit',n.limit??'','text','Em branco: sem teto.')}</div><div class="twocol">${field('Clock (%)','editClock',n.clock||100,'number','1% a 250%. Até 3 Power Shards.')}${slots?selectField('Somersloops por máquina','editSloops',Array.from({length:slots+1},(_,k)=>[k,k?`${k} de ${slots} · +${fmt(100*k/slots,0)}% produção`:'Nenhum']),n.sloops||0):'<div class="field"><label>Somersloops</label><small>Esta máquina não aceita amplificação.</small></div>'}</div>`;
+  body+=`<div class="twocol">${field('Meta da saída principal (/min)','editTarget',n.target??'','text','Valor fixo. Em branco: calcula pela demanda.')}${field('Quantidade desejada de máquinas','editMachineGoal',n.machineGoal??'','text','Inteiro exato. Em branco: cálculo automático por demanda.')}</div><div class="twocol">${field('Clock (%)','editClock',n.clock||100,'number','1% a 250%. Até 3 Power Shards.')}${slots?selectField('Somersloops por máquina','editSloops',Array.from({length:slots+1},(_,k)=>[k,k?`${k} de ${slots} · +${fmt(100*k/slots,0)}% produção`:'Nenhum']),n.sloops||0):'<div class="field"><label>Somersloops</label><small>Esta máquina não aceita amplificação.</small></div>'}</div>`;
+  if(isFixed(n.limit)&&desiredMachines(n)===null)body+=`<div class="info orange">Projeto antigo: teto de ${fmt(n.limit)} máquinas preservado. Defina uma quantidade exata para substituí-lo, ou simplesmente salve este editor para remover o teto antigo.</div>`;
  }else if(n.type==='source'){
   const itemOpts=[...new Set([...sourceItems,n.item])].map(i=>[i,itemName(i)]);
   const mode=isManualSource(n)?'manual':'auto';
   body+=`${selectField('Recurso','editItem',itemOpts,n.item)}${selectField('Tipo de entrada','editSourceMode',[['auto','Automático · acompanha demanda'],['manual','Vazão fixa · itens ou m³/min']],mode)}`;
   body+=`<div id="sourceManual">${field('Oferta fixa (/min)','editManualRate',mode==='manual'?(n.limit??0):120,'text','Defina a vazão sem máquina, pureza, clock nem consumo de energia.')}</div>`;
   body+=`<div class="info"><b>Automático:</b> acompanha o consumo. Quando a fábrica não tem metas, usa 120/min como referência inicial. <b>Fixo:</b> impõe a disponibilidade máxima informada, sem criar extratoras.</div>`;
+  if(items[n.item]?.key==='water')body+=`<div class="metricgrid"><div class="metric"><strong>${fmt(waterExtractorsNeeded(c.requestedOuts?.[0]||0),0)}</strong><span>Extratores de água a 100%</span></div><div class="metric"><strong>${fmt(waterExtractorsNeeded(c.requestedOuts?.[0]||0)*20,0)} MW</strong><span>Potência estimada</span></div></div><div class="info">Um extrator fornece 120 m³/min a 100%. Dimensionamento estimado pela demanda planejada, sem considerar a distribuição entre tubos, recalque ou aproveitamento de subprodutos.</div>`;
  }else if(n.type==='note'){body+=`<div class="field"><label>Conteúdo da nota</label><textarea id="editNote">${esc(n.note||'')}</textarea></div>`;}
  else if(isContainer(n)){const io=outpostIO(n);body+=`<div class="info">Abra a área (2 toques) e adicione <b>Entrada do outpost</b> e <b>Saída do outpost</b>. Cada uma vira uma porta neste bloco e o cálculo atravessa os dois planos.<br>Portas atuais: ${io.ins.length?io.ins.map(p=>'⇲ '+esc(itemName(p.item))).join(', '):'nenhuma entrada'}; ${io.outs.length?io.outs.map(p=>'⇱ '+esc(itemName(p.item))).join(', '):'nenhuma saída'}.</div>`;}
  else{const iopts=[["","Detectar pela conexão"],...items.map(it=>[it.id,it.name])];
@@ -2336,7 +2358,15 @@ function inspectNode(nid=null){const n=nBy(nid||[...selected][0]);if(!n)return t
 function updateSourceEditor(){const manual=$('sourceManual');if(manual)manual.hidden=$('editSourceMode')?.value!=='manual';}
 function saveNodeEdit(){const n=nBy([...selected][0]);if(!n)return;const change={};try{
  change.title=$('editTitle')?.value.trim()||'';
- if(n.type==='recipe'){change.target=readOptional('editTarget');change.limit=readOptional('editLimit');change.clock=readOptional('editClock')??100;if($('editSloops'))change.sloops=Number($('editSloops').value)||0;}
+ if(n.type==='recipe'){
+  change.target=readOptional('editTarget');change.clock=readOptional('editClock')??100;
+  if($('editMachineGoal')){
+   change.machineGoal=readOptional('editMachineGoal');
+   if(change.machineGoal!==null&&(!Number.isSafeInteger(change.machineGoal)||change.machineGoal>100000))throw Error('A quantidade desejada deve ser um número inteiro de 0 a 100.000.');
+   change.limit=null; // migrar/retirar somente o teto legado da receita editada
+  }else change.limit=readOptional('editLimit'); // geradores ainda usam teto
+  if($('editSloops'))change.sloops=Number($('editSloops').value)||0;
+ }
  if(n.type==='source'){
   change.item=Number($('editItem').value);change.ikey=items[change.item]?.key;
   change.sourceMode=$('editSourceMode').value;change.sourceMachine='external';change.purity=1;
@@ -2391,7 +2421,10 @@ function summarySheet(){const s=calculated.stats,ns=boardNodes();
  for(const n of ns){const c=calculated.nodes[n.id]||emptyCalcState();
   if(n.type==='recipe'){const r=recOf(n);if(!r)continue;const key=machines[r.cat]+(r.gen?' (gerador)':'');const t=byType.get(key)||{eq:0,built:0,pw:0,gen:0};t.eq+=c.machines||0;t.built+=c.built||0;t.pw+=c.power||0;t.gen+=c.gen||0;byType.set(key,t);
    r.outs.forEach((p,j)=>addBal(p.item,'p',c.actualOuts?.[j]||0));r.ins.forEach((p,i)=>addBal(p.item,'c',c.actualIns?.[i]||0));}
-  else if(n.type==='source'){addBal(n.item,'p',c.actualOuts?.[0]||0);if(!isAutoSource(n)&&!isManualSource(n)){const ex=EXTRACTORS[n.sourceMachine];if(ex){const t=byType.get(ex.name)||{eq:0,built:0,pw:0,gen:0};t.eq+=c.machines||0;t.built+=c.built||0;t.pw+=c.power||0;byType.set(ex.name,t);}}}}
+  else if(n.type==='source'){addBal(n.item,'p',c.actualOuts?.[0]||0);if(isAutoWater(n)&&c.waterExtractorsRequired>0){
+    const key='Extrator de água (automático · 100%)',t=byType.get(key)||{eq:0,built:0,pw:0,gen:0};
+    t.eq+=c.machines||0;t.built+=c.waterExtractorsRequired;t.pw+=c.power||0;byType.set(key,t);
+   }if(!isAutoSource(n)&&!isManualSource(n)){const ex=EXTRACTORS[n.sourceMachine];if(ex){const t=byType.get(ex.name)||{eq:0,built:0,pw:0,gen:0};t.eq+=c.machines||0;t.built+=c.built||0;t.pw+=c.power||0;byType.set(ex.name,t);}}}}
  const typeRows=[...byType].sort((a,b)=>b[1].built-a[1].built).map(([k,t])=>`<div class="line"><span>${esc(k)}<div class="muted">${fmt(t.eq)} equivalentes${t.gen>1e-6?` · +${fmt(t.gen,1)} MW`:` · ${fmt(t.pw,1)} MW`}</div></span><b>${fmt(t.built,0)}</b></div>`).join('')||'<p class="muted">Nenhuma máquina nesta área.</p>';
  const balRows=[...bal].sort((a,b)=>itemName(+a[0]).localeCompare(itemName(+b[0]))).map(([it,o])=>{const d=o.p-o.c;return`<div class="line"><span>${esc(itemName(+it))}<div class="muted">produz ${fmt(o.p)} · consome ${fmt(o.c)}</div></span><b style="color:${d<-0.01?'#ff9e92':d>0.01?'#a3e8c2':'#c7d7e4'}">${d>0.01?'+':''}${fmt(d)}/min</b></div>`}).join('')||'<p class="muted">Sem fluxo calculado.</p>';
  showSheet('Resumo de produção',sub,`<div class="metricgrid"><div class="metric"><strong>${fmt(s.need)}</strong><span>Máquinas equivalentes necessárias</span></div><div class="metric"><strong>${fmt(s.planned,0)}</strong><span>Máquinas para construir</span></div><div class="metric"><strong>${fmt(s.power,1)}</strong><span>Consumo planejado (MW)</span></div>${gens}<div class="metric"><strong>${s.shards}</strong><span>Power Shards</span></div><div class="metric"><strong>${s.sloops}</strong><span>Somersloops</span></div><div class="metric"><strong>${s.shortages}</strong><span>Pendências</span></div></div>
