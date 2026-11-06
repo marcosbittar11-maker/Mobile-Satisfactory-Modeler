@@ -1,0 +1,11 @@
+{
+  "checks": [
+    "home, breadcrumb, placeholder, storage warning, roundtrip and user text: 393",
+    "home, breadcrumb, placeholder, storage warning, roundtrip and user text: 1366",
+    "save without storage in an opaque origin: English warning and homepage"
+  ],
+  "screens": 86,
+  "distinctTexts": 1024,
+  "findings": [],
+  "errors": []
+}
