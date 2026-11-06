@@ -1,5 +1,5 @@
-/* Factory Flow v0.4.12 · cache offline do PWA */
-const CACHE_NAME = 'factory-flow-pwa-v0.4.12-1';
+/* Factory Flow v0.4.17 · cache offline do PWA */
+const CACHE_NAME = 'factory-flow-pwa-v0.4.17-1';
 const APP_FILES = [
   './',
   './index.html',
