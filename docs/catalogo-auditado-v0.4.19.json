@@ -1,0 +1,2776 @@
+{
+  "items": [
+    {
+      "key": "iron-ore",
+      "en": "Iron Ore",
+      "pt": "Minério de Ferro"
+    },
+    {
+      "key": "copper-ore",
+      "en": "Copper Ore",
+      "pt": "Minério de Cobre"
+    },
+    {
+      "key": "coal",
+      "en": "Coal",
+      "pt": "Carvão"
+    },
+    {
+      "key": "iron-ingot",
+      "en": "Iron Ingot",
+      "pt": "Lingote de Ferro"
+    },
+    {
+      "key": "copper-ingot",
+      "en": "Copper Ingot",
+      "pt": "Lingote de Cobre"
+    },
+    {
+      "key": "steel-ingot",
+      "en": "Steel Ingot",
+      "pt": "Lingote de Aço"
+    },
+    {
+      "key": "iron-plate",
+      "en": "Iron Plate",
+      "pt": "Placa de Ferro"
+    },
+    {
+      "key": "iron-rod",
+      "en": "Iron Rod",
+      "pt": "Barra de Ferro"
+    },
+    {
+      "key": "wire",
+      "en": "Wire",
+      "pt": "Fio"
+    },
+    {
+      "key": "cable",
+      "en": "Cable",
+      "pt": "Cabo"
+    },
+    {
+      "key": "biomass",
+      "en": "Biomass",
+      "pt": "Biomassa"
+    },
+    {
+      "key": "concrete",
+      "en": "Concrete",
+      "pt": "Concreto"
+    },
+    {
+      "key": "leaves",
+      "en": "Leaves",
+      "pt": "Folhas"
+    },
+    {
+      "key": "limestone",
+      "en": "Limestone",
+      "pt": "Calcário"
+    },
+    {
+      "key": "screw",
+      "en": "Screw",
+      "pt": "Parafusos"
+    },
+    {
+      "key": "wood",
+      "en": "Wood",
+      "pt": "Madeira"
+    },
+    {
+      "key": "hog-remains",
+      "en": "Hog Remains",
+      "pt": "Restos de Hog"
+    },
+    {
+      "key": "spitter-remains",
+      "en": "Spitter Remains",
+      "pt": "Restos de Spitter"
+    },
+    {
+      "key": "stinger-remains",
+      "en": "Stinger Remains",
+      "pt": "Restos de Stinger"
+    },
+    {
+      "key": "hatcher-remains",
+      "en": "Hatcher Remains",
+      "pt": "Restos de Hatcher"
+    },
+    {
+      "key": "alien-protein",
+      "en": "Alien Protein",
+      "pt": "Proteína Alienígena"
+    },
+    {
+      "key": "alien-dna-capsule",
+      "en": "Alien DNA Capsule",
+      "pt": "Cápsula de DNA Alienígena"
+    },
+    {
+      "key": "blue-power-slug",
+      "en": "Blue Power Slug",
+      "pt": "Lesma de Energia Azul"
+    },
+    {
+      "key": "yellow-power-slug",
+      "en": "Yellow Power Slug",
+      "pt": "Lesma de Energia Amarela"
+    },
+    {
+      "key": "purple-power-slug",
+      "en": "Purple Power Slug",
+      "pt": "Lesma de Energia Roxa"
+    },
+    {
+      "key": "power-shard",
+      "en": "Power Shard",
+      "pt": "Fragmento de Energia"
+    },
+    {
+      "key": "mycelia",
+      "en": "Mycelia",
+      "pt": "Micélio"
+    },
+    {
+      "key": "solid-biofuel",
+      "en": "Solid Biofuel",
+      "pt": "Biocombustível Sólido"
+    },
+    {
+      "key": "steel-beam",
+      "en": "Steel Beam",
+      "pt": "Viga de Aço"
+    },
+    {
+      "key": "steel-pipe",
+      "en": "Steel Pipe",
+      "pt": "Tubo de Aço"
+    },
+    {
+      "key": "reinforced-iron-plate",
+      "en": "Reinforced Iron Plate",
+      "pt": "Placa de Ferro Reforçada"
+    },
+    {
+      "key": "rotor",
+      "en": "Rotor",
+      "pt": "Rotor"
+    },
+    {
+      "key": "modular-frame",
+      "en": "Modular Frame",
+      "pt": "Estrutura Modular"
+    },
+    {
+      "key": "encased-industrial-beam",
+      "en": "Encased Industrial Beam",
+      "pt": "Viga Industrial Revestida"
+    },
+    {
+      "key": "stator",
+      "en": "Stator",
+      "pt": "Estator"
+    },
+    {
+      "key": "motor",
+      "en": "Motor",
+      "pt": "Motor"
+    },
+    {
+      "key": "circuit-board",
+      "en": "Circuit Board",
+      "pt": "Placa de Circuito"
+    },
+    {
+      "key": "plastic",
+      "en": "Plastic",
+      "pt": "Plástico"
+    },
+    {
+      "key": "rubber",
+      "en": "Rubber",
+      "pt": "Borracha"
+    },
+    {
+      "key": "heavy-modular-frame",
+      "en": "Heavy Modular Frame",
+      "pt": "Estrutura Modular Pesada"
+    },
+    {
+      "key": "computer",
+      "en": "Computer",
+      "pt": "Computador"
+    },
+    {
+      "key": "caterium-ore",
+      "en": "Caterium Ore",
+      "pt": "Minério de Caterium"
+    },
+    {
+      "key": "caterium-ingot",
+      "en": "Caterium Ingot",
+      "pt": "Lingote de Caterium"
+    },
+    {
+      "key": "quickwire",
+      "en": "Quickwire",
+      "pt": "Fio Rápido"
+    },
+    {
+      "key": "supercomputer",
+      "en": "Supercomputer",
+      "pt": "Supercomputador"
+    },
+    {
+      "key": "high-speed-connector",
+      "en": "High-Speed Connector",
+      "pt": "Conector de Alta Velocidade"
+    },
+    {
+      "key": "ai-limiter",
+      "en": "AI Limiter",
+      "pt": "Limitador de IA"
+    },
+    {
+      "key": "fabric",
+      "en": "Fabric",
+      "pt": "Tecido"
+    },
+    {
+      "key": "filter",
+      "en": "Gas Filter",
+      "pt": "Filtro de Gás"
+    },
+    {
+      "key": "raw-quartz",
+      "en": "Raw Quartz",
+      "pt": "Quartzo Bruto"
+    },
+    {
+      "key": "quartz-crystal",
+      "en": "Quartz Crystal",
+      "pt": "Cristal de Quartzo"
+    },
+    {
+      "key": "crystal-oscillator",
+      "en": "Crystal Oscillator",
+      "pt": "Oscilador de Cristal"
+    },
+    {
+      "key": "sulfur",
+      "en": "Sulfur",
+      "pt": "Enxofre"
+    },
+    {
+      "key": "black-powder",
+      "en": "Black Powder",
+      "pt": "Pólvora Negra"
+    },
+    {
+      "key": "smokeless-powder",
+      "en": "Smokeless Powder",
+      "pt": "Pólvora Sem Fumaça"
+    },
+    {
+      "key": "nobelisk",
+      "en": "Nobelisk",
+      "pt": "Nobelisk"
+    },
+    {
+      "key": "gas-nobelisk",
+      "en": "Gas Nobelisk",
+      "pt": "Nobelisk de Gás"
+    },
+    {
+      "key": "pulse-nobelisk",
+      "en": "Pulse Nobelisk",
+      "pt": "Nobelisk de Pulso"
+    },
+    {
+      "key": "cluster-nobelisk",
+      "en": "Cluster Nobelisk",
+      "pt": "Nobelisk de Fragmentação"
+    },
+    {
+      "key": "nuke-nobelisk",
+      "en": "Nuke Nobelisk",
+      "pt": "Nobelisk Nuclear"
+    },
+    {
+      "key": "compacted-coal",
+      "en": "Compacted Coal",
+      "pt": "Carvão Compactado"
+    },
+    {
+      "key": "silica",
+      "en": "Silica",
+      "pt": "Sílica"
+    },
+    {
+      "key": "bauxite",
+      "en": "Bauxite",
+      "pt": "Bauxita"
+    },
+    {
+      "key": "aluminum-ingot",
+      "en": "Aluminum Ingot",
+      "pt": "Lingote de Alumínio"
+    },
+    {
+      "key": "alclad-aluminum-sheet",
+      "en": "Alclad Aluminum Sheet",
+      "pt": "Chapa de Alumínio"
+    },
+    {
+      "key": "heat-sink",
+      "en": "Heat Sink",
+      "pt": "Dissipador de Calor"
+    },
+    {
+      "key": "radio-control-unit",
+      "en": "Radio Control Unit",
+      "pt": "Unidade de Controle de Rádio"
+    },
+    {
+      "key": "turbo-motor",
+      "en": "Turbo Motor",
+      "pt": "Turbomotor"
+    },
+    {
+      "key": "battery",
+      "en": "Battery",
+      "pt": "Bateria"
+    },
+    {
+      "key": "uranium",
+      "en": "Uranium",
+      "pt": "Urânio"
+    },
+    {
+      "key": "uranium-cell",
+      "en": "Encased Uranium Cell",
+      "pt": "Célula de Urânio Revestida"
+    },
+    {
+      "key": "em-control-rod",
+      "en": "Electromagnetic Control Rod",
+      "pt": "Barra de Controle Eletromagnética"
+    },
+    {
+      "key": "uranium-fuel-rod",
+      "en": "Uranium Fuel Rod",
+      "pt": "Barra de Combustível de Urânio"
+    },
+    {
+      "key": "iodine-infused-filter",
+      "en": "Iodine Infused Filter",
+      "pt": "Filtro Infundido com Iodo"
+    },
+    {
+      "key": "aluminum-scrap",
+      "en": "Aluminum Scrap",
+      "pt": "Sucata de Alumínio"
+    },
+    {
+      "key": "copper-sheet",
+      "en": "Copper Sheet",
+      "pt": "Chapa de Cobre"
+    },
+    {
+      "key": "polymer-resin",
+      "en": "Polymer Resin",
+      "pt": "Resina Polimérica"
+    },
+    {
+      "key": "petroleum-coke",
+      "en": "Petroleum Coke",
+      "pt": "Coque de Petróleo"
+    },
+    {
+      "key": "non-fissile-uranium",
+      "en": "Non-fissile Uranium",
+      "pt": "Urânio Não Físsil"
+    },
+    {
+      "key": "plutonium-pellet",
+      "en": "Plutonium Pellet",
+      "pt": "Pastilha de Plutônio"
+    },
+    {
+      "key": "encased-plutonium-cell",
+      "en": "Encased Plutonium Cell",
+      "pt": "Célula de Plutônio Revestida"
+    },
+    {
+      "key": "plutonium-fuel-rod",
+      "en": "Plutonium Fuel Rod",
+      "pt": "Barra de Combustível de Plutônio"
+    },
+    {
+      "key": "copper-powder",
+      "en": "Copper Powder",
+      "pt": "Pó de Cobre"
+    },
+    {
+      "key": "pressure-conversion-cube",
+      "en": "Pressure Conversion Cube",
+      "pt": "Cubo de Conversão de Pressão"
+    },
+    {
+      "key": "empty-canister",
+      "en": "Empty Canister",
+      "pt": "Galão Vazio"
+    },
+    {
+      "key": "packaged-water",
+      "en": "Packaged Water",
+      "pt": "Água Embalada"
+    },
+    {
+      "key": "packaged-oil",
+      "en": "Packaged Oil",
+      "pt": "Petróleo Embalado"
+    },
+    {
+      "key": "packaged-fuel",
+      "en": "Packaged Fuel",
+      "pt": "Combustível Embalado"
+    },
+    {
+      "key": "packaged-turbofuel",
+      "en": "Packaged Turbofuel",
+      "pt": "Turbocombustível Embalado"
+    },
+    {
+      "key": "packaged-heavy-oil-residue",
+      "en": "Packaged Heavy Oil Residue",
+      "pt": "Resíduo de Petróleo Pesado Embalado"
+    },
+    {
+      "key": "packaged-liquid-biofuel",
+      "en": "Packaged Liquid Biofuel",
+      "pt": "Biocombustível Líquido Embalado"
+    },
+    {
+      "key": "packaged-alumina-solution",
+      "en": "Packaged Alumina Solution",
+      "pt": "Solução de Alumina Embalada"
+    },
+    {
+      "key": "packaged-sulfuric-acid",
+      "en": "Packaged Sulfuric Acid",
+      "pt": "Ácido Sulfúrico Embalado"
+    },
+    {
+      "key": "packaged-nitrogen-gas",
+      "en": "Packaged Nitrogen Gas",
+      "pt": "Gás Nitrogênio Embalado"
+    },
+    {
+      "key": "packaged-nitric-acid",
+      "en": "Packaged Nitric Acid",
+      "pt": "Ácido Nítrico Embalado"
+    },
+    {
+      "key": "packaged-rocket-fuel",
+      "en": "Packaged Rocket Fuel",
+      "pt": "Combustível de Foguete Embalado"
+    },
+    {
+      "key": "packaged-ionized-fuel",
+      "en": "Packaged Ionized Fuel",
+      "pt": "Combustível Ionizado Embalado"
+    },
+    {
+      "key": "smart-plating",
+      "en": "Smart Plating",
+      "pt": "Revestimento Inteligente"
+    },
+    {
+      "key": "versatile-framework",
+      "en": "Versatile Framework",
+      "pt": "Estrutura Versátil"
+    },
+    {
+      "key": "automated-wiring",
+      "en": "Automated Wiring",
+      "pt": "Fiação Automatizada"
+    },
+    {
+      "key": "modular-engine",
+      "en": "Modular Engine",
+      "pt": "Motor Modular"
+    },
+    {
+      "key": "adaptive-control-unit",
+      "en": "Adaptive Control Unit",
+      "pt": "Unidade de Controle Adaptativa"
+    },
+    {
+      "key": "assembly-director-system",
+      "en": "Assembly Director System",
+      "pt": "Sistema Diretor de Montagem"
+    },
+    {
+      "key": "magnetic-field-generator",
+      "en": "Magnetic Field Generator",
+      "pt": "Gerador de Campo Magnético"
+    },
+    {
+      "key": "thermal-propulsion-rocket",
+      "en": "Thermal Propulsion Rocket",
+      "pt": "Foguete de Propulsão Térmica"
+    },
+    {
+      "key": "nuclear-pasta",
+      "en": "Nuclear Pasta",
+      "pt": "Pasta Nuclear"
+    },
+    {
+      "key": "portable-miner",
+      "en": "Portable Miner",
+      "pt": "Mineradora Portátil"
+    },
+    {
+      "key": "aluminum-casing",
+      "en": "Aluminum Casing",
+      "pt": "Carcaça de Alumínio"
+    },
+    {
+      "key": "empty-fluid-tank",
+      "en": "Empty Fluid Tank",
+      "pt": "Tanque de Fluido Vazio"
+    },
+    {
+      "key": "cooling-system",
+      "en": "Cooling System",
+      "pt": "Sistema de Resfriamento"
+    },
+    {
+      "key": "fused-modular-frame",
+      "en": "Fused Modular Frame",
+      "pt": "Estrutura Modular Fundida"
+    },
+    {
+      "key": "uranium-waste",
+      "en": "Uranium Waste",
+      "pt": "Resíduo de Urânio"
+    },
+    {
+      "key": "plutonium-waste",
+      "en": "Plutonium Waste",
+      "pt": "Resíduo de Plutônio"
+    },
+    {
+      "key": "sam",
+      "en": "SAM",
+      "pt": "SAM"
+    },
+    {
+      "key": "reanimated-sam",
+      "en": "Reanimated SAM",
+      "pt": "SAM Reanimado"
+    },
+    {
+      "key": "sam-fluctuator",
+      "en": "SAM Fluctuator",
+      "pt": "Flutuador SAM"
+    },
+    {
+      "key": "iron-rebar",
+      "en": "Iron Rebar",
+      "pt": "Vergalhão de Ferro"
+    },
+    {
+      "key": "stun-rebar",
+      "en": "Stun Rebar",
+      "pt": "Vergalhão Atordoante"
+    },
+    {
+      "key": "shatter-rebar",
+      "en": "Shatter Rebar",
+      "pt": "Vergalhão Estilhaçante"
+    },
+    {
+      "key": "explosive-rebar",
+      "en": "Explosive Rebar",
+      "pt": "Vergalhão Explosivo"
+    },
+    {
+      "key": "rifle-ammo",
+      "en": "Rifle Ammo",
+      "pt": "Munição de Rifle"
+    },
+    {
+      "key": "homing-rifle-ammo",
+      "en": "Homing Rifle Ammo",
+      "pt": "Munição Teleguiada de Rifle"
+    },
+    {
+      "key": "turbo-rifle-ammo",
+      "en": "Turbo Rifle Ammo",
+      "pt": "Munição Turbo de Rifle"
+    },
+    {
+      "key": "diamonds",
+      "en": "Diamonds",
+      "pt": "Diamantes"
+    },
+    {
+      "key": "time-crystal",
+      "en": "Time Crystal",
+      "pt": "Cristal Temporal"
+    },
+    {
+      "key": "ficsite-ingot",
+      "en": "Ficsite Ingot",
+      "pt": "Lingote de Ficsita"
+    },
+    {
+      "key": "ficsite-trigon",
+      "en": "Ficsite Trigon",
+      "pt": "Trígono de Ficsita"
+    },
+    {
+      "key": "dark-matter-crystal",
+      "en": "Dark Matter Crystal",
+      "pt": "Cristal de Matéria Escura"
+    },
+    {
+      "key": "ficsonium",
+      "en": "Ficsonium",
+      "pt": "Ficsonium"
+    },
+    {
+      "key": "ficsonium-fuel-rod",
+      "en": "Ficsonium Fuel Rod",
+      "pt": "Barra de Combustível de Ficsonium"
+    },
+    {
+      "key": "superposition-oscillator",
+      "en": "Superposition Oscillator",
+      "pt": "Oscilador de Superposição"
+    },
+    {
+      "key": "neural-quantum-processor",
+      "en": "Neural-Quantum Processor",
+      "pt": "Processador Neural-Quântico"
+    },
+    {
+      "key": "singularity-cell",
+      "en": "Singularity Cell",
+      "pt": "Célula de Singularidade"
+    },
+    {
+      "key": "ballistic-warp-drive",
+      "en": "Ballistic Warp Drive",
+      "pt": "Motor de Dobra Balístico"
+    },
+    {
+      "key": "ai-expansion-server",
+      "en": "AI Expansion Server",
+      "pt": "Servidor de Expansão de IA"
+    },
+    {
+      "key": "alien-power-matrix",
+      "en": "Alien Power Matrix",
+      "pt": "Matriz de Energia Alienígena"
+    },
+    {
+      "key": "water",
+      "en": "Water",
+      "pt": "Água"
+    },
+    {
+      "key": "crude-oil",
+      "en": "Crude Oil",
+      "pt": "Petróleo Bruto"
+    },
+    {
+      "key": "fuel",
+      "en": "Fuel",
+      "pt": "Combustível"
+    },
+    {
+      "key": "turbofuel",
+      "en": "Turbofuel",
+      "pt": "Turbocombustível"
+    },
+    {
+      "key": "heavy-oil-residue",
+      "en": "Heavy Oil Residue",
+      "pt": "Resíduo de Petróleo Pesado"
+    },
+    {
+      "key": "liquid-biofuel",
+      "en": "Liquid Biofuel",
+      "pt": "Biocombustível Líquido"
+    },
+    {
+      "key": "alumina-solution",
+      "en": "Alumina Solution",
+      "pt": "Solução de Alumina"
+    },
+    {
+      "key": "sulfuric-acid",
+      "en": "Sulfuric Acid",
+      "pt": "Ácido Sulfúrico"
+    },
+    {
+      "key": "nitrogen-gas",
+      "en": "Nitrogen Gas",
+      "pt": "Gás Nitrogênio"
+    },
+    {
+      "key": "nitric-acid",
+      "en": "Nitric Acid",
+      "pt": "Ácido Nítrico"
+    },
+    {
+      "key": "dissolved-silica",
+      "en": "Dissolved Silica",
+      "pt": "Sílica Dissolvida"
+    },
+    {
+      "key": "rocket-fuel",
+      "en": "Rocket Fuel",
+      "pt": "Combustível de Foguete"
+    },
+    {
+      "key": "dark-matter-residue",
+      "en": "Dark Matter Residue",
+      "pt": "Resíduo de Matéria Escura"
+    },
+    {
+      "key": "excited-photonic-matter",
+      "en": "Excited Photonic Matter",
+      "pt": "Matéria Fotônica Excitada"
+    },
+    {
+      "key": "ionized-fuel",
+      "en": "Ionized Fuel",
+      "pt": "Combustível Ionizado"
+    },
+    {
+      "key": "biochemical-sculptor",
+      "en": "Biochemical Sculptor",
+      "pt": "Escultor Bioquímico"
+    },
+    {
+      "key": "blade-runners",
+      "en": "Blade Runners",
+      "pt": "Blade Runners"
+    },
+    {
+      "key": "chainsaw",
+      "en": "Chainsaw",
+      "pt": "Motosserra"
+    },
+    {
+      "key": "factory-carttm",
+      "en": "Factory Cart™",
+      "pt": "Carrinho de Fábrica™"
+    },
+    {
+      "key": "gas-mask",
+      "en": "Gas Mask",
+      "pt": "Máscara de Gás"
+    },
+    {
+      "key": "golden-factory-carttm",
+      "en": "Golden Factory Cart™",
+      "pt": "Carrinho de Fábrica Dourado™"
+    },
+    {
+      "key": "hazmat-suit",
+      "en": "Hazmat Suit",
+      "pt": "Traje de Proteção"
+    },
+    {
+      "key": "hoverpack",
+      "en": "Hoverpack",
+      "pt": "Mochila Flutuante"
+    },
+    {
+      "key": "jetpack",
+      "en": "Jetpack",
+      "pt": "Jetpack"
+    },
+    {
+      "key": "object-scanner",
+      "en": "Object Scanner",
+      "pt": "Scanner de Objetos"
+    },
+    {
+      "key": "nobelisk-detonator",
+      "en": "Nobelisk Detonator",
+      "pt": "Detonador de Nobelisk"
+    },
+    {
+      "key": "bacon-agaric",
+      "en": "Bacon Agaric",
+      "pt": "Ágarico-bacon"
+    },
+    {
+      "key": "paleberry",
+      "en": "Paleberry",
+      "pt": "Baga-pálida"
+    },
+    {
+      "key": "beryl-nut",
+      "en": "Beryl Nut",
+      "pt": "Noz de Berílio"
+    },
+    {
+      "key": "medicinal-inhaler",
+      "en": "Medicinal Inhaler",
+      "pt": "Inalador Medicinal"
+    },
+    {
+      "key": "parachute",
+      "en": "Parachute",
+      "pt": "Paraquedas"
+    },
+    {
+      "key": "rebar-gun",
+      "en": "Rebar Gun",
+      "pt": "Rifle de Vergalhão"
+    },
+    {
+      "key": "rifle",
+      "en": "Rifle",
+      "pt": "Rifle"
+    },
+    {
+      "key": "xeno-zapper",
+      "en": "Xeno-Zapper",
+      "pt": "Xeno-Zapper"
+    },
+    {
+      "key": "xeno-basher",
+      "en": "Xeno-Basher",
+      "pt": "Xeno-Basher"
+    },
+    {
+      "key": "zipline",
+      "en": "Zipline",
+      "pt": "Tirolesa"
+    }
+  ],
+  "machines": [
+    {
+      "en": "Smelter",
+      "pt": "Fundidora"
+    },
+    {
+      "en": "Foundry",
+      "pt": "Fundição"
+    },
+    {
+      "en": "Refinery",
+      "pt": "Refinaria"
+    },
+    {
+      "en": "Constructor",
+      "pt": "Construtor"
+    },
+    {
+      "en": "Assembler",
+      "pt": "Montadora"
+    },
+    {
+      "en": "Manufacturer",
+      "pt": "Fabricadora"
+    },
+    {
+      "en": "Blender",
+      "pt": "Misturadora"
+    },
+    {
+      "en": "Particle Accelerator",
+      "pt": "Acelerador de Partículas"
+    },
+    {
+      "en": "Packager",
+      "pt": "Empacotadora"
+    },
+    {
+      "en": "Converter",
+      "pt": "Conversor"
+    },
+    {
+      "en": "Quantum Encoder",
+      "pt": "Codificador Quântico"
+    },
+    {
+      "en": "Nuclear Power Plant",
+      "pt": "Usina Nuclear"
+    },
+    {
+      "en": "Coal-Powered Generator",
+      "pt": "Gerador a Carvão"
+    },
+    {
+      "en": "Fuel-Powered Generator",
+      "pt": "Gerador a Combustível"
+    },
+    {
+      "en": "Equipment Workshop (manual)",
+      "pt": "Oficina de Equipamentos (manual)"
+    }
+  ],
+  "recipes": [
+    {
+      "key": "iron-ingot",
+      "original": "Iron Ingot",
+      "pt": "Lingote de Ferro",
+      "status": "item label reused"
+    },
+    {
+      "key": "alternate-iron-alloy-ingot",
+      "original": "Alternate: Iron Alloy Ingot",
+      "pt": "Alternate: Iron Alloy Ingot",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "alternate-pure-iron-ingot",
+      "original": "Alternate: Pure Iron Ingot",
+      "pt": "Alternate: Pure Iron Ingot",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "alternate-leached-iron-ingot",
+      "original": "Alternate: Leached Iron Ingot",
+      "pt": "Alternate: Leached Iron Ingot",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "copper-ingot",
+      "original": "Copper Ingot",
+      "pt": "Lingote de Cobre",
+      "status": "item label reused"
+    },
+    {
+      "key": "alternate-copper-alloy-ingot",
+      "original": "Alternate: Copper Alloy Ingot",
+      "pt": "Alternate: Copper Alloy Ingot",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "alternate-pure-copper-ingot",
+      "original": "Alternate: Pure Copper Ingot",
+      "pt": "Alternate: Pure Copper Ingot",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "alternate-leached-copper-ingot",
+      "original": "Alternate: Leached Copper Ingot",
+      "pt": "Alternate: Leached Copper Ingot",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "steel-ingot",
+      "original": "Steel Ingot",
+      "pt": "Lingote de Aço",
+      "status": "item label reused"
+    },
+    {
+      "key": "alternate-solid-steel-ingot",
+      "original": "Alternate: Solid Steel Ingot",
+      "pt": "Alternate: Solid Steel Ingot",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "alternate-compacted-steel-ingot",
+      "original": "Alternate: Compacted Steel Ingot",
+      "pt": "Alternate: Compacted Steel Ingot",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "alternate-coke-steel-ingot",
+      "original": "Alternate: Coke Steel Ingot",
+      "pt": "Alternate: Coke Steel Ingot",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "iron-plate",
+      "original": "Iron Plate",
+      "pt": "Placa de Ferro",
+      "status": "item label reused"
+    },
+    {
+      "key": "alternate-steel-cast-plate",
+      "original": "Alternate: Steel Cast Plate",
+      "pt": "Alternate: Steel Cast Plate",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "alternate-coated-iron-plate",
+      "original": "Alternate: Coated Iron Plate",
+      "pt": "Alternate: Coated Iron Plate",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "iron-rod",
+      "original": "Iron Rod",
+      "pt": "Barra de Ferro",
+      "status": "item label reused"
+    },
+    {
+      "key": "alternate-steel-rod",
+      "original": "Alternate: Steel Rod",
+      "pt": "Alternate: Steel Rod",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "alternate-aluminum-rod",
+      "original": "Alternate: Aluminum Rod",
+      "pt": "Alternate: Aluminum Rod",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "wire",
+      "original": "Wire",
+      "pt": "Fio",
+      "status": "item label reused"
+    },
+    {
+      "key": "alternate-iron-wire",
+      "original": "Alternate: Iron Wire",
+      "pt": "Alternate: Iron Wire",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "alternate-caterium-wire",
+      "original": "Alternate: Caterium Wire",
+      "pt": "Alternate: Caterium Wire",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "alternate-fused-wire",
+      "original": "Alternate: Fused Wire",
+      "pt": "Alternate: Fused Wire",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "cable",
+      "original": "Cable",
+      "pt": "Cabo",
+      "status": "item label reused"
+    },
+    {
+      "key": "alternate-insulated-cable",
+      "original": "Alternate: Insulated Cable",
+      "pt": "Alternate: Insulated Cable",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "alternate-quickwire-cable",
+      "original": "Alternate: Quickwire Cable",
+      "pt": "Alternate: Quickwire Cable",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "alternate-coated-cable",
+      "original": "Alternate: Coated Cable",
+      "pt": "Alternate: Coated Cable",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "concrete",
+      "original": "Concrete",
+      "pt": "Concreto",
+      "status": "item label reused"
+    },
+    {
+      "key": "alternate-fine-concrete",
+      "original": "Alternate: Fine Concrete",
+      "pt": "Alternate: Fine Concrete",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "alternate-rubber-concrete",
+      "original": "Alternate: Rubber Concrete",
+      "pt": "Alternate: Rubber Concrete",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "alternate-wet-concrete",
+      "original": "Alternate: Wet Concrete",
+      "pt": "Alternate: Wet Concrete",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "screw",
+      "original": "Screw",
+      "pt": "Parafusos",
+      "status": "item label reused"
+    },
+    {
+      "key": "alternate-cast-screw",
+      "original": "Alternate: Cast Screw",
+      "pt": "Alternate: Cast Screw",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "alternate-steel-screw",
+      "original": "Alternate: Steel Screw",
+      "pt": "Alternate: Steel Screw",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "hog-protein",
+      "original": "Hog Protein",
+      "pt": "Hog Protein",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "spitter-protein",
+      "original": "Spitter Protein",
+      "pt": "Spitter Protein",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "stinger-protein",
+      "original": "Stinger Protein",
+      "pt": "Stinger Protein",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "hatcher-protein",
+      "original": "Hatcher Protein",
+      "pt": "Hatcher Protein",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "alien-dna-capsule",
+      "original": "Alien DNA Capsule",
+      "pt": "Cápsula de DNA Alienígena",
+      "status": "item label reused"
+    },
+    {
+      "key": "power-shard-1",
+      "original": "Power Shard (1)",
+      "pt": "Power Shard (1)",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "power-shard-2",
+      "original": "Power Shard (2)",
+      "pt": "Power Shard (2)",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "power-shard-5",
+      "original": "Power Shard (5)",
+      "pt": "Power Shard (5)",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "biomass-leaves",
+      "original": "Biomass (Leaves)",
+      "pt": "Biomass (Leaves)",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "biomass-wood",
+      "original": "Biomass (Wood)",
+      "pt": "Biomass (Wood)",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "biomass-mycelia",
+      "original": "Biomass (Mycelia)",
+      "pt": "Biomass (Mycelia)",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "biomass-alien-protein",
+      "original": "Biomass (Alien Protein)",
+      "pt": "Biomass (Alien Protein)",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "solid-biofuel",
+      "original": "Solid Biofuel",
+      "pt": "Biocombustível Sólido",
+      "status": "item label reused"
+    },
+    {
+      "key": "steel-beam",
+      "original": "Steel Beam",
+      "pt": "Viga de Aço",
+      "status": "item label reused"
+    },
+    {
+      "key": "alternate-aluminum-beam",
+      "original": "Alternate: Aluminum Beam",
+      "pt": "Alternate: Aluminum Beam",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "steel-pipe",
+      "original": "Steel Pipe",
+      "pt": "Tubo de Aço",
+      "status": "item label reused"
+    },
+    {
+      "key": "alternate-molded-steel-pipe",
+      "original": "Alternate: Molded Steel Pipe",
+      "pt": "Alternate: Molded Steel Pipe",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "alternate-iron-pipe",
+      "original": "Alternate: Iron Pipe",
+      "pt": "Alternate: Iron Pipe",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "reinforced-iron-plate",
+      "original": "Reinforced Iron Plate",
+      "pt": "Placa de Ferro Reforçada",
+      "status": "item label reused"
+    },
+    {
+      "key": "alternate-bolted-iron-plate",
+      "original": "Alternate: Bolted Iron Plate",
+      "pt": "Alternate: Bolted Iron Plate",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "alternate-stitched-iron-plate",
+      "original": "Alternate: Stitched Iron Plate",
+      "pt": "Alternate: Stitched Iron Plate",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "alternate-adhered-iron-plate",
+      "original": "Alternate: Adhered Iron Plate",
+      "pt": "Alternate: Adhered Iron Plate",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "rotor",
+      "original": "Rotor",
+      "pt": "Rotor",
+      "status": "item label reused"
+    },
+    {
+      "key": "alternate-steel-rotor",
+      "original": "Alternate: Steel Rotor",
+      "pt": "Alternate: Steel Rotor",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "alternate-copper-rotor",
+      "original": "Alternate: Copper Rotor",
+      "pt": "Alternate: Copper Rotor",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "modular-frame",
+      "original": "Modular Frame",
+      "pt": "Estrutura Modular",
+      "status": "item label reused"
+    },
+    {
+      "key": "alternate-steeled-frame",
+      "original": "Alternate: Steeled Frame",
+      "pt": "Alternate: Steeled Frame",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "alternate-bolted-frame",
+      "original": "Alternate: Bolted Frame",
+      "pt": "Alternate: Bolted Frame",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "encased-industrial-beam",
+      "original": "Encased Industrial Beam",
+      "pt": "Viga Industrial Revestida",
+      "status": "item label reused"
+    },
+    {
+      "key": "alternate-encased-industrial-pipe",
+      "original": "Alternate: Encased Industrial Pipe",
+      "pt": "Alternate: Encased Industrial Pipe",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "stator",
+      "original": "Stator",
+      "pt": "Estator",
+      "status": "item label reused"
+    },
+    {
+      "key": "alternate-quickwire-stator",
+      "original": "Alternate: Quickwire Stator",
+      "pt": "Alternate: Quickwire Stator",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "motor",
+      "original": "Motor",
+      "pt": "Motor",
+      "status": "item label reused"
+    },
+    {
+      "key": "alternate-rigor-motor",
+      "original": "Alternate: Rigor Motor",
+      "pt": "Alternate: Rigor Motor",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "alternate-electric-motor",
+      "original": "Alternate: Electric Motor",
+      "pt": "Alternate: Electric Motor",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "circuit-board",
+      "original": "Circuit Board",
+      "pt": "Placa de Circuito",
+      "status": "item label reused"
+    },
+    {
+      "key": "alternate-caterium-circuit-board",
+      "original": "Alternate: Caterium Circuit Board",
+      "pt": "Alternate: Caterium Circuit Board",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "alternate-silicon-circuit-board",
+      "original": "Alternate: Silicon Circuit Board",
+      "pt": "Alternate: Silicon Circuit Board",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "alternate-electrode-circuit-board",
+      "original": "Alternate: Electrode Circuit Board",
+      "pt": "Alternate: Electrode Circuit Board",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "plastic",
+      "original": "Plastic",
+      "pt": "Plástico",
+      "status": "item label reused"
+    },
+    {
+      "key": "alternate-recycled-plastic",
+      "original": "Alternate: Recycled Plastic",
+      "pt": "Alternate: Recycled Plastic",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "residual-plastic",
+      "original": "Residual Plastic",
+      "pt": "Residual Plastic",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "fuel",
+      "original": "Fuel",
+      "pt": "Combustível",
+      "status": "item label reused"
+    },
+    {
+      "key": "residual-fuel",
+      "original": "Residual Fuel",
+      "pt": "Residual Fuel",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "alternate-diluted-fuel",
+      "original": "Alternate: Diluted Fuel",
+      "pt": "Alternate: Diluted Fuel",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "rubber",
+      "original": "Rubber",
+      "pt": "Borracha",
+      "status": "item label reused"
+    },
+    {
+      "key": "alternate-recycled-rubber",
+      "original": "Alternate: Recycled Rubber",
+      "pt": "Alternate: Recycled Rubber",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "residual-rubber",
+      "original": "Residual Rubber",
+      "pt": "Residual Rubber",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "petroleum-coke",
+      "original": "Petroleum Coke",
+      "pt": "Coque de Petróleo",
+      "status": "item label reused"
+    },
+    {
+      "key": "alternate-polymer-resin",
+      "original": "Alternate: Polymer Resin",
+      "pt": "Alternativa: Resina Polimérica",
+      "status": "item label reused"
+    },
+    {
+      "key": "alternate-heavy-oil-residue",
+      "original": "Alternate: Heavy Oil Residue",
+      "pt": "Alternativa: Resíduo de Petróleo Pesado",
+      "status": "item label reused"
+    },
+    {
+      "key": "heavy-modular-frame",
+      "original": "Heavy Modular Frame",
+      "pt": "Estrutura Modular Pesada",
+      "status": "item label reused"
+    },
+    {
+      "key": "alternate-heavy-encased-frame",
+      "original": "Alternate: Heavy Encased Frame",
+      "pt": "Alternate: Heavy Encased Frame",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "alternate-heavy-flexible-frame",
+      "original": "Alternate: Heavy Flexible Frame",
+      "pt": "Alternate: Heavy Flexible Frame",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "computer",
+      "original": "Computer",
+      "pt": "Computador",
+      "status": "item label reused"
+    },
+    {
+      "key": "alternate-caterium-computer",
+      "original": "Alternate: Caterium Computer",
+      "pt": "Alternate: Caterium Computer",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "alternate-crystal-computer",
+      "original": "Alternate: Crystal Computer",
+      "pt": "Alternate: Crystal Computer",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "caterium-ingot",
+      "original": "Caterium Ingot",
+      "pt": "Lingote de Caterium",
+      "status": "item label reused"
+    },
+    {
+      "key": "alternate-pure-caterium-ingot",
+      "original": "Alternate: Pure Caterium Ingot",
+      "pt": "Alternate: Pure Caterium Ingot",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "alternate-leached-caterium-ingot",
+      "original": "Alternate: Leached Caterium Ingot",
+      "pt": "Alternate: Leached Caterium Ingot",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "quickwire",
+      "original": "Quickwire",
+      "pt": "Fio Rápido",
+      "status": "item label reused"
+    },
+    {
+      "key": "alternate-fused-quickwire",
+      "original": "Alternate: Fused Quickwire",
+      "pt": "Alternate: Fused Quickwire",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "supercomputer",
+      "original": "Supercomputer",
+      "pt": "Supercomputador",
+      "status": "item label reused"
+    },
+    {
+      "key": "alternate-super-state-computer",
+      "original": "Alternate: Super-State Computer",
+      "pt": "Alternate: Super-State Computer",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "alternate-oc-supercomputer",
+      "original": "Alternate: OC Supercomputer",
+      "pt": "Alternate: OC Supercomputer",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "high-speed-connector",
+      "original": "High-Speed Connector",
+      "pt": "Conector de Alta Velocidade",
+      "status": "item label reused"
+    },
+    {
+      "key": "alternate-silicon-high-speed-connector",
+      "original": "Alternate: Silicon High-Speed Connector",
+      "pt": "Alternate: Silicon High-Speed Connector",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "ai-limiter",
+      "original": "AI Limiter",
+      "pt": "Limitador de IA",
+      "status": "item label reused"
+    },
+    {
+      "key": "alternate-plastic-ai-limiter",
+      "original": "Alternate: Plastic AI Limiter",
+      "pt": "Alternate: Plastic AI Limiter",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "fabric",
+      "original": "Fabric",
+      "pt": "Tecido",
+      "status": "item label reused"
+    },
+    {
+      "key": "alternate-polyester-fabric",
+      "original": "Alternate: Polyester Fabric",
+      "pt": "Alternate: Polyester Fabric",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "gas-filter",
+      "original": "Gas Filter",
+      "pt": "Filtro de Gás",
+      "status": "item label reused"
+    },
+    {
+      "key": "quartz-crystal",
+      "original": "Quartz Crystal",
+      "pt": "Cristal de Quartzo",
+      "status": "item label reused"
+    },
+    {
+      "key": "alternate-pure-quartz-crystal",
+      "original": "Alternate: Pure Quartz Crystal",
+      "pt": "Alternate: Pure Quartz Crystal",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "alternate-quartz-purification",
+      "original": "Alternate: Quartz Purification",
+      "pt": "Alternate: Quartz Purification",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "crystal-oscillator",
+      "original": "Crystal Oscillator",
+      "pt": "Oscilador de Cristal",
+      "status": "item label reused"
+    },
+    {
+      "key": "alternate-insulated-crystal-oscillator",
+      "original": "Alternate: Insulated Crystal Oscillator",
+      "pt": "Alternate: Insulated Crystal Oscillator",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "black-powder",
+      "original": "Black Powder",
+      "pt": "Pólvora Negra",
+      "status": "item label reused"
+    },
+    {
+      "key": "alternate-fine-black-powder",
+      "original": "Alternate: Fine Black Powder",
+      "pt": "Alternate: Fine Black Powder",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "smokeless-powder",
+      "original": "Smokeless Powder",
+      "pt": "Pólvora Sem Fumaça",
+      "status": "item label reused"
+    },
+    {
+      "key": "nobelisk",
+      "original": "Nobelisk",
+      "pt": "Nobelisk",
+      "status": "item label reused"
+    },
+    {
+      "key": "gas-nobelisk",
+      "original": "Gas Nobelisk",
+      "pt": "Nobelisk de Gás",
+      "status": "item label reused"
+    },
+    {
+      "key": "cluster-nobelisk",
+      "original": "Cluster Nobelisk",
+      "pt": "Nobelisk de Fragmentação",
+      "status": "item label reused"
+    },
+    {
+      "key": "pulse-nobelisk",
+      "original": "Pulse Nobelisk",
+      "pt": "Nobelisk de Pulso",
+      "status": "item label reused"
+    },
+    {
+      "key": "nuke-nobelisk",
+      "original": "Nuke Nobelisk",
+      "pt": "Nobelisk Nuclear",
+      "status": "item label reused"
+    },
+    {
+      "key": "rifle-ammo",
+      "original": "Rifle Ammo",
+      "pt": "Munição de Rifle",
+      "status": "item label reused"
+    },
+    {
+      "key": "homing-rifle-ammo",
+      "original": "Homing Rifle Ammo",
+      "pt": "Munição Teleguiada de Rifle",
+      "status": "item label reused"
+    },
+    {
+      "key": "turbo-rifle-ammo",
+      "original": "Turbo Rifle Ammo",
+      "pt": "Munição Turbo de Rifle",
+      "status": "item label reused"
+    },
+    {
+      "key": "turbo-rifle-ammo@blender",
+      "original": "Turbo Rifle Ammo",
+      "pt": "Munição Turbo de Rifle",
+      "status": "item label reused"
+    },
+    {
+      "key": "alternate-compacted-coal",
+      "original": "Alternate: Compacted Coal",
+      "pt": "Alternativa: Carvão Compactado",
+      "status": "item label reused"
+    },
+    {
+      "key": "alternate-charcoal",
+      "original": "Alternate: Charcoal",
+      "pt": "Alternate: Charcoal",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "alternate-biocoal",
+      "original": "Alternate: Biocoal",
+      "pt": "Alternate: Biocoal",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "turbofuel",
+      "original": "Turbofuel",
+      "pt": "Turbocombustível",
+      "status": "item label reused"
+    },
+    {
+      "key": "alternate-turbo-heavy-fuel",
+      "original": "Alternate: Turbo Heavy Fuel",
+      "pt": "Alternate: Turbo Heavy Fuel",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "alternate-turbo-blend-fuel",
+      "original": "Alternate: Turbo Blend Fuel",
+      "pt": "Alternate: Turbo Blend Fuel",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "rocket-fuel",
+      "original": "Rocket Fuel",
+      "pt": "Combustível de Foguete",
+      "status": "item label reused"
+    },
+    {
+      "key": "alternate-nitro-rocket-fuel",
+      "original": "Alternate: Nitro Rocket Fuel",
+      "pt": "Alternate: Nitro Rocket Fuel",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "silica",
+      "original": "Silica",
+      "pt": "Sílica",
+      "status": "item label reused"
+    },
+    {
+      "key": "alternate-cheap-silica",
+      "original": "Alternate: Cheap Silica",
+      "pt": "Alternate: Cheap Silica",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "alternate-distilled-silica",
+      "original": "Alternate: Distilled Silica",
+      "pt": "Alternate: Distilled Silica",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "aluminum-ingot",
+      "original": "Aluminum Ingot",
+      "pt": "Lingote de Alumínio",
+      "status": "item label reused"
+    },
+    {
+      "key": "alternate-pure-aluminum-ingot",
+      "original": "Alternate: Pure Aluminum Ingot",
+      "pt": "Alternate: Pure Aluminum Ingot",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "alclad-aluminum-sheet",
+      "original": "Alclad Aluminum Sheet",
+      "pt": "Chapa de Alumínio",
+      "status": "item label reused"
+    },
+    {
+      "key": "aluminum-casing",
+      "original": "Aluminum Casing",
+      "pt": "Carcaça de Alumínio",
+      "status": "item label reused"
+    },
+    {
+      "key": "alternate-alclad-casing",
+      "original": "Alternate: Alclad Casing",
+      "pt": "Alternate: Alclad Casing",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "heat-sink",
+      "original": "Heat Sink",
+      "pt": "Dissipador de Calor",
+      "status": "item label reused"
+    },
+    {
+      "key": "alternate-heat-exchanger",
+      "original": "Alternate: Heat Exchanger",
+      "pt": "Alternate: Heat Exchanger",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "radio-control-unit",
+      "original": "Radio Control Unit",
+      "pt": "Unidade de Controle de Rádio",
+      "status": "item label reused"
+    },
+    {
+      "key": "alternate-radio-connection-unit",
+      "original": "Alternate: Radio Connection Unit",
+      "pt": "Alternate: Radio Connection Unit",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "alternate-radio-control-system",
+      "original": "Alternate: Radio Control System",
+      "pt": "Alternate: Radio Control System",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "turbo-motor",
+      "original": "Turbo Motor",
+      "pt": "Turbomotor",
+      "status": "item label reused"
+    },
+    {
+      "key": "alternate-turbo-electric-motor",
+      "original": "Alternate: Turbo Electric Motor",
+      "pt": "Alternate: Turbo Electric Motor",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "alternate-turbo-pressure-motor",
+      "original": "Alternate: Turbo Pressure Motor",
+      "pt": "Alternate: Turbo Pressure Motor",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "battery",
+      "original": "Battery",
+      "pt": "Bateria",
+      "status": "item label reused"
+    },
+    {
+      "key": "alternate-classic-battery",
+      "original": "Alternate: Classic Battery",
+      "pt": "Alternate: Classic Battery",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "encased-uranium-cell",
+      "original": "Encased Uranium Cell",
+      "pt": "Célula de Urânio Revestida",
+      "status": "item label reused"
+    },
+    {
+      "key": "alternate-infused-uranium-cell",
+      "original": "Alternate: Infused Uranium Cell",
+      "pt": "Alternate: Infused Uranium Cell",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "non-fissile-uranium",
+      "original": "Non-Fissile Uranium",
+      "pt": "Non-Fissile Uranium",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "alternate-fertile-uranium",
+      "original": "Alternate: Fertile Uranium",
+      "pt": "Alternate: Fertile Uranium",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "electromagnetic-control-rod",
+      "original": "Electromagnetic Control Rod",
+      "pt": "Barra de Controle Eletromagnética",
+      "status": "item label reused"
+    },
+    {
+      "key": "alternate-electromagnetic-connection-rod",
+      "original": "Alternate: Electromagnetic Connection Rod",
+      "pt": "Alternate: Electromagnetic Connection Rod",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "nitric-acid",
+      "original": "Nitric Acid",
+      "pt": "Ácido Nítrico",
+      "status": "item label reused"
+    },
+    {
+      "key": "uranium-fuel-rod",
+      "original": "Uranium Fuel Rod",
+      "pt": "Barra de Combustível de Urânio",
+      "status": "item label reused"
+    },
+    {
+      "key": "alternate-uranium-fuel-unit",
+      "original": "Alternate: Uranium Fuel Unit",
+      "pt": "Alternate: Uranium Fuel Unit",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "plutonium-pellet",
+      "original": "Plutonium Pellet",
+      "pt": "Pastilha de Plutônio",
+      "status": "item label reused"
+    },
+    {
+      "key": "encased-plutonium-cell",
+      "original": "Encased Plutonium Cell",
+      "pt": "Célula de Plutônio Revestida",
+      "status": "item label reused"
+    },
+    {
+      "key": "alternate-instant-plutonium-cell",
+      "original": "Alternate: Instant Plutonium Cell",
+      "pt": "Alternate: Instant Plutonium Cell",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "plutonium-fuel-rod",
+      "original": "Plutonium Fuel Rod",
+      "pt": "Barra de Combustível de Plutônio",
+      "status": "item label reused"
+    },
+    {
+      "key": "alternate-plutonium-fuel-unit",
+      "original": "Alternate: Plutonium Fuel Unit",
+      "pt": "Alternate: Plutonium Fuel Unit",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "iodine-infused-filter",
+      "original": "Iodine-Infused Filter",
+      "pt": "Iodine-Infused Filter",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "copper-sheet",
+      "original": "Copper Sheet",
+      "pt": "Chapa de Cobre",
+      "status": "item label reused"
+    },
+    {
+      "key": "alternate-steamed-copper-sheet",
+      "original": "Alternate: Steamed Copper Sheet",
+      "pt": "Alternate: Steamed Copper Sheet",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "copper-powder",
+      "original": "Copper Powder",
+      "pt": "Pó de Cobre",
+      "status": "item label reused"
+    },
+    {
+      "key": "empty-canister",
+      "original": "Empty Canister",
+      "pt": "Galão Vazio",
+      "status": "item label reused"
+    },
+    {
+      "key": "alternate-steel-canister",
+      "original": "Alternate: Steel Canister",
+      "pt": "Alternate: Steel Canister",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "alternate-coated-iron-canister",
+      "original": "Alternate: Coated Iron Canister",
+      "pt": "Alternate: Coated Iron Canister",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "packaged-fuel",
+      "original": "Packaged Fuel",
+      "pt": "Combustível Embalado",
+      "status": "item label reused"
+    },
+    {
+      "key": "alternate-diluted-packaged-fuel",
+      "original": "Alternate: Diluted Packaged Fuel",
+      "pt": "Alternate: Diluted Packaged Fuel",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "unpackage-fuel",
+      "original": "Unpackage Fuel",
+      "pt": "Unpackage Fuel",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "packaged-turbofuel",
+      "original": "Packaged Turbofuel",
+      "pt": "Turbocombustível Embalado",
+      "status": "item label reused"
+    },
+    {
+      "key": "unpackage-turbo-fuel",
+      "original": "Unpackage Turbo Fuel",
+      "pt": "Unpackage Turbo Fuel",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "packaged-rocket-fuel",
+      "original": "Packaged Rocket Fuel",
+      "pt": "Combustível de Foguete Embalado",
+      "status": "item label reused"
+    },
+    {
+      "key": "unpackage-rocket-fuel",
+      "original": "Unpackage Rocket Fuel",
+      "pt": "Unpackage Rocket Fuel",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "packaged-ionized-fuel",
+      "original": "Packaged Ionized Fuel",
+      "pt": "Combustível Ionizado Embalado",
+      "status": "item label reused"
+    },
+    {
+      "key": "unpackage-ionized-fuel",
+      "original": "Unpackage Ionized Fuel",
+      "pt": "Unpackage Ionized Fuel",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "packaged-water",
+      "original": "Packaged Water",
+      "pt": "Água Embalada",
+      "status": "item label reused"
+    },
+    {
+      "key": "unpackage-water",
+      "original": "Unpackage Water",
+      "pt": "Unpackage Water",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "packaged-oil",
+      "original": "Packaged Oil",
+      "pt": "Petróleo Embalado",
+      "status": "item label reused"
+    },
+    {
+      "key": "unpackage-oil",
+      "original": "Unpackage Oil",
+      "pt": "Unpackage Oil",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "packaged-heavy-oil-residue",
+      "original": "Packaged Heavy Oil Residue",
+      "pt": "Resíduo de Petróleo Pesado Embalado",
+      "status": "item label reused"
+    },
+    {
+      "key": "unpackage-heavy-oil-residue",
+      "original": "Unpackage Heavy Oil Residue",
+      "pt": "Unpackage Heavy Oil Residue",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "packaged-liquid-biofuel",
+      "original": "Packaged Liquid Biofuel",
+      "pt": "Biocombustível Líquido Embalado",
+      "status": "item label reused"
+    },
+    {
+      "key": "unpackage-liquid-biofuel",
+      "original": "Unpackage Liquid Biofuel",
+      "pt": "Unpackage Liquid Biofuel",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "packaged-sulfuric-acid",
+      "original": "Packaged Sulfuric Acid",
+      "pt": "Ácido Sulfúrico Embalado",
+      "status": "item label reused"
+    },
+    {
+      "key": "unpackage-sulfuric-acid",
+      "original": "Unpackage Sulfuric Acid",
+      "pt": "Unpackage Sulfuric Acid",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "packaged-alumina-solution",
+      "original": "Packaged Alumina Solution",
+      "pt": "Solução de Alumina Embalada",
+      "status": "item label reused"
+    },
+    {
+      "key": "unpackage-alumina-solution",
+      "original": "Unpackage Alumina Solution",
+      "pt": "Unpackage Alumina Solution",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "empty-fluid-tank",
+      "original": "Empty Fluid Tank",
+      "pt": "Tanque de Fluido Vazio",
+      "status": "item label reused"
+    },
+    {
+      "key": "packaged-nitrogen-gas",
+      "original": "Packaged Nitrogen Gas",
+      "pt": "Gás Nitrogênio Embalado",
+      "status": "item label reused"
+    },
+    {
+      "key": "unpackage-nitrogen-gas",
+      "original": "Unpackage Nitrogen Gas",
+      "pt": "Unpackage Nitrogen Gas",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "packaged-nitric-acid",
+      "original": "Packaged Nitric Acid",
+      "pt": "Ácido Nítrico Embalado",
+      "status": "item label reused"
+    },
+    {
+      "key": "unpackage-nitric-acid",
+      "original": "Unpackage Nitric Acid",
+      "pt": "Unpackage Nitric Acid",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "liquid-biofuel",
+      "original": "Liquid Biofuel",
+      "pt": "Biocombustível Líquido",
+      "status": "item label reused"
+    },
+    {
+      "key": "aluminum-scrap",
+      "original": "Aluminum Scrap",
+      "pt": "Sucata de Alumínio",
+      "status": "item label reused"
+    },
+    {
+      "key": "alternate-electrode-aluminum-scrap",
+      "original": "Alternate: Electrode Aluminum Scrap",
+      "pt": "Alternate: Electrode Aluminum Scrap",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "alternate-instant-scrap",
+      "original": "Alternate: Instant Scrap",
+      "pt": "Alternate: Instant Scrap",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "alumina-solution",
+      "original": "Alumina Solution",
+      "pt": "Solução de Alumina",
+      "status": "item label reused"
+    },
+    {
+      "key": "alternate-sloppy-alumina",
+      "original": "Alternate: Sloppy Alumina",
+      "pt": "Alternate: Sloppy Alumina",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "sulfuric-acid",
+      "original": "Sulfuric Acid",
+      "pt": "Ácido Sulfúrico",
+      "status": "item label reused"
+    },
+    {
+      "key": "fused-modular-frame",
+      "original": "Fused Modular Frame",
+      "pt": "Estrutura Modular Fundida",
+      "status": "item label reused"
+    },
+    {
+      "key": "alternate-heat-fused-frame",
+      "original": "Alternate: Heat-Fused Frame",
+      "pt": "Alternate: Heat-Fused Frame",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "pressure-conversion-cube",
+      "original": "Pressure Conversion Cube",
+      "pt": "Cubo de Conversão de Pressão",
+      "status": "item label reused"
+    },
+    {
+      "key": "cooling-system",
+      "original": "Cooling System",
+      "pt": "Sistema de Resfriamento",
+      "status": "item label reused"
+    },
+    {
+      "key": "alternate-cooling-device",
+      "original": "Alternate: Cooling Device",
+      "pt": "Alternate: Cooling Device",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "smart-plating",
+      "original": "Smart Plating",
+      "pt": "Revestimento Inteligente",
+      "status": "item label reused"
+    },
+    {
+      "key": "alternate-plastic-smart-plating",
+      "original": "Alternate: Plastic Smart Plating",
+      "pt": "Alternate: Plastic Smart Plating",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "versatile-framework",
+      "original": "Versatile Framework",
+      "pt": "Estrutura Versátil",
+      "status": "item label reused"
+    },
+    {
+      "key": "alternate-flexible-framework",
+      "original": "Alternate: Flexible Framework",
+      "pt": "Alternate: Flexible Framework",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "automated-wiring",
+      "original": "Automated Wiring",
+      "pt": "Fiação Automatizada",
+      "status": "item label reused"
+    },
+    {
+      "key": "alternate-automated-speed-wiring",
+      "original": "Alternate: Automated Speed Wiring",
+      "pt": "Alternate: Automated Speed Wiring",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "modular-engine",
+      "original": "Modular Engine",
+      "pt": "Motor Modular",
+      "status": "item label reused"
+    },
+    {
+      "key": "adaptive-control-unit",
+      "original": "Adaptive Control Unit",
+      "pt": "Unidade de Controle Adaptativa",
+      "status": "item label reused"
+    },
+    {
+      "key": "assembly-director-system",
+      "original": "Assembly Director System",
+      "pt": "Sistema Diretor de Montagem",
+      "status": "item label reused"
+    },
+    {
+      "key": "magnetic-field-generator",
+      "original": "Magnetic Field Generator",
+      "pt": "Gerador de Campo Magnético",
+      "status": "item label reused"
+    },
+    {
+      "key": "thermal-propulsion-rocket",
+      "original": "Thermal Propulsion Rocket",
+      "pt": "Foguete de Propulsão Térmica",
+      "status": "item label reused"
+    },
+    {
+      "key": "nuclear-pasta",
+      "original": "Nuclear Pasta",
+      "pt": "Pasta Nuclear",
+      "status": "item label reused"
+    },
+    {
+      "key": "alternate-automated-miner",
+      "original": "Alternate: Automated Miner",
+      "pt": "Alternate: Automated Miner",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "reanimated-sam",
+      "original": "Reanimated SAM",
+      "pt": "SAM Reanimado",
+      "status": "item label reused"
+    },
+    {
+      "key": "sam-fluctuator",
+      "original": "SAM Fluctuator",
+      "pt": "Flutuador SAM",
+      "status": "item label reused"
+    },
+    {
+      "key": "iron-rebar",
+      "original": "Iron Rebar",
+      "pt": "Vergalhão de Ferro",
+      "status": "item label reused"
+    },
+    {
+      "key": "stun-rebar",
+      "original": "Stun Rebar",
+      "pt": "Vergalhão Atordoante",
+      "status": "item label reused"
+    },
+    {
+      "key": "shatter-rebar",
+      "original": "Shatter Rebar",
+      "pt": "Vergalhão Estilhaçante",
+      "status": "item label reused"
+    },
+    {
+      "key": "explosive-rebar",
+      "original": "Explosive Rebar",
+      "pt": "Vergalhão Explosivo",
+      "status": "item label reused"
+    },
+    {
+      "key": "diamonds",
+      "original": "Diamonds",
+      "pt": "Diamantes",
+      "status": "item label reused"
+    },
+    {
+      "key": "alternate-petroleum-diamonds",
+      "original": "Alternate: Petroleum Diamonds",
+      "pt": "Alternate: Petroleum Diamonds",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "alternate-turbo-diamonds",
+      "original": "Alternate: Turbo Diamonds",
+      "pt": "Alternate: Turbo Diamonds",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "alternate-oil-based-diamonds",
+      "original": "Alternate: Oil-Based Diamonds",
+      "pt": "Alternate: Oil-Based Diamonds",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "alternate-cloudy-diamonds",
+      "original": "Alternate: Cloudy Diamonds",
+      "pt": "Alternate: Cloudy Diamonds",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "alternate-pink-diamonds",
+      "original": "Alternate: Pink Diamonds",
+      "pt": "Alternate: Pink Diamonds",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "time-crystal",
+      "original": "Time Crystal",
+      "pt": "Cristal Temporal",
+      "status": "item label reused"
+    },
+    {
+      "key": "ficsite-ingot-iron",
+      "original": "Ficsite Ingot (Iron)",
+      "pt": "Ficsite Ingot (Iron)",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "ficsite-ingot-caterium",
+      "original": "Ficsite Ingot (Caterium)",
+      "pt": "Ficsite Ingot (Caterium)",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "ficsite-ingot-aluminum",
+      "original": "Ficsite Ingot (Aluminum)",
+      "pt": "Ficsite Ingot (Aluminum)",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "ficsite-trigon",
+      "original": "Ficsite Trigon",
+      "pt": "Trígono de Ficsita",
+      "status": "item label reused"
+    },
+    {
+      "key": "excited-photonic-matter",
+      "original": "Excited Photonic Matter",
+      "pt": "Matéria Fotônica Excitada",
+      "status": "item label reused"
+    },
+    {
+      "key": "dark-matter-residue",
+      "original": "Dark Matter Residue",
+      "pt": "Resíduo de Matéria Escura",
+      "status": "item label reused"
+    },
+    {
+      "key": "dark-matter-crystal",
+      "original": "Dark Matter Crystal",
+      "pt": "Cristal de Matéria Escura",
+      "status": "item label reused"
+    },
+    {
+      "key": "alternate-dark-matter-crystallization",
+      "original": "Alternate: Dark Matter Crystallization",
+      "pt": "Alternate: Dark Matter Crystallization",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "alternate-dark-matter-trap",
+      "original": "Alternate: Dark Matter Trap",
+      "pt": "Alternate: Dark Matter Trap",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "ficsonium",
+      "original": "Ficsonium",
+      "pt": "Ficsonium",
+      "status": "item label reused"
+    },
+    {
+      "key": "superposition-oscillator",
+      "original": "Superposition Oscillator",
+      "pt": "Oscilador de Superposição",
+      "status": "item label reused"
+    },
+    {
+      "key": "neural-quantum-processor",
+      "original": "Neural-Quantum Processor",
+      "pt": "Processador Neural-Quântico",
+      "status": "item label reused"
+    },
+    {
+      "key": "ficsonium-fuel-rod",
+      "original": "Ficsonium Fuel Rod",
+      "pt": "Barra de Combustível de Ficsonium",
+      "status": "item label reused"
+    },
+    {
+      "key": "synthetic-power-shard",
+      "original": "Synthetic Power Shard",
+      "pt": "Synthetic Power Shard",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "ionized-fuel",
+      "original": "Ionized Fuel",
+      "pt": "Combustível Ionizado",
+      "status": "item label reused"
+    },
+    {
+      "key": "alternate-dark-ion-fuel",
+      "original": "Alternate: Dark-Ion Fuel",
+      "pt": "Alternate: Dark-Ion Fuel",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "singularity-cell",
+      "original": "Singularity Cell",
+      "pt": "Célula de Singularidade",
+      "status": "item label reused"
+    },
+    {
+      "key": "ballistic-warp-drive",
+      "original": "Ballistic Warp Drive",
+      "pt": "Motor de Dobra Balístico",
+      "status": "item label reused"
+    },
+    {
+      "key": "ai-expansion-server",
+      "original": "AI Expansion Server",
+      "pt": "Servidor de Expansão de IA",
+      "status": "item label reused"
+    },
+    {
+      "key": "alien-power-matrix",
+      "original": "Alien Power Matrix",
+      "pt": "Matriz de Energia Alienígena",
+      "status": "item label reused"
+    },
+    {
+      "key": "iron-ore-limestone",
+      "original": "Iron Ore (Limestone)",
+      "pt": "Iron Ore (Limestone)",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "copper-ore-sulfur",
+      "original": "Copper Ore (Sulfur)",
+      "pt": "Copper Ore (Sulfur)",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "copper-ore-quartz",
+      "original": "Copper Ore (Quartz)",
+      "pt": "Copper Ore (Quartz)",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "limestone-sulfur",
+      "original": "Limestone (Sulfur)",
+      "pt": "Limestone (Sulfur)",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "coal-limestone",
+      "original": "Coal (Limestone)",
+      "pt": "Coal (Limestone)",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "coal-iron",
+      "original": "Coal (Iron)",
+      "pt": "Coal (Iron)",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "sulfur-iron",
+      "original": "Sulfur (Iron)",
+      "pt": "Sulfur (Iron)",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "sulfur-coal",
+      "original": "Sulfur (Coal)",
+      "pt": "Sulfur (Coal)",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "caterium-ore-copper",
+      "original": "Caterium Ore (Copper)",
+      "pt": "Caterium Ore (Copper)",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "caterium-ore-quartz",
+      "original": "Caterium Ore (Quartz)",
+      "pt": "Caterium Ore (Quartz)",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "raw-quartz-coal",
+      "original": "Raw Quartz (Coal)",
+      "pt": "Raw Quartz (Coal)",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "raw-quartz-bauxite",
+      "original": "Raw Quartz (Bauxite)",
+      "pt": "Raw Quartz (Bauxite)",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "bauxite-copper",
+      "original": "Bauxite (Copper)",
+      "pt": "Bauxite (Copper)",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "bauxite-caterium",
+      "original": "Bauxite (Caterium)",
+      "pt": "Bauxite (Caterium)",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "nitrogen-gas-caterium",
+      "original": "Nitrogen Gas (Caterium)",
+      "pt": "Nitrogen Gas (Caterium)",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "nitrogen-gas-bauxite",
+      "original": "Nitrogen Gas (Bauxite)",
+      "pt": "Nitrogen Gas (Bauxite)",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "uranium-ore-bauxite",
+      "original": "Uranium Ore (Bauxite)",
+      "pt": "Uranium Ore (Bauxite)",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "reactor-cycle-uranium",
+      "original": "Reactor Cycle (Uranium)",
+      "pt": "Reactor Cycle (Uranium)",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "reactor-cycle-plutonium",
+      "original": "Reactor Cycle (Plutonium)",
+      "pt": "Reactor Cycle (Plutonium)",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "alternate-basic-iron-ingot",
+      "original": "Alternate: Basic Iron Ingot",
+      "pt": "Alternate: Basic Iron Ingot",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "alternate-fused-quartz-crystal",
+      "original": "Alternate: Fused Quartz Crystal",
+      "pt": "Alternate: Fused Quartz Crystal",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "alternate-molded-beam",
+      "original": "Alternate: Molded Beam",
+      "pt": "Alternate: Molded Beam",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "alternate-tempered-caterium-ingot",
+      "original": "Alternate: Tempered Caterium Ingot",
+      "pt": "Alternate: Tempered Caterium Ingot",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "alternate-tempered-copper-ingot",
+      "original": "Alternate: Tempered Copper Ingot",
+      "pt": "Alternate: Tempered Copper Ingot",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "biochemical-sculptor",
+      "original": "Biochemical Sculptor",
+      "pt": "Escultor Bioquímico",
+      "status": "item label reused"
+    },
+    {
+      "key": "blade-runners",
+      "original": "Blade Runners",
+      "pt": "Blade Runners",
+      "status": "item label reused"
+    },
+    {
+      "key": "chainsaw",
+      "original": "Chainsaw",
+      "pt": "Motosserra",
+      "status": "item label reused"
+    },
+    {
+      "key": "factory-cart",
+      "original": "Factory Cart™",
+      "pt": "Carrinho de Fábrica™",
+      "status": "item label reused"
+    },
+    {
+      "key": "gas-mask",
+      "original": "Gas Mask",
+      "pt": "Máscara de Gás",
+      "status": "item label reused"
+    },
+    {
+      "key": "golden-factory-cart",
+      "original": "Golden Factory Cart™",
+      "pt": "Carrinho de Fábrica Dourado™",
+      "status": "item label reused"
+    },
+    {
+      "key": "hazmat-suit",
+      "original": "Hazmat Suit",
+      "pt": "Traje de Proteção",
+      "status": "item label reused"
+    },
+    {
+      "key": "hoverpack",
+      "original": "Hoverpack",
+      "pt": "Mochila Flutuante",
+      "status": "item label reused"
+    },
+    {
+      "key": "jetpack",
+      "original": "Jetpack",
+      "pt": "Jetpack",
+      "status": "item label reused"
+    },
+    {
+      "key": "nobelisk-detonator",
+      "original": "Nobelisk Detonator",
+      "pt": "Detonador de Nobelisk",
+      "status": "item label reused"
+    },
+    {
+      "key": "nutritional-inhaler",
+      "original": "Nutritional Inhaler",
+      "pt": "Nutritional Inhaler",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "object-scanner",
+      "original": "Object Scanner",
+      "pt": "Scanner de Objetos",
+      "status": "item label reused"
+    },
+    {
+      "key": "parachute",
+      "original": "Parachute",
+      "pt": "Paraquedas",
+      "status": "item label reused"
+    },
+    {
+      "key": "portable-miner",
+      "original": "Portable Miner",
+      "pt": "Mineradora Portátil",
+      "status": "item label reused"
+    },
+    {
+      "key": "protein-inhaler",
+      "original": "Protein Inhaler",
+      "pt": "Protein Inhaler",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "rebar-gun",
+      "original": "Rebar Gun",
+      "pt": "Rifle de Vergalhão",
+      "status": "item label reused"
+    },
+    {
+      "key": "rifle",
+      "original": "Rifle",
+      "pt": "Rifle",
+      "status": "item label reused"
+    },
+    {
+      "key": "therapeutic-inhaler",
+      "original": "Therapeutic Inhaler",
+      "pt": "Therapeutic Inhaler",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "vitamin-inhaler",
+      "original": "Vitamin Inhaler",
+      "pt": "Vitamin Inhaler",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "xeno-basher",
+      "original": "Xeno-Basher",
+      "pt": "Xeno-Basher",
+      "status": "item label reused"
+    },
+    {
+      "key": "xeno-zapper",
+      "original": "Xeno-Zapper",
+      "pt": "Xeno-Zapper",
+      "status": "item label reused"
+    },
+    {
+      "key": "zipline",
+      "original": "Zipline",
+      "pt": "Tirolesa",
+      "status": "item label reused"
+    },
+    {
+      "key": "gerador-a-carvao-coal",
+      "original": "Gerador a carvão · Coal",
+      "pt": "Gerador a carvão · Coal",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "gerador-a-combustivel-fuel",
+      "original": "Gerador a combustível · Fuel",
+      "pt": "Gerador a combustível · Fuel",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "gerador-a-combustivel-liquid-biofuel",
+      "original": "Gerador a combustível · Liquid Biofuel",
+      "pt": "Gerador a combustível · Liquid Biofuel",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "gerador-a-combustivel-turbofuel",
+      "original": "Gerador a combustível · Turbofuel",
+      "pt": "Gerador a combustível · Turbofuel",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "gerador-a-combustivel-rocket-fuel",
+      "original": "Gerador a combustível · Rocket Fuel",
+      "pt": "Gerador a combustível · Rocket Fuel",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "gerador-a-combustivel-ionized-fuel",
+      "original": "Gerador a combustível · Ionized Fuel",
+      "pt": "Gerador a combustível · Ionized Fuel",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "gerador-a-carvao-compacted-coal",
+      "original": "Gerador a carvão · Compacted Coal",
+      "pt": "Gerador a carvão · Compacted Coal",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "gerador-a-carvao-petroleum-coke",
+      "original": "Gerador a carvão · Petroleum Coke",
+      "pt": "Gerador a carvão · Petroleum Coke",
+      "status": "original retained: specific translation unverified"
+    },
+    {
+      "key": "reactor-cycle-ficsonium",
+      "original": "Reactor Cycle (Ficsonium)",
+      "pt": "Reactor Cycle (Ficsonium)",
+      "status": "original retained: specific translation unverified"
+    }
+  ]
+}
