@@ -46,13 +46,13 @@ const near = (a, b, msg, eps = 1e-6) => { if (!(Math.abs(a - b) <= eps * Math.ma
 const ok = (c, msg) => { if (!c) throw Error(msg); };
 
 // ---------- cálculo: comportamentos já corretos (regressão) ----------
-test('JSON de exemplo: 96,6 MW e máquinas corretas', async page => {
+test('JSON de exemplo: migração v0.4.18 sem energia de extratoras abstratas', async page => {
   const r = await page.evaluate(j => {
     importProjectText(j, 'x.factory.json'); closeSheet();
     const by = rid => calculated.nodes[project.nodes.find(n => n.rid === rid).id].machines;
     return { power: calculated.stats.power, ingot: by(0), steel: by(9), beam: by(46), pipe: by(48) };
   }, FIXTURE);
-  near(r.power, 96.6, 'energia'); near(r.ingot, 4, 'smelters'); near(r.steel, 3, 'foundries'); near(r.beam, 1.5, 'Steel Beam'); near(r.pipe, 3, 'Steel Pipe');
+  near(r.power, 81.6, 'energia'); near(r.ingot, 4, 'smelters'); near(r.steel, 3, 'foundries'); near(r.beam, 1.5, 'Steel Beam'); near(r.pipe, 3, 'Steel Pipe');
 });
 test('Overclock 150% + última máquina subclockada + shards', async page => {
   const r = await page.evaluate(() => T.build({ nodes: { s: { src: 'iron-ore' }, i: { r: 'Iron Ingot' }, p: { r: 'Iron Plate', set: { target: 100, clock: 150 } } }, edges: [['s', 0, 'i', 0], ['i', 0, 'p', 0]] }));
@@ -115,7 +115,7 @@ test('P0-1: resultado independe da ordem dos nós', async page => {
   });
   near(r[0], r[1], 'foundries (ordem A × B)');
 });
-test('P0-2: fonte com extratora física é preservada ao salvar o editor', async page => {
+test('P0-2: extratora antiga migra para oferta fixa equivalente (v0.4.18)', async page => {
   const r = await page.evaluate(j => {
     importProjectText(j, 'x.factory.json'); closeSheet();
     const n = project.nodes.find(n => n.type === 'source' && n.item === 0);
@@ -124,19 +124,19 @@ test('P0-2: fonte com extratora física é preservada ao salvar o editor', async
     const m = nBy(n.id);
     return { before, after: { power: calculated.stats.power, mode: m.sourceMode, machine: m.sourceMachine, cap: sourceCap(m) } };
   }, FIXTURE);
-  ok(/Mk\.?2/i.test(r.before.sub), 'subtítulo deve citar o Miner Mk.2: ' + r.before.sub);
-  near(r.after.power, r.before.power, 'energia após salvar sem mudanças'); ok(r.after.machine === 'miner-mk2', 'extratora perdida: ' + r.after.machine); near(r.after.cap, 120, 'teto');
+  ok(/120/.test(r.before.sub), 'oferta antiga deve ser preservada');
+  near(r.after.power, r.before.power, 'energia após salvar sem mudanças'); ok(r.after.machine === 'external' && r.after.mode === 'manual', 'fonte abstrata fixa'); near(r.after.cap, 120, 'teto');
 });
-test('P0-2: editor permite configurar Miner Mk.3 puro com 250%', async page => {
+test('P0-2: oferta manual fixa limita fluxo sem gerar energia fictícia', async page => {
   const r = await page.evaluate(() => {
     const x = T.build({ nodes: { s: { src: 'iron-ore' }, i: { r: 'Iron Ingot' }, st: { u: 'storage' } }, edges: [['s', 0, 'i', 0], ['i', 0, 'st', 0]] });
     const n = nBy(x.nodes.s.id); selected = new Set([n.id]); inspectNode(n.id);
-    $('editSourceMode').value = 'node'; $('editSourceMode').dispatchEvent(new Event('change'));
-    $('editSourceMachine').value = 'miner-mk3'; $('editPurity').value = '2'; $('editSourceCount').value = '1'; $('editSourceClock').value = '250';
+    $('editSourceMode').value = 'manual'; $('editSourceMode').dispatchEvent(new Event('change'));
+    $('editManualRate').value = '1200';
     saveNodeEdit(); const c = calculated.nodes[n.id];
     return { cap: sourceCap(nBy(n.id)), flow: c.actualOuts[0], power: c.power };
   });
-  near(r.cap, 1200, 'teto Mk3 puro 250%'); near(r.power, 45 * Math.pow(2.5, 1.321928), 'energia do minerador', 1e-4);
+  near(r.cap, 1200, 'teto manual'); near(r.power, 0, 'entrada externa sem equipamento'); near(r.flow, 1200, 'fluxo');
 });
 test('P0-4: divisor prioritário manda o transbordo para a saída 2', async page => {
   const r = await page.evaluate(() => T.build({ nodes: { s: { src: 'iron-ore', set: { sourceMode: 'manual', limit: 120 } }, i: { r: 'Iron Ingot' }, sp: { u: 'priority_splitter' }, rod: { r: 'Iron Rod', set: { limit: 1 } }, pl: { r: 'Iron Plate', set: { limit: 10 } }, s1: { u: 'storage' }, s2: { u: 'storage' } }, edges: [['s', 0, 'i', 0], ['i', 0, 'sp', 0], ['sp', 0, 'rod', 0], ['sp', 1, 'pl', 0], ['rod', 0, 's1', 0], ['pl', 0, 's2', 0]] }));
@@ -221,7 +221,7 @@ test('Geradores: Compacted Coal, Petroleum Coke e Ficsonium', async page => {
 });
 test('Resumo mostra máquinas por tipo e balanço por item', async page => {
   const r = await page.evaluate(j => { importProjectText(j, 'x.factory.json'); closeSheet(); summarySheet(); return $('sheetBody').textContent; }, FIXTURE);
-  ok(/Máquinas por tipo/.test(r) && /Foundry/.test(r) && /Miner Mk\.2/.test(r), 'tipos'); ok(/Balanço por item/.test(r) && /Steel Ingot/.test(r), 'balanço');
+  ok(/Máquinas por tipo|Machines by type/.test(r) && /Foundry/.test(r), 'tipos'); ok(/Balanço por item|Per-item balance/.test(r) && /Steel Ingot/.test(r), 'balanço');
 });
 test('Importação antiga com receitas inconsistentes avisa; a do exemplo não', async page => {
   const r = await page.evaluate(j => {
@@ -252,17 +252,21 @@ test('Arraste em grupo é desfeito em um passo', async page => {
 });
 
 (async () => {
-  const browser = await chromium.launch();
+  const server = require('http').createServer((req, res) => { res.setHeader('Content-Type', 'text/html'); res.end(fs.readFileSync(HTML)); });
+  await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
+  const browser = await chromium.launch({ executablePath: process.env.CHROMIUM_PATH || undefined, args: ['--no-sandbox'] });
   let fail = 0;
   for (const t of tests) {
     const page = await (await browser.newContext({ viewport: { width: 390, height: 844 }, isMobile: false, hasTouch: true })).newPage();
     const errors = []; page.on('pageerror', e => errors.push(e.message));
-    await page.goto('file://' + HTML); await page.waitForTimeout(150); await page.evaluate(HELPERS);
+    await page.goto('http://127.0.0.1:' + server.address().port); await page.waitForTimeout(150); await page.evaluate(HELPERS);
     try { await t.fn(page); if (errors.length) throw Error('erro JS: ' + errors.join(' | ')); console.log('✓ ' + t.name); }
     catch (e) { fail++; console.log('✗ ' + t.name + '\n    ' + e.message); }
     await page.context().close();
   }
   await browser.close();
+  server.close();
   console.log(`\n${tests.length - fail}/${tests.length} testes passaram`);
   process.exit(fail ? 1 : 0);
 })();
+

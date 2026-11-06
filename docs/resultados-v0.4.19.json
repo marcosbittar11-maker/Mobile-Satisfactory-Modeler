@@ -1,0 +1,725 @@
+{
+  "numerical": [
+    {
+      "name": "limited supply and planned machines",
+      "maxAbsoluteDifference": 0,
+      "baseline": {
+        "nodes": {
+          "s": {
+            "m": 0,
+            "built": 0,
+            "ins": [],
+            "need": [],
+            "outs": [
+              30
+            ],
+            "pw": 0,
+            "gen": 0
+          },
+          "i": {
+            "m": 4,
+            "built": 4,
+            "ins": [
+              30
+            ],
+            "need": [
+              120
+            ],
+            "outs": [
+              30
+            ],
+            "pw": 16,
+            "gen": 0
+          },
+          "p": {
+            "m": 4,
+            "built": 4,
+            "ins": [
+              30
+            ],
+            "need": [
+              120
+            ],
+            "outs": [
+              20
+            ],
+            "pw": 16,
+            "gen": 0
+          }
+        },
+        "power": 32
+      },
+      "current": {
+        "nodes": {
+          "s": {
+            "m": 0,
+            "built": 0,
+            "ins": [],
+            "need": [],
+            "outs": [
+              30
+            ],
+            "pw": 0,
+            "gen": 0
+          },
+          "i": {
+            "m": 4,
+            "built": 4,
+            "ins": [
+              30
+            ],
+            "need": [
+              120
+            ],
+            "outs": [
+              30
+            ],
+            "pw": 16,
+            "gen": 0
+          },
+          "p": {
+            "m": 4,
+            "built": 4,
+            "ins": [
+              30
+            ],
+            "need": [
+              120
+            ],
+            "outs": [
+              20
+            ],
+            "pw": 16,
+            "gen": 0
+          }
+        },
+        "power": 32
+      }
+    },
+    {
+      "name": "surplus multiple consumers",
+      "maxAbsoluteDifference": 0,
+      "baseline": {
+        "nodes": {
+          "s": {
+            "m": 0,
+            "built": 0,
+            "ins": [],
+            "need": [],
+            "outs": [
+              120
+            ],
+            "pw": 0,
+            "gen": 0
+          },
+          "i": {
+            "m": 3.99999999999999,
+            "built": 4,
+            "ins": [
+              120
+            ],
+            "need": [
+              119.99999999999969
+            ],
+            "outs": [
+              119.99999999999969
+            ],
+            "pw": 16,
+            "gen": 0
+          },
+          "p": {
+            "m": 1,
+            "built": 1,
+            "ins": [
+              30
+            ],
+            "need": [
+              30
+            ],
+            "outs": [
+              20
+            ],
+            "pw": 4,
+            "gen": 0
+          },
+          "r": {
+            "m": 5.99999999999998,
+            "built": 6,
+            "ins": [
+              89.99999999999969
+            ],
+            "need": [
+              89.99999999999969
+            ],
+            "outs": [
+              89.99999999999969
+            ],
+            "pw": 24,
+            "gen": 0
+          },
+          "st": {
+            "m": 0,
+            "built": 0,
+            "ins": [
+              89.99999999999969
+            ],
+            "need": [
+              89.99999999999969
+            ],
+            "outs": [
+              0
+            ],
+            "pw": 0,
+            "gen": 0
+          }
+        },
+        "power": 44
+      },
+      "current": {
+        "nodes": {
+          "s": {
+            "m": 0,
+            "built": 0,
+            "ins": [],
+            "need": [],
+            "outs": [
+              120
+            ],
+            "pw": 0,
+            "gen": 0
+          },
+          "i": {
+            "m": 3.99999999999999,
+            "built": 4,
+            "ins": [
+              120
+            ],
+            "need": [
+              119.99999999999969
+            ],
+            "outs": [
+              119.99999999999969
+            ],
+            "pw": 16,
+            "gen": 0
+          },
+          "p": {
+            "m": 1,
+            "built": 1,
+            "ins": [
+              30
+            ],
+            "need": [
+              30
+            ],
+            "outs": [
+              20
+            ],
+            "pw": 4,
+            "gen": 0
+          },
+          "r": {
+            "m": 5.99999999999998,
+            "built": 6,
+            "ins": [
+              89.99999999999969
+            ],
+            "need": [
+              89.99999999999969
+            ],
+            "outs": [
+              89.99999999999969
+            ],
+            "pw": 24,
+            "gen": 0
+          },
+          "st": {
+            "m": 0,
+            "built": 0,
+            "ins": [
+              89.99999999999969
+            ],
+            "need": [
+              89.99999999999969
+            ],
+            "outs": [
+              0
+            ],
+            "pw": 0,
+            "gen": 0
+          }
+        },
+        "power": 44
+      }
+    },
+    {
+      "name": "clock and Somersloops",
+      "maxAbsoluteDifference": 0,
+      "baseline": {
+        "nodes": {
+          "s": {
+            "m": 0,
+            "built": 0,
+            "ins": [],
+            "need": [],
+            "outs": [
+              75
+            ],
+            "pw": 0,
+            "gen": 0
+          },
+          "i": {
+            "m": 2.5,
+            "built": 3,
+            "ins": [
+              75
+            ],
+            "need": [
+              75
+            ],
+            "outs": [
+              75
+            ],
+            "pw": 9.600000105233455,
+            "gen": 0
+          },
+          "p": {
+            "m": 1.6666666666666667,
+            "built": 2,
+            "ins": [
+              75
+            ],
+            "need": [
+              75
+            ],
+            "outs": [
+              100
+            ],
+            "pw": 43.34638655988418,
+            "gen": 0
+          }
+        },
+        "power": 52.946386665117636
+      },
+      "current": {
+        "nodes": {
+          "s": {
+            "m": 0,
+            "built": 0,
+            "ins": [],
+            "need": [],
+            "outs": [
+              75
+            ],
+            "pw": 0,
+            "gen": 0
+          },
+          "i": {
+            "m": 2.5,
+            "built": 3,
+            "ins": [
+              75
+            ],
+            "need": [
+              75
+            ],
+            "outs": [
+              75
+            ],
+            "pw": 9.600000105233455,
+            "gen": 0
+          },
+          "p": {
+            "m": 1.6666666666666667,
+            "built": 2,
+            "ins": [
+              75
+            ],
+            "need": [
+              75
+            ],
+            "outs": [
+              100
+            ],
+            "pw": 43.34638655988418,
+            "gen": 0
+          }
+        },
+        "power": 52.946386665117636
+      }
+    },
+    {
+      "name": "hydraulic feedback",
+      "maxAbsoluteDifference": 0,
+      "baseline": {
+        "nodes": {
+          "a": {
+            "m": 0,
+            "built": 0,
+            "ins": [],
+            "need": [],
+            "outs": [
+              120
+            ],
+            "pw": 0,
+            "gen": 0
+          },
+          "w": {
+            "m": 1,
+            "built": 1,
+            "ins": [],
+            "need": [],
+            "outs": [
+              120
+            ],
+            "pw": 20,
+            "gen": 0
+          },
+          "c": {
+            "m": 0,
+            "built": 0,
+            "ins": [],
+            "need": [],
+            "outs": [
+              60
+            ],
+            "pw": 0,
+            "gen": 0
+          },
+          "al": {
+            "m": 1,
+            "built": 1,
+            "ins": [
+              120,
+              180
+            ],
+            "need": [
+              120,
+              180
+            ],
+            "outs": [
+              120,
+              50
+            ],
+            "pw": 30,
+            "gen": 0
+          },
+          "sc": {
+            "m": 0.5,
+            "built": 1,
+            "ins": [
+              120,
+              60
+            ],
+            "need": [
+              120,
+              60
+            ],
+            "outs": [
+              180,
+              60
+            ],
+            "pw": 12.000000789250919,
+            "gen": 0
+          },
+          "st": {
+            "m": 0,
+            "built": 0,
+            "ins": [
+              180
+            ],
+            "need": [
+              180
+            ],
+            "outs": [
+              0
+            ],
+            "pw": 0,
+            "gen": 0
+          }
+        },
+        "power": 62.00000078925092
+      },
+      "current": {
+        "nodes": {
+          "a": {
+            "m": 0,
+            "built": 0,
+            "ins": [],
+            "need": [],
+            "outs": [
+              120
+            ],
+            "pw": 0,
+            "gen": 0
+          },
+          "w": {
+            "m": 1,
+            "built": 1,
+            "ins": [],
+            "need": [],
+            "outs": [
+              120
+            ],
+            "pw": 20,
+            "gen": 0
+          },
+          "c": {
+            "m": 0,
+            "built": 0,
+            "ins": [],
+            "need": [],
+            "outs": [
+              60
+            ],
+            "pw": 0,
+            "gen": 0
+          },
+          "al": {
+            "m": 1,
+            "built": 1,
+            "ins": [
+              120,
+              180
+            ],
+            "need": [
+              120,
+              180
+            ],
+            "outs": [
+              120,
+              50
+            ],
+            "pw": 30,
+            "gen": 0
+          },
+          "sc": {
+            "m": 0.5,
+            "built": 1,
+            "ins": [
+              120,
+              60
+            ],
+            "need": [
+              120,
+              60
+            ],
+            "outs": [
+              180,
+              60
+            ],
+            "pw": 12.000000789250919,
+            "gen": 0
+          },
+          "st": {
+            "m": 0,
+            "built": 0,
+            "ins": [
+              180
+            ],
+            "need": [
+              180
+            ],
+            "outs": [
+              0
+            ],
+            "pw": 0,
+            "gen": 0
+          }
+        },
+        "power": 62.00000078925092
+      }
+    },
+    {
+      "name": "generator limited coal",
+      "maxAbsoluteDifference": 0,
+      "baseline": {
+        "nodes": {
+          "c": {
+            "m": 0,
+            "built": 0,
+            "ins": [],
+            "need": [],
+            "outs": [
+              15
+            ],
+            "pw": 0,
+            "gen": 0
+          },
+          "w": {
+            "m": 1.5,
+            "built": 2,
+            "ins": [],
+            "need": [],
+            "outs": [
+              180
+            ],
+            "pw": 40,
+            "gen": 0
+          },
+          "g": {
+            "m": 4,
+            "built": 4,
+            "ins": [
+              15,
+              180
+            ],
+            "need": [
+              60,
+              180
+            ],
+            "outs": [],
+            "pw": 0,
+            "gen": 75
+          }
+        },
+        "power": 40
+      },
+      "current": {
+        "nodes": {
+          "c": {
+            "m": 0,
+            "built": 0,
+            "ins": [],
+            "need": [],
+            "outs": [
+              15
+            ],
+            "pw": 0,
+            "gen": 0
+          },
+          "w": {
+            "m": 1.5,
+            "built": 2,
+            "ins": [],
+            "need": [],
+            "outs": [
+              180
+            ],
+            "pw": 40,
+            "gen": 0
+          },
+          "g": {
+            "m": 4,
+            "built": 4,
+            "ins": [
+              15,
+              180
+            ],
+            "need": [
+              60,
+              180
+            ],
+            "outs": [],
+            "pw": 0,
+            "gen": 75
+          }
+        },
+        "power": 40
+      }
+    }
+  ],
+  "viewports": [
+    {
+      "width": 320,
+      "height": 680,
+      "touch": true,
+      "desktop": false,
+      "viewport": 320,
+      "overflow": false,
+      "items": 172,
+      "recipes": 308,
+      "title": "Factory Flow v0.4.19 — Satisfactory Mobile Modeler"
+    },
+    {
+      "width": 393,
+      "height": 852,
+      "touch": true,
+      "desktop": false,
+      "viewport": 393,
+      "overflow": false,
+      "items": 172,
+      "recipes": 308,
+      "title": "Factory Flow v0.4.19 — Satisfactory Mobile Modeler"
+    },
+    {
+      "width": 768,
+      "height": 1024,
+      "touch": true,
+      "desktop": false,
+      "viewport": 768,
+      "overflow": false,
+      "items": 172,
+      "recipes": 308,
+      "title": "Factory Flow v0.4.19 — Satisfactory Mobile Modeler"
+    },
+    {
+      "width": 1024,
+      "height": 768,
+      "touch": true,
+      "desktop": false,
+      "viewport": 1024,
+      "overflow": false,
+      "items": 172,
+      "recipes": 308,
+      "title": "Factory Flow v0.4.19 — Satisfactory Mobile Modeler"
+    },
+    {
+      "width": 1366,
+      "height": 768,
+      "touch": false,
+      "desktop": true,
+      "viewport": 776,
+      "overflow": false,
+      "items": 172,
+      "recipes": 308,
+      "title": "Factory Flow v0.4.19 — Satisfactory Mobile Modeler"
+    },
+    {
+      "width": 1920,
+      "height": 1080,
+      "touch": false,
+      "desktop": true,
+      "viewport": 1330,
+      "overflow": false,
+      "items": 172,
+      "recipes": 308,
+      "title": "Factory Flow v0.4.19 — Satisfactory Mobile Modeler"
+    },
+    {
+      "width": 2560,
+      "height": 1080,
+      "touch": false,
+      "desktop": true,
+      "viewport": 1970,
+      "overflow": false,
+      "items": 172,
+      "recipes": 308,
+      "title": "Factory Flow v0.4.19 — Satisfactory Mobile Modeler"
+    }
+  ],
+  "checks": [
+    "legacy fixture: identical power",
+    "language changes preserve project byte-for-byte",
+    "aluminum preferred names, English and all required aliases",
+    "desktop insert, inline editing, machine goal, escaped user title",
+    "invalid clock rejected",
+    "deselect overview, collapsible catalog, wheel zoom, F fit",
+    "panel resized using mouse",
+    "Space + drag pans over a node without moving it",
+    "keyboard editing does not delete selected node",
+    "JSON export/import",
+    "session restored on reload from localStorage",
+    "rename with touch at mobile and tablet sizes",
+    "500 nodes: viewport culling retained",
+    "calculation/render with network disabled after loading; file:// blocked by browser policy",
+    "cold offline boot: embedded HTML executes with network disabled from start (setContent)",
+    "no uncaught JavaScript errors"
+  ],
+  "errors": [],
+  "performance": {
+    "nodes": 500,
+    "recomputeAndRenderMs": 284.5,
+    "domNodes": 100
+  }
+}

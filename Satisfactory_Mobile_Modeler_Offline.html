@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="pt-BR"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover, user-scalable=no"/>
 <meta name="theme-color" content="#0a1018"/><meta name="apple-mobile-web-app-capable" content="yes"/><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
-<title>Factory Flow v0.4.17 — Satisfactory Mobile Modeler</title>
+<title>Factory Flow v0.4.19 — Satisfactory Mobile Modeler</title>
 <style>
 :root{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#e8f0f9;background:#0b121a;--bg:#0b121a;--panel:#15202d;--panel2:#1e2e3f;--border:#304357;--muted:#8e9fb2;--orange:#ffb74d;--aqua:#5ddbd2;--warn:#ff7e72;--green:#72d6a3;--blue:#72b5ff;--top:calc(57px + env(safe-area-inset-top,0px));--bottom:calc(72px + env(safe-area-inset-bottom,0px));}
 *{box-sizing:border-box}html,body{width:100%;height:100%;margin:0;overflow:hidden;overscroll-behavior:none}button,input,select,textarea{font:inherit}button{cursor:pointer;-webkit-tap-highlight-color:transparent}button:focus-visible,input:focus-visible{outline:2px solid var(--orange);outline-offset:2px}body{-webkit-touch-callout:none}
@@ -56,6 +56,18 @@ button.alert-row:active{background:#24384b}
 .game-item-icon.with-atlas .fallback{opacity:0}
 .port.in.satisfied .qty{color:#77e6b3!important}.port.in.satisfied .port-dot{box-shadow:0 0 0 3px #40b9813a}.port.in.insufficient .qty{color:#ffbc76!important}.port.in.insufficient .port-dot{box-shadow:0 0 0 3px #ffad4b26}
 </style>
+<style id="responsive-tablet-desktop-v0418">
+@media (min-width:651px) and (pointer:coarse){
+ .bottom>.bbutton{min-height:46px;font-size:13px}
+ .zoomwrap .ib{min-height:44px;width:42px}
+ .ib{min-width:44px;min-height:44px}
+ .fab{min-width:62px;min-height:62px}
+}
+@media (min-width:1100px) and (pointer:fine){
+ .bottom>.bbutton{font-size:13px;min-height:44px}
+ .bottom{gap:10px}
+}
+</style>
 <style id="pwa-standalone-safe-area-v1">
 /* iPhone instalado: amplia a folga abaixo da Dynamic Island sem afetar Safari/Edge. */
 @media (display-mode: standalone) {
@@ -77,7 +89,7 @@ button.alert-row:active{background:#24384b}
 }
 </style>
 <style id="rename-stable-background-v0417">
-/* v0.4.17: freeze the factory canvas at its original dimensions while
+/* v0.4.18: freeze the factory canvas at its original dimensions while
    iOS presents its keyboard. Only the floating rename sheet follows it. */
 #app.rename-background-frozen {
   height: var(--rename-base-height) !important;
@@ -875,12 +887,218 @@ const sourceItems=['iron-ore','copper-ore','coal','limestone','caterium-ore','ra
 const aliases={'motor modular':'modular engine','placa de circuito':'circuit board','silicio':'silicon','sílica':'silica','fio veloz':'quickwire','caterio':'caterium','conector de alta velocidade':'high-speed connector','computador':'computer','supercomputador':'supercomputer','lingote':'ingot','combustivel':'fuel','combustível':'fuel','combustivel diluido':'diluted fuel','combustível diluído':'diluted fuel','borracha':'rubber','plastico':'plastic','plástico':'plastic','parafuso':'screw','barra de ferro':'iron rod','placa de ferro':'iron plate','motor':'motor','quadro modular':'modular frame','limitador de ia':'ai limiter','carvão':'coal','ferro':'iron','cobre':'copper','refinaria':'refinery','montador':'assembler','fabricante':'manufacturer','misturador':'blender','turbocombustivel':'turbofuel','petróleo':'oil','água':'water','minério':'ore'};
 const normalize=s=>String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim();
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const _nf={};const fmt=(n,d)=>{const dd=d??(typeof project!=='undefined'&&project?.settings?.decimals!=null?project.settings.decimals:2);if(!Number.isFinite(n))return'—';const f=_nf[dd]||(_nf[dd]=new Intl.NumberFormat('pt-BR',{maximumFractionDigits:dd}));return f.format(Math.abs(n)<1e-8?0:n)};
-const num=s=>{if(typeof s==='number')return Number.isFinite(s)?s:NaN;let t=String(s??'').trim();if(!t)return NaN;t=t.replace(/\s+/g,' ');if(/^[-+]?\d+(?:[.,]\d+)? \d+(?:[.,]\d+)?\/\d+(?:[.,]\d+)?$/.test(t)){let [w,f]=t.split(' ');return Number(w.replace(',','.'))+num(f)}if(t.includes('/')){let a=t.split('/');return a.length===2&&num(a[1])!==0?num(a[0])/num(a[1]):NaN}return Number(t.replace(',','.'))};
+/* ================= v0.4.18 · idiomas e nomes do Satisfactory 1.2 ================= */
+// Fonte dos nomes pt-BR: SatisfactoryBase (baseada em CommunityResources/Docs).
+// Os nomes originais, IDs de itens e chaves de receitas permanecem imutáveis.
+const ITEM_NAMES_PT={
+ "iron-ore": "Minério de Ferro",
+ "copper-ore": "Minério de Cobre",
+ "coal": "Carvão",
+ "iron-ingot": "Lingote de Ferro",
+ "copper-ingot": "Lingote de Cobre",
+ "steel-ingot": "Lingote de Aço",
+ "iron-plate": "Placa de Ferro",
+ "iron-rod": "Barra de Ferro",
+ "wire": "Fio",
+ "cable": "Cabo",
+ "biomass": "Biomassa",
+ "concrete": "Concreto",
+ "leaves": "Folhas",
+ "limestone": "Calcário",
+ "screw": "Parafusos",
+ "wood": "Madeira",
+ "hog-remains": "Restos de Hog",
+ "spitter-remains": "Restos de Spitter",
+ "stinger-remains": "Restos de Stinger",
+ "hatcher-remains": "Restos de Hatcher",
+ "alien-protein": "Proteína Alienígena",
+ "alien-dna-capsule": "Cápsula de DNA Alienígena",
+ "blue-power-slug": "Lesma de Energia Azul",
+ "yellow-power-slug": "Lesma de Energia Amarela",
+ "purple-power-slug": "Lesma de Energia Roxa",
+ "power-shard": "Fragmento de Energia",
+ "mycelia": "Micélio",
+ "solid-biofuel": "Biocombustível Sólido",
+ "steel-beam": "Viga de Aço",
+ "steel-pipe": "Tubo de Aço",
+ "reinforced-iron-plate": "Placa de Ferro Reforçada",
+ "rotor": "Rotor",
+ "modular-frame": "Estrutura Modular",
+ "encased-industrial-beam": "Viga Industrial Revestida",
+ "stator": "Estator",
+ "motor": "Motor",
+ "circuit-board": "Placa de Circuito",
+ "plastic": "Plástico",
+ "rubber": "Borracha",
+ "heavy-modular-frame": "Estrutura Modular Pesada",
+ "computer": "Computador",
+ "caterium-ore": "Minério de Caterium",
+ "caterium-ingot": "Lingote de Caterium",
+ "quickwire": "Fio Rápido",
+ "supercomputer": "Supercomputador",
+ "high-speed-connector": "Conector de Alta Velocidade",
+ "ai-limiter": "Limitador de IA",
+ "fabric": "Tecido",
+ "filter": "Filtro de Gás",
+ "raw-quartz": "Quartzo Bruto",
+ "quartz-crystal": "Cristal de Quartzo",
+ "crystal-oscillator": "Oscilador de Cristal",
+ "sulfur": "Enxofre",
+ "black-powder": "Pólvora Negra",
+ "smokeless-powder": "Pólvora Sem Fumaça",
+ "nobelisk": "Nobelisk",
+ "gas-nobelisk": "Nobelisk de Gás",
+ "pulse-nobelisk": "Nobelisk de Pulso",
+ "cluster-nobelisk": "Nobelisk de Fragmentação",
+ "nuke-nobelisk": "Nobelisk Nuclear",
+ "compacted-coal": "Carvão Compactado",
+ "silica": "Sílica",
+ "bauxite": "Bauxita",
+ "aluminum-ingot": "Lingote de Alumínio",
+ "alclad-aluminum-sheet": "Chapa de Alumínio",
+ "heat-sink": "Dissipador de Calor",
+ "radio-control-unit": "Unidade de Controle de Rádio",
+ "turbo-motor": "Turbomotor",
+ "battery": "Bateria",
+ "uranium": "Urânio",
+ "uranium-cell": "Célula de Urânio Revestida",
+ "em-control-rod": "Barra de Controle Eletromagnética",
+ "uranium-fuel-rod": "Barra de Combustível de Urânio",
+ "iodine-infused-filter": "Filtro Infundido com Iodo",
+ "aluminum-scrap": "Sucata de Alumínio",
+ "copper-sheet": "Chapa de Cobre",
+ "polymer-resin": "Resina Polimérica",
+ "petroleum-coke": "Coque de Petróleo",
+ "non-fissile-uranium": "Urânio Não Físsil",
+ "plutonium-pellet": "Pastilha de Plutônio",
+ "encased-plutonium-cell": "Célula de Plutônio Revestida",
+ "plutonium-fuel-rod": "Barra de Combustível de Plutônio",
+ "copper-powder": "Pó de Cobre",
+ "pressure-conversion-cube": "Cubo de Conversão de Pressão",
+ "empty-canister": "Galão Vazio",
+ "packaged-water": "Água Embalada",
+ "packaged-oil": "Petróleo Embalado",
+ "packaged-fuel": "Combustível Embalado",
+ "packaged-turbofuel": "Turbocombustível Embalado",
+ "packaged-heavy-oil-residue": "Resíduo de Petróleo Pesado Embalado",
+ "packaged-liquid-biofuel": "Biocombustível Líquido Embalado",
+ "packaged-alumina-solution": "Solução de Alumina Embalada",
+ "packaged-sulfuric-acid": "Ácido Sulfúrico Embalado",
+ "packaged-nitrogen-gas": "Gás Nitrogênio Embalado",
+ "packaged-nitric-acid": "Ácido Nítrico Embalado",
+ "packaged-rocket-fuel": "Combustível de Foguete Embalado",
+ "packaged-ionized-fuel": "Combustível Ionizado Embalado",
+ "smart-plating": "Revestimento Inteligente",
+ "versatile-framework": "Estrutura Versátil",
+ "automated-wiring": "Fiação Automatizada",
+ "modular-engine": "Motor Modular",
+ "adaptive-control-unit": "Unidade de Controle Adaptativa",
+ "assembly-director-system": "Sistema Diretor de Montagem",
+ "magnetic-field-generator": "Gerador de Campo Magnético",
+ "thermal-propulsion-rocket": "Foguete de Propulsão Térmica",
+ "nuclear-pasta": "Pasta Nuclear",
+ "portable-miner": "Mineradora Portátil",
+ "aluminum-casing": "Carcaça de Alumínio",
+ "empty-fluid-tank": "Tanque de Fluido Vazio",
+ "cooling-system": "Sistema de Resfriamento",
+ "fused-modular-frame": "Estrutura Modular Fundida",
+ "uranium-waste": "Resíduo de Urânio",
+ "plutonium-waste": "Resíduo de Plutônio",
+ "sam": "SAM",
+ "reanimated-sam": "SAM Reanimado",
+ "sam-fluctuator": "Flutuador SAM",
+ "iron-rebar": "Vergalhão de Ferro",
+ "stun-rebar": "Vergalhão Atordoante",
+ "shatter-rebar": "Vergalhão Estilhaçante",
+ "explosive-rebar": "Vergalhão Explosivo",
+ "rifle-ammo": "Munição de Rifle",
+ "homing-rifle-ammo": "Munição Teleguiada de Rifle",
+ "turbo-rifle-ammo": "Munição Turbo de Rifle",
+ "diamonds": "Diamantes",
+ "time-crystal": "Cristal Temporal",
+ "ficsite-ingot": "Lingote de Ficsita",
+ "ficsite-trigon": "Trígono de Ficsita",
+ "dark-matter-crystal": "Cristal de Matéria Escura",
+ "ficsonium": "Ficsonium",
+ "ficsonium-fuel-rod": "Barra de Combustível de Ficsonium",
+ "superposition-oscillator": "Oscilador de Superposição",
+ "neural-quantum-processor": "Processador Neural-Quântico",
+ "singularity-cell": "Célula de Singularidade",
+ "ballistic-warp-drive": "Motor de Dobra Balístico",
+ "ai-expansion-server": "Servidor de Expansão de IA",
+ "alien-power-matrix": "Matriz de Energia Alienígena",
+ "water": "Água",
+ "crude-oil": "Petróleo Bruto",
+ "fuel": "Combustível",
+ "turbofuel": "Turbocombustível",
+ "heavy-oil-residue": "Resíduo de Petróleo Pesado",
+ "liquid-biofuel": "Biocombustível Líquido",
+ "alumina-solution": "Solução de Alumina",
+ "sulfuric-acid": "Ácido Sulfúrico",
+ "nitrogen-gas": "Gás Nitrogênio",
+ "nitric-acid": "Ácido Nítrico",
+ "dissolved-silica": "Sílica Dissolvida",
+ "rocket-fuel": "Combustível de Foguete",
+ "dark-matter-residue": "Resíduo de Matéria Escura",
+ "excited-photonic-matter": "Matéria Fotônica Excitada",
+ "ionized-fuel": "Combustível Ionizado",
+ "biochemical-sculptor": "Escultor Bioquímico",
+ "blade-runners": "Blade Runners",
+ "chainsaw": "Motosserra",
+ "factory-carttm": "Carrinho de Fábrica™",
+ "gas-mask": "Máscara de Gás",
+ "golden-factory-carttm": "Carrinho de Fábrica Dourado™",
+ "hazmat-suit": "Traje de Proteção",
+ "hoverpack": "Mochila Flutuante",
+ "jetpack": "Jetpack",
+ "object-scanner": "Scanner de Objetos",
+ "nobelisk-detonator": "Detonador de Nobelisk",
+ "bacon-agaric": "Ágarico-bacon",
+ "paleberry": "Baga-pálida",
+ "beryl-nut": "Noz de Berílio",
+ "medicinal-inhaler": "Inalador Medicinal",
+ "parachute": "Paraquedas",
+ "rebar-gun": "Rifle de Vergalhão",
+ "rifle": "Rifle",
+ "xeno-zapper": "Xeno-Zapper",
+ "xeno-basher": "Xeno-Basher",
+ "zipline": "Tirolesa"
+};
+const MACHINE_NAMES_PT={"Smelter":"Fundidora","Foundry":"Fundição","Refinery":"Refinaria","Constructor":"Construtor","Assembler":"Montadora","Manufacturer":"Fabricadora","Blender":"Misturadora","Particle Accelerator":"Acelerador de Partículas","Packager":"Empacotadora","Converter":"Conversor","Quantum Encoder":"Codificador Quântico","Nuclear Power Plant":"Usina Nuclear","Coal-Powered Generator":"Gerador a Carvão","Fuel-Powered Generator":"Gerador a Combustível","Equipment Workshop (manual)":"Oficina de Equipamentos (manual)"};
+items.forEach(it=>it.namePt=ITEM_NAMES_PT[it.key]||it.name);
+Object.assign(aliases,{'invólucro de alumínio':'aluminum casing','carcaça de alumínio':'aluminum casing','chapa de alumínio alclad':'alclad aluminum sheet','chapa de duralumínio':'alclad aluminum sheet','chapa de alumínio':'alclad aluminum sheet'});
+const LANGUAGE_STORAGE_KEY='factory_flow_ui_language_v1';
+let languagePreference='auto';
+try{const stored=localStorage.getItem(LANGUAGE_STORAGE_KEY);if(['auto','pt-BR','en-US'].includes(stored))languagePreference=stored;}catch(e){}
+const detectedLanguage=()=>{const langs=navigator.languages?.length?navigator.languages:[navigator.language||'en-US'];return /^pt(?:-|$)/i.test(langs[0]||'')?'pt-BR':'en-US';};
+const appLanguage=()=>languagePreference==='auto'?detectedLanguage():languagePreference;
+const langIsEnglish=()=>appLanguage()==='en-US';
+const machineLabel=i=>langIsEnglish()?machines[i]:(MACHINE_NAMES_PT[machines[i]]||machines[i]);
+const normalizeForSearch=t=>String(t||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLocaleLowerCase('en-US');
+const LOCALIZED_RECIPE_CACHE=new Map();
+const LOCALIZED_ITEM_REPLACEMENTS=[...items].sort((a,b)=>b.name.length-a.name.length).map(it=>[new RegExp('\\b'+it.name.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'\\b','gi'),it.namePt]);
+function recipeLabel(recipe){
+ if(!recipe)return langIsEnglish()?'Recipe':'Receita';
+ if(recipe.id==null)return recipe.name; // Custom recipes retain user-defined titles.
+ if(langIsEnglish())return recipe.name;
+ const cached=LOCALIZED_RECIPE_CACHE.get(recipe.id);
+ if(cached!==undefined)return cached;
+ const base=recipe.name.replace(/^Alternate: /,'');
+ const match=items.find(x=>x.name===base);
+ if(match){const label=(recipe.alt?'Alternativa: ':'')+match.namePt;LOCALIZED_RECIPE_CACHE.set(recipe.id,label);return label;}
+ // No verified recipe-specific PT-BR label: retain its original name.
+ // Word-by-word translation produced hybrid/invented titles in v0.4.18.
+ LOCALIZED_RECIPE_CACHE.set(recipe.id,recipe.name);return recipe.name;
+}
+const _nf={};const fmt=(n,d)=>{const dd=d??(typeof project!=='undefined'&&project?.settings?.decimals!=null?project.settings.decimals:3);if(!Number.isFinite(n))return'—';const lk=appLanguage()+':'+dd;const f=_nf[lk]||(_nf[lk]=new Intl.NumberFormat(appLanguage(),{maximumFractionDigits:dd}));return f.format(Math.abs(n)<1e-8?0:n)};
+const num=s=>{if(typeof s==='number')return Number.isFinite(s)?s:NaN;let t=String(s??'').trim();if(!t)return NaN;t=t.replace(/\s+/g,' ');if(/^[-+]?\d+(?:[.,]\d+)? \d+(?:[.,]\d+)?\/\d+(?:[.,]\d+)?$/.test(t)){let [w,f]=t.split(' ');return Number(w.replace(',','.'))+num(f)}if(t.includes('/')){let a=t.split('/');return a.length===2&&num(a[1])!==0?num(a[0])/num(a[1]):NaN}if(t.includes(',')&&t.includes('.')){const mark=t.lastIndexOf(',')>t.lastIndexOf('.')?',':'.';t=t.replace(mark===','?/\./g:/,/g,'').replace(mark,'.');}
+ else if(t.includes(',')&&!t.includes('.')){const digits=t.split(',').pop();if(langIsEnglish()&&digits.length===3&&/^[-+]?\d{1,3}(,\d{3})+$/.test(t))t=t.replace(/,/g,'');else t=t.replace(',','.');}
+ return Number(t)};
 const clone=o=>JSON.parse(JSON.stringify(o));
 const id=()=>Math.random().toString(36).slice(2,9)+Date.now().toString(36).slice(-5);
-const itemName=i=>items[i]?.name||'Produto';
-function itemIcon(item){let n=itemName(item).toLowerCase();if(/water|acid|solution|oil|fuel|gas|residue|biofuel/.test(n))return '💧';if(/iron|steel|beam|plate|rod|ingot|scrap/.test(n))return '🔩';if(/copper|caterium|wire|cable|sheet/.test(n))return '🟠';if(/computer|circuit|ai |connector|quantum|oscillator/.test(n))return '💻';if(/motor|rotor|stator|frame|engine/.test(n))return '⚙️';if(/coal|sulfur|quartz|bauxite|ore|sam|limestone/.test(n))return '⛏️';if(/plastic|rubber|polymer/.test(n))return '🧱';return '📦'}
+const itemName=i=>items[i]?(langIsEnglish()?items[i].name:items[i].namePt):(langIsEnglish()?'Item':'Produto');
+function itemIcon(item){let n=(items[item]?.name||'').toLowerCase();if(/water|acid|solution|oil|fuel|gas|residue|biofuel/.test(n))return '💧';if(/iron|steel|beam|plate|rod|ingot|scrap/.test(n))return '🔩';if(/copper|caterium|wire|cable|sheet/.test(n))return '🟠';if(/computer|circuit|ai |connector|quantum|oscillator/.test(n))return '💻';if(/motor|rotor|stator|frame|engine/.test(n))return '⚙️';if(/coal|sulfur|quartz|bauxite|ore|sam|limestone/.test(n))return '⛏️';if(/plastic|rubber|polymer/.test(n))return '🧱';return '📦'}
+/* UI translation infrastructure is injected below after the main initialization. */
 const projectKey='factory_flow_mobile_projects_v2',activeKey='factory_flow_mobile_active_v2';
 let projects=[],project,history=[],future=[],selected=new Set(),pending=null,gesture=null,activePointers=new Map(),camera={x:50,y:90,z:0.9},calculated=null,dragline=null,pickerContext=null,lastTap=null;
 function save(){project.cameras[project.current]=clone(camera);try{localStorage.setItem(projectKey,JSON.stringify(projects));localStorage.setItem(activeKey,project.id);}catch(e){toast('Salvamento local indisponível. Exporte um arquivo JSON!',true)}}
@@ -1061,6 +1279,7 @@ function closeSheet(){
  $('overlay').classList.add('hidden');$('overlay').classList.remove('rename-dialog');
  if(document.activeElement?.blur)document.activeElement.blur();
  resetRenamePosition();pickerContext=null;sheetInitialAppHeight=0;
+ syncDesktop();
  // Keep the factory geometry stable until the keyboard's close animation ends.
  if(wasRename){clearTimeout(renameRestoreTimer);renameRestoreTimer=setTimeout(()=>{
   if($('overlay').classList.contains('hidden'))restoreRenameBackground();
@@ -1170,10 +1389,10 @@ function openPicker(pos=null,link=null,replaceId=null){
  if(!changing)setTimeout(()=>{if(window.innerWidth>700&&$('pickerSearch'))$('pickerSearch').focus()},50);
 }
 function findCompatibleNewPort(n,link){let pp=ports(n);let io=link.io==='in'?'out':'in',item=portItem(nBy(link.nid),link.io,link.index);let list=pp[io==='out'?'outs':'ins'];let ix=list.findIndex(v=>v===item);if(ix<0)ix=list.findIndex(v=>v==null);return ix>=0?{nid:n.id,io,index:ix}:null;}
-function customRecipeSheet(){pickerContext=null;const opts=items.map(o=>`<option value="${o.id}">${esc(o.name)}</option>`).join('');
+function customRecipeSheet(){pickerContext=null;const opts=items.map(o=>`<option value="${o.id}">${esc(itemName(o.id))}</option>`).join('');
  let inputFields=[1,2,3,4].map(i=>`<div class="twocol"><div class="field"><label>Entrada ${i}</label><select id="customInItem${i}"><option value="">— nenhuma —</option>${opts}</select></div>${field('Qtd./ciclo','customInQty'+i,1,'number')}</div>`).join('');
  let outputFields=[1,2].map(i=>`<div class="twocol"><div class="field"><label>Saída ${i}</label><select id="customOutItem${i}"><option value="">— nenhuma —</option>${opts}</select></div>${field('Qtd./ciclo','customOutQty'+i,1,'number')}</div>`).join('');
- showSheet('Receita personalizada','Defina sua própria receita com duração, entradas e saídas',`<form id="customForm">${field('Nome','customName','Minha receita')}${selectField('Máquina','customMachine',cats.map((x,i)=>[i,x]).filter(([i])=>i<11||i===14),3)}${field('Duração por ciclo (s)','customTime',6,'number')}<div class="info">Entradas e saídas são quantidades por ciclo, não por minuto.</div>${inputFields}${outputFields}</form>`,btn('Cancelar','close')+btn('Criar receita','saveCustom','pri'));
+ showSheet('Receita personalizada','Defina sua própria receita com duração, entradas e saídas',`<form id="customForm">${field('Nome','customName','Minha receita')}${selectField('Máquina','customMachine',machines.map((x,i)=>[i,machineLabel(i)]).filter(([i])=>i<11||i===14),3)}${field('Duração por ciclo (s)','customTime',6,'number')}<div class="info">Entradas e saídas são quantidades por ciclo, não por minuto.</div>${inputFields}${outputFields}</form>`,btn('Cancelar','close')+btn('Criar receita','saveCustom','pri'));
  $('customOutItem1').value=6;
 }
 function saveCustom(){let ins=[],outs=[];for(let i=1;i<=4;i++){let s=$('customInItem'+i).value;if(s!==''){let q=num($('customInQty'+i).value);if(!(q>0))return toast('Quantidade de entrada inválida',true);ins.push({item:+s,qty:q});}}
@@ -1225,18 +1444,18 @@ function locatorSheet(){
 function openMenu(){showSheet('Ferramentas do projeto','Ações, edição, salvamento e configurações',
  `<div class="actions">${btn('⚙ Configurações','settings')}${btn('ⓘ Gestos e ajuda','help')}${btn('⌕ Localizar bloco','locator')}</div><div class="actions">${btn('⤓ Exportar JSON','export')}${btn('⤒ Importar JSON / .sfmd','import')}${btn('▧ Exportar PNG','png')}</div><div class="actions">${btn('▦ Selecionar todos','selectAll')}${btn('⧉ Copiar seleção','copy')}${btn('↗ Colar seleção','paste')}${btn('🗑 Apagar seleção','delete','danger')}</div><div class="actions">${btn('⤴ Salvar modelo','saveTemplate')}${btn('⤵ Inserir modelo','insertTemplate')}${btn('📋 Exportar resumo CSV','csv')}</div><div class="actions">${btn('🏭 Gerar cadeia automática','generator','pri')}</div>`,btn('Fechar','close'))}
 function creditsSheet(){showSheet('Créditos e licença','Dados de referência e direitos autorais',`<div class="info">Factory Flow é um projeto não oficial e independente. Não é afiliado a Coffee Stain Studios nem ao Satisfactory Modeler da Steam.<p>Dados de referência: <a href="https://github.com/KirkMcDonald/satisfactory-calculator" target="_blank" rel="noopener" style="color:#8addd8">KirkMcDonald/satisfactory-calculator</a> (Apache 2.0). Receitas e nomes do jogo © Coffee Stain Studios. Catálogo incorporado como referência, sem garantia de atualização para o último patch.</p></div><pre style="font-size:10px;color:#a6b8c8;white-space:pre-wrap;line-height:1.45;max-height:52dvh;overflow:auto">${esc($('licenseText').textContent)}</pre>`,btn('Fechar','close'))}
-function projectsSheet(){let list=projects.map(p=>`<div class="line"><span><b style="color:#ebf4ff">${esc(p.name)}</b><div class="muted">${p.nodes.length} nós · ${new Date(p.created||Date.now()).toLocaleDateString('pt-BR')}${p.id===project.id?' · aberto':''}</div></span><button class="bbutton ${p.id===project.id?'good':''}" data-openproject="${esc(p.id)}">${p.id===project.id?'Atual':'Abrir'}</button></div>`).join('');
+function projectsSheet(){let list=projects.map(p=>`<div class="line"><span><b class="user-project-name" style="color:#ebf4ff">${esc(p.name)}</b><div class="muted">${p.nodes.length} nós · ${new Date(p.created||Date.now()).toLocaleDateString('pt-BR')}${p.id===project.id?' · aberto':''}</div></span><button class="bbutton ${p.id===project.id?'good':''}" data-openproject="${esc(p.id)}">${p.id===project.id?'Atual':'Abrir'}</button></div>`).join('');
  showSheet('Meus projetos',`${projects.length} planos salvos neste dispositivo`,list+`<div class="actions">${btn('＋ Criar projeto','new','pri')}${btn('⧉ Duplicar atual','duplicateProject')}${btn('✎ Renomear','rename')}${btn('🗑 Excluir atual','deleteProject','danger')}</div><div class="info">Estes projetos ficam no armazenamento do navegador (localStorage). Em arquivos HTML abertos pelo app Arquivos do iPhone, a persistência pode variar. Exporte o JSON regularmente.</div>`,btn('Fechar','close'));
  $('sheetBody').querySelectorAll('[data-openproject]').forEach(b=>b.addEventListener('click',()=>switchProject(b.dataset.openproject)));
 }
 function switchProject(which){if(project.id===which){closeSheet();return;}save();project=projects.find(p=>p.id===which)||project;normalizeProject();selected.clear();history=[];future=[];pending=null;loadCamera();recompute(true);render();save();closeSheet();toast('Projeto aberto')}
-function newProject(){let name='Nova fábrica '+(projects.length+1);let p=emptyProject(name);projects.unshift(p);project=p;selected.clear();pending=null;history=[];future=[];loadCamera();recompute(true);render();save();closeSheet();toast('Plano vazio criado')}
+function newProject(){let name=(langIsEnglish()?'New factory ':'Nova fábrica ')+(projects.length+1);let p=emptyProject(name);projects.unshift(p);project=p;selected.clear();pending=null;history=[];future=[];loadCamera();recompute(true);render();save();closeSheet();toast('Plano vazio criado')}
 function duplicateProject(){let p=clone(project);p.id=id();p.name=project.name+' (cópia)';p.created=Date.now();projects.unshift(p);project=p;history=[];future=[];selected.clear();recompute(true);render();save();closeSheet();toast('Projeto duplicado')}
 function deleteProject(){showSheet('Excluir projeto?','Confirmação de exclusão',`<div class="info orange">Você está prestes a excluir <b>${esc(project.name)}</b> (${project.nodes.length} nós e ${project.edges.length} conexões). Esta ação não pode ser desfeita.</div><div class="info">Faça uma exportação JSON antes de excluir caso queira guardar uma cópia.</div>`,btn('Cancelar','close')+btn('Excluir definitivamente','confirmDeleteProject','danger'))}
 function confirmDeleteProject(){
  const deletedId=project.id;
  projects=projects.filter(p=>p.id!==deletedId);
- if(projects.length===0)projects=[emptyProject('Minha fábrica')];
+ if(projects.length===0)projects=[emptyProject(langIsEnglish()?'My factory':'Minha fábrica')];
  project=projects[0];history=[];future=[];selected.clear();pending=null;
  normalizeProject();loadCamera();recompute(true);render();save();closeSheet();toast('Projeto excluído');
 }
@@ -1450,8 +1669,9 @@ function viewportDown(e){
  activePointers.set(e.pointerId,{x:e.clientX,y:e.clientY});
  try{$('viewport').setPointerCapture(e.pointerId)}catch{}
  if(activePointers.size>=2){if(activePointers.size===2)beginPinch();return;}
- const port=findPortElement(e.target),nodeEl=e.target.closest('.node'),nid=nodeEl?.dataset.node;
+ const port=spacePan?null:findPortElement(e.target),nodeEl=spacePan?null:e.target.closest('.node'),nid=nodeEl?.dataset.node;
  gesture={type:port?'port':nid?'node':'background',pointerId:e.pointerId,start:{x:e.clientX,y:e.clientY},last:{x:e.clientX,y:e.clientY},startCamera:{x:camera.x,y:camera.y},port,nid,portAction:port?(e.target.closest('.port-dot')?'connect':'edit'):null,moved:false,longDone:false,timer:null};
+ gesture.additive=e.shiftKey||e.ctrlKey||e.metaKey;
  if(nid){let n=nBy(nid);gesture.nodeStart={x:n.x,y:n.y};if(selected.has(nid)&&selected.size>1)gesture.group=[...selected].map(k=>nBy(k)).filter(m=>m&&m.board===project.current).map(m=>({id:m.id,x:m.x,y:m.y}));}
  startLongPress(gesture);
 }
@@ -1518,8 +1738,8 @@ function viewportUp(e){
  if(g.type==='port'){pointerPortTap(g.port);return;}
  if(g.type==='node'){
   const n=nBy(g.nid);if(!n)return;let now=Date.now();
-  if(lastTap&&lastTap.nid===n.id&&now-lastTap.at<340){lastTap=null;if(n.boardId)enterBoard(n);else inspectNode(n.id);return;}
-  lastTap={nid:n.id,at:now};selected=new Set([n.id]);pending=null;render();return;
+  if(!g.additive&&lastTap&&lastTap.nid===n.id&&now-lastTap.at<340){lastTap=null;if(n.boardId)enterBoard(n);else inspectNode(n.id);return;}
+  lastTap={nid:n.id,at:now};if(g.additive){selected.has(n.id)?selected.delete(n.id):selected.add(n.id);}else selected=new Set([n.id]);pending=null;render();return;
  }
  if(g.type==='background'){
   let now=Date.now(),world=toWorld(e.clientX,e.clientY);
@@ -1568,7 +1788,7 @@ function setupEvents(){const vp=$('viewport');vp.addEventListener('pointerdown',
  if(window.visualViewport){visualViewport.addEventListener('resize',syncVisibleViewport);visualViewport.addEventListener('scroll',syncVisibleViewport)}document.addEventListener('keydown',e=>{if(!$('overlay').classList.contains('hidden')){if(e.key==='Escape')closeSheet();return}let typing=['INPUT','TEXTAREA','SELECT'].includes(document.activeElement?.tagName);if(typing)return;const mod=e.ctrlKey||e.metaKey,k=e.key.toLowerCase();if(mod&&k==='z'){e.preventDefault();return e.shiftKey?redo():undo()}if(mod&&k==='y'){e.preventDefault();return redo()}if(mod&&k==='s'){e.preventDefault();return exportJSON()}if(mod&&k==='c'){e.preventDefault();return copySelection()}if(mod&&k==='v'){e.preventDefault();return pasteSelection()}if(mod&&k==='a'){e.preventDefault();selected=new Set(boardNodes().map(n=>n.id));return render()}if(e.key==='Delete'||e.key==='Backspace'){e.preventDefault();return deleteSelected()}if(e.key==='Escape'){pending=null;selected.clear();render()}});
 }
 /* ================= v0.4 · núcleo ================= */
-const APP_VERSION='0.4.17';
+const APP_VERSION='0.4.19';
 $('appVersionBadge').textContent='v'+APP_VERSION;
 const NODE_W=246,Z_MIN=0.01,Z_MAX=4;
 const BELT_CAPS=[60,120,270,480,780,1200],PIPE_CAPS=[300,600];
@@ -2240,8 +2460,8 @@ function recomputeCore(t0,mode){
 }
 
 /* ================= v0.4 · projeto, migração e segurança ================= */
-const DEFAULT_SETTINGS={snap:false,grid:32,calc:'auto',decimals:2,showLabels:true,maxBelt:6,maxPipe:2,recipeCostMul:1,powerMul:1};
-function emptyProject(name='Nova fábrica'){return{id:id(),schema:5,name,created:Date.now(),boards:[{id:'root',name:'Plano principal',parent:null}],current:'root',nodes:[],edges:[],cameras:{root:{x:60,y:95,z:0.9}},settings:{...DEFAULT_SETTINGS}}}
+const DEFAULT_SETTINGS={snap:false,grid:32,calc:'auto',decimals:3,showLabels:true,maxBelt:6,maxPipe:2,recipeCostMul:1,powerMul:1};
+function emptyProject(name=langIsEnglish()?'New factory':'Nova fábrica'){return{id:id(),schema:5,name,created:Date.now(),boards:[{id:'root',name:'Plano principal',parent:null}],current:'root',nodes:[],edges:[],cameras:{root:{x:60,y:95,z:0.9}},settings:{...DEFAULT_SETTINGS}}}
 // IDs vindos de arquivos importados viram atributos HTML: só aceitamos [A-Za-z0-9_-].
 function sanitizeProject(p){
  if(!p||typeof p!=='object')throw Error('Projeto inválido.');
@@ -2268,7 +2488,7 @@ function normalizeProject(){
  const s=project.settings;s.maxBelt=Math.max(1,Math.min(6,Number(s.maxBelt)||6));s.maxPipe=Math.max(1,Math.min(2,Number(s.maxPipe)||2));
  s.recipeCostMul=[.25,.5,.75,1,1.25,1.5,1.75,2].includes(Number(s.recipeCostMul))?Number(s.recipeCostMul):1;
  s.powerMul=[.25,.5,.75,1,2,5].includes(Number(s.powerMul))?Number(s.powerMul):1;
- s.decimals=[0,1,2,3].includes(Number(s.decimals))?Number(s.decimals):2;if(!['auto','manual','none'].includes(s.calc))s.calc='auto';
+ s.decimals=[0,1,2,3].includes(Number(s.decimals))?Number(s.decimals):3;if(!['auto','manual','none'].includes(s.calc))s.calc='auto';
  project.cameras=project.cameras||{};
  if(Array.isArray(project.customRecipes))for(const r of project.customRecipes)for(const p of[...r.ins,...r.outs]){const it=resolveItem(p.key,p.item);p.item=it;if(it!=null)p.key=items[it].key;}
  project.nodes=project.nodes.filter(n=>n&&n.id&&NODE_TYPES.has(n.type)).map(n=>{
@@ -2319,8 +2539,8 @@ function loadAll(){
  try{let raw=localStorage.getItem(projectKey);firstLaunch=raw===null;let v=JSON.parse(raw||'[]');if(Array.isArray(v))projects=v.filter(p=>p&&Array.isArray(p.nodes)&&Array.isArray(p.edges));}catch{}
  // v0.4.1 começa vazia em uma instalação nova. Não importa automaticamente receitas antigas
  // por índice: o catálogo 1.2 foi atualizado e importações explícitas são mais seguras.
- if(!projects.length)projects=[emptyProject('Minha fábrica')];
- projects=projects.map(p=>{try{return sanitizeProject(p)}catch{return null}}).filter(Boolean);if(!projects.length)projects=[emptyProject('Minha fábrica')];
+ if(!projects.length)projects=[emptyProject(langIsEnglish()?'My factory':'Minha fábrica')];
+ projects=projects.map(p=>{try{return sanitizeProject(p)}catch{return null}}).filter(Boolean);if(!projects.length)projects=[emptyProject(langIsEnglish()?'My factory':'Minha fábrica')];
  let active='';try{active=firstLaunch?'':localStorage.getItem(activeKey)||'';}catch{}
  project=projects.find(p=>p.id===active)||projects[0];normalizeProject();loadCamera();
 }
@@ -2330,7 +2550,7 @@ function undo(){if(!history.length)return;future.push(JSON.stringify(project));r
 function redo(){if(!future.length)return;history.push(JSON.stringify(project));restoreSnapshot(future.pop());}
 function connect(a,b){if(!validLink(a,b)){toast('Portas incompatíveis.',true);return false;}const f=a.io==='out'?a:b,t=a.io==='in'?a:b;
  const existing=project.edges.find(e=>e.from===f.nid&&e.fi===f.index&&e.to===t.nid&&e.ti===t.index);
- if(existing){mutate(()=>{project.edges=project.edges.filter(e=>e.id!==existing.id);});pending=null;dragline=null;toast('Conexão removida');return true;}
+ if(existing){pending=null;dragline=null;render();return true;}
  mutate(()=>{const fn=nBy(f.nid),tn=nBy(t.nid),item=portItem(fn,'out',f.index)??portItem(tn,'in',t.index);setPortItem(fn,'out',f.index,item);setPortItem(tn,'in',t.index,item);project.edges.push({id:id(),board:fn.board,from:fn.id,fi:f.index,to:tn.id,ti:t.index});});
  pending=null;dragline=null;toast('Conexão criada');return true}
 function purgeOrphanUtilityItem(n){if(!n||n.type==='recipe'||n.type==='source'||isContainer(n)||n.type==='port_in'||n.type==='port_out')return;const connected=project.edges.some(e=>e.from===n.id||e.to===n.id);if(!connected)n.item=null}
@@ -2339,9 +2559,9 @@ function forceRecalc(){recompute(true);render();toast('Cálculo atualizado');}
 /* ================= v0.4 · renderização ================= */
 const PURITY_NAMES={0.5:'impuro',1:'normal',2:'puro'};
 function extractorLabel(n){const ex=EXTRACTORS[n.sourceMachine];if(!ex)return'Extratora';const cnt=n.sourceCount||1;return`${ex.name}${cnt>1?' ×'+cnt:''}${ex.purity?' · '+(PURITY_NAMES[n.purity]||'normal'):''} · ${fmt(n.clock||100,0)}% · até ${fmt(sourceCap(n))}/min`;}
-function nodeTitle(n){return n.title||({recipe:recOf(n)?.name,source:itemName(n.item),splitter:'Divisor',priority_splitter:'Divisor prioritário',merger:'Combinador',priority_merger:'Combinador prioritário',storage:'Armazenamento',depot:'Depósito dimensional',sink:'AWESOME Sink',output:'Destino / meta',outpost:'Outpost',blueprint:'Blueprint',note:'Anotação',port_in:'Entrada do outpost',port_out:'Saída do outpost'}[n.type]||'Nó')}
+function nodeTitle(n){return n.title||({recipe:recipeLabel(recOf(n)),source:itemName(n.item),splitter:'Divisor',priority_splitter:'Divisor prioritário',merger:'Combinador',priority_merger:'Combinador prioritário',storage:'Armazenamento',depot:'Depósito dimensional',sink:'AWESOME Sink',output:'Destino / meta',outpost:'Outpost',blueprint:'Blueprint',note:'Anotação',port_in:'Entrada do outpost',port_out:'Saída do outpost'}[n.type]||'Nó')}
 function nodeSubtitle(n){
- if(n.type==='recipe'){const r=recOf(n);if(!r)return'Receita';if(r.gen)return`${machines[r.cat]} · ⚡ ${fmt(r.gen,0)} MW cada`;return machines[r.cat]+(r.alt?' • alternativa':'')+(r.pw?` • ${fmt(r.pwMin,0)}–${fmt(r.pwMax,0)} MW`:'');}
+ if(n.type==='recipe'){const r=recOf(n);if(!r)return'Receita';if(r.gen)return`${machineLabel(r.cat)} · ⚡ ${fmt(r.gen,0)} MW cada`;return machineLabel(r.cat)+(r.alt?' • alternativa':'')+(r.pw?` • ${fmt(r.pwMin,0)}–${fmt(r.pwMax,0)} MW`:'');}
  if(n.type==='source'){if(isManualSource(n))return'Entrada fixa · '+fmt(n.limit??0)+'/min';if(isAutoWater(n))return'Água automática · extratores de 120 m³/min';if(isAutoSource(n))return'Entrada automática · acompanha a demanda';return extractorLabel(n);}
  if(n.type==='note')return'Nota';
  if(isContainer(n)){const io=outpostIO(n);return`${pl(io.ins.length,'entrada','entradas')} · ${pl(io.outs.length,'saída','saídas')} · 2 toques abre`;}
@@ -2433,6 +2653,7 @@ function render(){
  $('stats').innerHTML=`<div class="stat"><b>${ns.length}</b> ${ns.length===1?'nó':'nós'} · <b>${boardEdges().length}</b> ${boardEdges().length===1?'linha':'linhas'}</div><div class="stat" title="Consumo planejado; geração conforme o combustível que chega">⚡ <b>${fmt(st.power,1)}</b> MW${st.gen>1e-6?` · <b style="color:var(--green)">+${fmt(st.gen,1)}</b>`:''}</div><button type="button" class="stat actionable ${stale?'recalc':(st.shortages||st.limited)?'warning':''}" data-action="${stale?'recalc':'alerts'}" aria-label="${stale?'Recalcular agora':'Ver pendências e alertas'}">${status}</button>`;
  if(pending){$('linkBanner').hidden=false;$('linkInfo').textContent=`${pending.io==='out'?'Saída':'Entrada'}: ${itemName(portItem(nBy(pending.nid),pending.io,pending.index))} — toque na outra porta ou arraste`;}else $('linkBanner').hidden=true;
  updateCamera(true);
+ syncDesktop();
 }
 function wireCurve(a,b){const z=Math.max(.15,Math.min(1.6,camera.z));return Math.min(175*z,Math.max(35*z,Math.abs(b.x-a.x)*.42));}
 const bez=(p0,p1,p2,p3,t)=>{const u=1-t;return u*u*u*p0+3*u*u*t*p1+3*u*t*t*p2+t*t*t*p3;};
@@ -2495,16 +2716,16 @@ function pickerTabCandidates(tab,context){
   for(const r of recs){
    if(changing&&(r.outs[0]?.item!==product||(!original.recipe&&r.id===original.rid)))continue;
    if(isIn&&!r.outs.some(x=>x.item===chosen))continue;if(isOut&&!r.ins.some(x=>x.item===chosen))continue;
-   const sub=r.gen?`${machines[r.cat]} • ⚡ ${fmt(r.gen,0)} MW • consome ${r.ins.map(p=>itemName(p.item)+' '+fmt(p.qty*60/r.duration)+'/min').join(', ')}`:machines[r.cat]+(r.manual?' • fabricação manual':isIn&&r.outs[0]?.item!==chosen?' • subproduto':'')+' • '+r.outs.map(p=>itemName(p.item)+' '+fmt(p.qty*60/r.duration)+'/min').join(', ');
-   list.push({kind:'recipe',rid:r.id,name:r.name,sub,icon:machineIcons[r.cat],alt:r.alt,cat:r.cat});
+   const sub=r.gen?`${machineLabel(r.cat)} • ⚡ ${fmt(r.gen,0)} MW • consome ${r.ins.map(p=>itemName(p.item)+' '+fmt(p.qty*60/r.duration)+'/min').join(', ')}`:machineLabel(r.cat)+(r.manual?' • fabricação manual':isIn&&r.outs[0]?.item!==chosen?' • subproduto':'')+' • '+r.outs.map(p=>itemName(p.item)+' '+fmt(p.qty*60/r.duration)+'/min').join(', ');
+   list.push({kind:'recipe',rid:r.id,name:recipeLabel(r),sub,searchNames:r.name+' '+machines[r.cat]+' '+r.ins.concat(r.outs).map(p=>items[p.item]?.name+' '+items[p.item]?.namePt).join(' '),icon:machineIcons[r.cat],alt:r.alt,cat:r.cat});
   }
   for(const[ix,r]of(project.customRecipes||[]).entries()){
    if(changing&&(r.outs[0]?.item!==product||(original.recipe&&JSON.stringify(r)===JSON.stringify(original.recipe))))continue;
    if(isIn&&!r.outs.some(x=>x.item===chosen))continue;if(isOut&&!r.ins.some(x=>x.item===chosen))continue;
-   list.push({kind:'custom',idx:ix,name:r.name,sub:'Receita personalizada • '+machines[r.cat],icon:machineIcons[r.cat]||'⚙️',alt:false,cat:r.cat});
+   list.push({kind:'custom',idx:ix,name:r.name,sub:'Receita personalizada • '+machineLabel(r.cat),icon:machineIcons[r.cat]||'⚙️',alt:false,cat:r.cat});
   }
  }
- if(!changing&&(tab==='resources'||tab==='all'))for(const item of sourceItems){if(isOut||isIn&&item!==chosen)continue;list.push({kind:'source',item,name:itemName(item),sub:'Fonte de recurso • automática, extratora (Mk/pureza/clock) ou vazão fixa',icon:itemIcon(item)});}
+ if(!changing&&(tab==='resources'||tab==='all'))for(const item of sourceItems){if(isOut||isIn&&item!==chosen)continue;list.push({kind:'source',item,name:itemName(item),searchNames:items[item].name+' '+items[item].namePt,sub:'Fonte de recurso • automática ou vazão fixa',icon:itemIcon(item)});}
  if(!changing&&(tab==='utils'||tab==='all')){const inside=insideOutpost();
   for(const u of toolset){if(u.hidden||(u.key==='port_in'||u.key==='port_out')&&!inside)continue;
    if(context?.link){if(isIn&&!['merger','splitter','priority_splitter','priority_merger','storage','depot','port_in'].includes(u.key))continue;if(isOut&&!['sink','output','splitter','merger','priority_merger','priority_splitter','storage','depot','port_out'].includes(u.key))continue;}
@@ -2517,7 +2738,7 @@ function refreshPicker(){
  if(!pickerContext)return;
  for(const el of document.querySelectorAll('#pickTabs [data-tab]'))el.classList.toggle('active',el.dataset.tab===pickerContext.tab);
  const match=queryMatcher(pickerContext.query);
- const list=pickerTabCandidates(pickerContext.tab,pickerContext).filter(v=>match(normalize(v.name+' '+v.sub))).slice(0,500);
+ const list=pickerTabCandidates(pickerContext.tab,pickerContext).filter(v=>match(normalize(v.name+' '+v.sub+' '+(v.searchNames||'')))).slice(0,500);
  $('pickerList').innerHTML=list.length?list.map(v=>`<button class="pickitem" data-pick="${esc([v.kind,v.rid??v.idx??v.item??v.key].join(':'))}"><span class="pic">${v.kind==='recipe'?gameIconMarkup(recs[v.rid]?.outs?.[0]?.item??recs[v.rid]?.ins?.[0]?.item):v.kind==='source'?gameIconMarkup(v.item):v.icon}</span><span class="picktext"><span class="picktitle">${esc(v.name)}</span><div class="picksub">${esc(v.sub)}</div></span>${v.alt?'<span class="picktag">ALT</span>':''}</button>`).join(''):
  `<div class="emptylist">${pickerContext.replaceId?'Não há outras receitas cadastradas para este produto.':'Nenhum item corresponde ao filtro. Experimente outro termo ou outra aba.'}</div>`;
 }
@@ -2552,16 +2773,16 @@ function rankRecipes(item,{avoid=new Set(),allowAlt=false}={}){
 }
 function bestRecipeForItem(item){return rankRecipes(item)[0]?.r||null;}
 function planText(c,clock){const b=c.built||0;if(!b)return'nenhuma máquina';if(Math.abs((c.lastClock||0)-clock)<0.05)return`${b} ${b===1?'máquina':'máquinas'} a ${fmt(clock)}%`;return(b>1?`${b-1} ${b===2?'máquina':'máquinas'} a ${fmt(clock)}% + `:'')+`1 a ${fmt(c.lastClock,1)}%`;}
-function inspectNode(nid=null){const n=nBy(nid||[...selected][0]);if(!n)return toast('Toque em um bloco para selecioná-lo.');selected=new Set([n.id]);render();const c=calculated.nodes[n.id]||emptyCalcState();const r=n.type==='recipe'?recOf(n):null;
+function inspectNode(nid=null,inline=false){const n=nBy(nid||[...selected][0]);if(!n)return toast('Toque em um bloco para selecioná-lo.');if(!inline){selected=new Set([n.id]);render();if(desktopLayout()||(tabletQuery.matches&&$('inspectorPanel')?.classList.contains('tablet-open')))return;}const c=calculated.nodes[n.id]||emptyCalcState();const r=n.type==='recipe'?recOf(n):null;
  let body=field('Título opcional','editTitle',n.title||'');
  if(r&&r.gen){
   body+=`<div class="metricgrid"><div class="metric"><strong>${fmt(c.machines)}</strong><span>Geradores equivalentes</span></div><div class="metric"><strong>${fmt(c.gen,1)}</strong><span>MW gerados (com o combustível que chega)</span></div></div>`;
-  body+=`<div class="info">${esc(machines[r.cat])} • ${fmt(r.gen,0)} MW por gerador a 100%. Consumo por gerador: ${r.ins.map(x=>fmt(x.qty*60/r.duration)+' '+itemName(x.item)).join(' · ')}/min${r.outs.length?'<br>Resíduo: '+r.outs.map(x=>fmt(x.qty*60/r.duration)+' '+itemName(x.item)).join(' · ')+'/min':''}. Overclock de gerador é linear.</div>`;
+  body+=`<div class="info">${esc(machineLabel(r.cat))} • ${fmt(r.gen,0)} MW por gerador a 100%. Consumo por gerador: ${r.ins.map(x=>fmt(x.qty*60/r.duration)+' '+itemName(x.item)).join(' · ')}/min${r.outs.length?'<br>Resíduo: '+r.outs.map(x=>fmt(x.qty*60/r.duration)+' '+itemName(x.item)).join(' · ')+'/min':''}. Overclock de gerador é linear.</div>`;
   body+=`<div class="twocol">${field('Potência desejada (MW)','editTarget',n.target??'','text','Em branco: usa o máximo de geradores ou 1.')}${field('Quantidade desejada de geradores','editMachineGoal',n.machineGoal??'','text','Inteiro exato. Em branco: cálculo automático pela potência desejada.')}</div>${field('Clock (%)','editClock',n.clock||100,'number','1% a 250%.')}`;
   if(isFixed(n.limit)&&desiredMachines(n)===null)body+=`<div class="info orange">Projeto antigo: teto de ${fmt(n.limit)} geradores preservado. Defina uma quantidade exata para substituí-lo, ou salve este editor para remover o teto antigo.</div>`;
  }else if(r){const R=rr(n),slots=sloopSlots(r);
   body+=`<div class="metricgrid"><div class="metric"><strong>${fmt(c.wanted)}</strong><span>Máquinas equivalentes necessárias</span></div><div class="metric"><strong>${c.built||0}</strong><span>Máquinas para construir</span></div></div><div class="info">Plano: <b>${planText(c,n.clock||100)}</b>. Uso real: <b>${fmt((c.util||0)*100,1)}%</b>${c.machines+1e-5<c.wanted?'<br><b>⚠ A quantidade ou o limite impede atender toda a demanda.</b>':''}${c.shards?`<br>Power Shards: <b>${c.shards}</b>`:''}${c.sloops?` · Somersloops: <b>${c.sloops}</b>`:''}</div>`;
-  body+=`<div class="info">${esc(machines[r.cat])} • ${fmt(r.duration)} s/ciclo${r.pw?` • ${fmt(r.pwMin,0)}–${fmt(r.pwMax,0)} MW (média ${fmt(r.pw,0)})`:''}. Taxas por máquina com clock e Somersloops atuais:<br>${R?R.ins.map((q,i)=>'↓ '+fmt(q)+' '+itemName(r.ins[i].item)).join(' · ')||'Sem entradas':''}<br>${R?R.outs.map((q,i)=>'↑ '+fmt(q)+' '+itemName(r.outs[i].item)).join(' · '):''}</div>`;
+  body+=`<div class="info">${esc(machineLabel(r.cat))} • ${fmt(r.duration)} s/ciclo${r.pw?` • ${fmt(r.pwMin,0)}–${fmt(r.pwMax,0)} MW (média ${fmt(r.pw,0)})`:''}. Taxas por máquina com clock e Somersloops atuais:<br>${R?R.ins.map((q,i)=>'↓ '+fmt(q)+' '+itemName(r.ins[i].item)).join(' · ')||'Sem entradas':''}<br>${R?R.outs.map((q,i)=>'↑ '+fmt(q)+' '+itemName(r.outs[i].item)).join(' · '):''}</div>`;
   body+=`<div class="twocol">${field('Meta da saída principal (/min)','editTarget',n.target??'','text','Valor fixo. Em branco: calcula pela demanda.')}${field('Quantidade desejada de máquinas','editMachineGoal',n.machineGoal??'','text','Inteiro exato. Em branco: cálculo automático por demanda.')}</div><div class="twocol">${field('Clock (%)','editClock',n.clock||100,'number','1% a 250%. Até 3 Power Shards.')}${slots?selectField('Somersloops por máquina','editSloops',Array.from({length:slots+1},(_,k)=>[k,k?`${k} de ${slots} · +${fmt(100*k/slots,0)}% produção`:'Nenhum']),n.sloops||0):'<div class="field"><label>Somersloops</label><small>Esta máquina não aceita amplificação.</small></div>'}</div>`;
   if(isFixed(n.limit)&&desiredMachines(n)===null)body+=`<div class="info orange">Projeto antigo: teto de ${fmt(n.limit)} máquinas preservado. Defina uma quantidade exata para substituí-lo, ou simplesmente salve este editor para remover o teto antigo.</div>`;
  }else if(n.type==='source'){
@@ -2573,7 +2794,7 @@ function inspectNode(nid=null){const n=nBy(nid||[...selected][0]);if(!n)return t
   if(items[n.item]?.key==='water')body+=`<div class="metricgrid"><div class="metric"><strong>${fmt(waterExtractorsNeeded(c.requestedOuts?.[0]||0),0)}</strong><span>Extratores de água a 100%</span></div><div class="metric"><strong>${fmt(waterExtractorsNeeded(c.requestedOuts?.[0]||0)*20,0)} MW</strong><span>Potência estimada</span></div></div><div class="info">Um extrator fornece 120 m³/min a 100%. Dimensionamento estimado pela demanda planejada, sem considerar a distribuição entre tubos, recalque ou aproveitamento de subprodutos.</div>`;
  }else if(n.type==='note'){body+=`<div class="field"><label>Conteúdo da nota</label><textarea id="editNote">${esc(n.note||'')}</textarea></div>`;}
  else if(isContainer(n)){const io=outpostIO(n);body+=`<div class="info">Abra a área (2 toques) e adicione <b>Entrada do outpost</b> e <b>Saída do outpost</b>. Cada uma vira uma porta neste bloco e o cálculo atravessa os dois planos.<br>Portas atuais: ${io.ins.length?io.ins.map(p=>'⇲ '+esc(itemName(p.item))).join(', '):'nenhuma entrada'}; ${io.outs.length?io.outs.map(p=>'⇱ '+esc(itemName(p.item))).join(', '):'nenhuma saída'}.</div>`;}
- else{const iopts=[["","Detectar pela conexão"],...items.map(it=>[it.id,it.name])];
+ else{const iopts=[["","Detectar pela conexão"],...items.map(it=>[it.id,itemName(it.id)])];
   body+=selectField('Material desta estrutura','editItem',iopts,n.item??'');
   if(['output','sink','depot','storage'].includes(n.type))body+=field(n.type==='storage'?'Meta de recebimento (/min)':'Demanda alvo (/min)','editTarget',n.target??'','text',n.type==='sink'?'Sem meta: o Sink só recebe excedentes.':'Em branco: recebe a vazão disponível; preenchido: reserva esta demanda na cadeia.');
   if(['splitter','merger','storage','depot','priority_splitter','priority_merger','port_in','port_out'].includes(n.type))body+=field('Teto de vazão (/min)','editLimit',n.limit??'','text');
@@ -2582,7 +2803,8 @@ function inspectNode(nid=null){const n=nBy(nid||[...selected][0]);if(!n)return t
   if(n.type==='priority_merger')body+='<div class="info">Quando a saída não escoa tudo, a entrada 1 tem prioridade, depois a 2 e a 3.</div>';
  }
  body+=`<div class="actions">${r?btn('⇄ Trocar receita','replaceRecipe'):''}${isContainer(n)?btn('↗ Abrir área','enterBoard'):''}${btn('⧉ Duplicar','duplicate')}${btn('🗑 Excluir','delete','danger')}</div>`;
- showSheet(nodeTitle(n),'Ajustes do nó • taxas em itens ou m³ por minuto',`<form id="editForm">${body}</form>`,btn('Cancelar','close')+btn('Salvar alterações','saveNode','pri'));
+ if(inline){$('inspectorTitle').textContent=nodeTitle(n);$('inspectorBody').innerHTML=`<form id="editForm">${body}</form>`+btn('Salvar alterações','saveNode','pri');}
+ else showSheet(nodeTitle(n),'Ajustes do nó • taxas em itens ou m³ por minuto',`<form id="editForm">${body}</form>`,btn('Cancelar','close')+btn('Salvar alterações','saveNode','pri'));
  $('editForm').addEventListener('submit',e=>{e.preventDefault();saveNodeEdit()});
  if(n.type==='source'){$('editSourceMode').addEventListener('change',updateSourceEditor);updateSourceEditor();}
 }
@@ -2650,7 +2872,7 @@ function summarySheet(){const s=calculated.stats,ns=boardNodes();
  const sub=project.boards.find(b=>b.id===project.current)?.name||'';
  const byType=new Map(),bal=new Map(),addBal=(it,k,v)=>{if(it==null||!(v>1e-6))return;const o=bal.get(it)||{p:0,c:0};o[k]+=v;bal.set(it,o);};
  for(const n of ns){const c=calculated.nodes[n.id]||emptyCalcState();
-  if(n.type==='recipe'){const r=recOf(n);if(!r)continue;const key=machines[r.cat]+(r.gen?' (gerador)':'');const t=byType.get(key)||{eq:0,built:0,pw:0,gen:0};t.eq+=c.machines||0;t.built+=c.built||0;t.pw+=c.power||0;t.gen+=c.gen||0;byType.set(key,t);
+  if(n.type==='recipe'){const r=recOf(n);if(!r)continue;const key=machineLabel(r.cat)+(r.gen?' (gerador)':'');const t=byType.get(key)||{eq:0,built:0,pw:0,gen:0};t.eq+=c.machines||0;t.built+=c.built||0;t.pw+=c.power||0;t.gen+=c.gen||0;byType.set(key,t);
    r.outs.forEach((p,j)=>addBal(p.item,'p',c.actualOuts?.[j]||0));r.ins.forEach((p,i)=>addBal(p.item,'c',c.actualIns?.[i]||0));}
   else if(n.type==='source'){addBal(n.item,'p',c.actualOuts?.[0]||0);if(isAutoWater(n)&&c.waterExtractorsRequired>0){
     const key='Extrator de água (automático · 100%)',t=byType.get(key)||{eq:0,built:0,pw:0,gen:0};
@@ -2664,19 +2886,19 @@ function summarySheet(){const s=calculated.stats,ns=boardNodes();
   <h3 style="font-size:14px;margin:20px 0 7px">Balanço por item (fluxo real)</h3><small class="muted">Saldo positivo segue para destinos, armazenamento, Sink ou fica sem uso.</small>${balRows}
   ${project.boards.length>1?`<div class="info">Projeto inteiro (todas as áreas): consumo ${fmt(s.projectPower,1)} MW${s.projectGen>1e-6?` · geração ${fmt(s.projectGen,1)} MW`:''}.</div>`:''}<div class="info">Consumo planejado inclui máquinas de energia variável pela média do ciclo, Somersloops e o multiplicador de energia${project.settings.powerMul!==1?` (${fmt(project.settings.powerMul)}×)`:''}. Fontes automáticas ou manuais não entram no consumo.</div>`,btn('Exportar CSV','csv')+btn('Fechar','close'))}
 function openSettings(){const s=project.settings;showSheet('Configurações','Preferências do editor e do cálculo',
- `<div class="toggle"><span>Alinhar nós à grade</span><input type="checkbox" id="sSnap" ${s.snap?'checked':''}></div><div class="toggle"><span>Mostrar grade</span><input type="checkbox" id="sGrid" ${s.grid?'checked':''}></div><div class="toggle"><span>Mostrar números nas conexões</span><input type="checkbox" id="sLabels" ${s.showLabels!==false?'checked':''}></div><div style="padding-top:14px">${selectField('Modo de cálculo','sCalc',[['auto','Automático · recalcula a cada mudança'],['manual','Manual · recalcula ao tocar em Recalcular'],['none','Sem cálculo · editor visual']],s.calc)}
+ `<div style="padding-bottom:12px">${selectField('Idioma / Language','sLanguage', [['auto','Automático (idioma do sistema)'],['pt-BR','Português (Brasil)'],['en-US','Inglês (English)']],languagePreference)}<small class="muted">A seleção manual fica salva neste navegador.</small></div><div class="toggle"><span>Alinhar nós à grade</span><input type="checkbox" id="sSnap" ${s.snap?'checked':''}></div><div class="toggle"><span>Mostrar grade</span><input type="checkbox" id="sGrid" ${s.grid?'checked':''}></div><div class="toggle"><span>Mostrar números nas conexões</span><input type="checkbox" id="sLabels" ${s.showLabels!==false?'checked':''}></div><div style="padding-top:14px">${selectField('Modo de cálculo','sCalc',[['auto','Automático · recalcula a cada mudança'],['manual','Manual · recalcula ao tocar em Recalcular'],['none','Sem cálculo · editor visual']],s.calc)}
  <div class="twocol">${selectField('Esteira mais rápida liberada','sBelt',BELT_CAPS.map((c,i)=>[i+1,`Mk.${i+1} · ${c}/min`]),s.maxBelt)}${selectField('Cano mais rápido liberado','sPipe',PIPE_CAPS.map((c,i)=>[i+1,`Mk.${i+1} · ${c}/min`]),s.maxPipe)}</div>
  <div class="twocol">${selectField('Custo das receitas (Game Mode)','sCost',[.25,.5,.75,1,1.25,1.5,1.75,2].map(v=>[v,fmt(v)+'×']),s.recipeCostMul)}${selectField('Consumo de energia (Game Mode)','sPow',[.25,.5,.75,1,2,5].map(v=>[v,fmt(v)+'×']),s.powerMul)}</div>
- <div class="info">Os multiplicadores reproduzem as opções de Game Modes da 1.2: o de custo multiplica os ingredientes das receitas de produção; o de energia multiplica o consumo das máquinas.</div>${selectField('Precisão visual','sDecimal',[[0,'Sem decimais'],[1,'1 decimal'],[2,'2 decimais'],[3,'3 decimais']],s.decimals??2)}</div>`,btn('Cancelar','close')+btn('Aplicar','applySettings','pri'))}
-function applySettings(){mutate(()=>{const s=project.settings;s.snap=$('sSnap').checked;s.grid=$('sGrid').checked?32:0;s.showLabels=$('sLabels').checked;s.calc=$('sCalc').value;s.decimals=Number($('sDecimal').value);s.maxBelt=Number($('sBelt').value);s.maxPipe=Number($('sPipe').value);s.recipeCostMul=Number($('sCost').value);s.powerMul=Number($('sPow').value);});recompute(true);render();closeSheet();toast('Preferências salvas')}
-function helpSheet(){showSheet('Controles no celular','Pensado para toque, sem mouse ou teclado',
+ <div class="info">Os multiplicadores reproduzem as opções de Game Modes da 1.2: o de custo multiplica os ingredientes das receitas de produção; o de energia multiplica o consumo das máquinas.</div>${selectField('Precisão visual','sDecimal',[[0,'Sem decimais'],[1,'1 decimal'],[2,'2 decimais'],[3,'3 decimais']],s.decimals??3)}</div>`,btn('Cancelar','close')+btn('Aplicar','applySettings','pri'))}
+function applySettings(){const chosenLanguage=$('sLanguage').value;persistLanguage(chosenLanguage);mutate(()=>{const s=project.settings;s.snap=$('sSnap').checked;s.grid=$('sGrid').checked?32:0;s.showLabels=$('sLabels').checked;s.calc=$('sCalc').value;s.decimals=Number($('sDecimal').value);s.maxBelt=Number($('sBelt').value);s.maxPipe=Number($('sPipe').value);s.recipeCostMul=Number($('sCost').value);s.powerMul=Number($('sPow').value);});recompute(true);render();closeSheet();localizeAll();toast('Preferências salvas')}
+function helpSheet(){showSheet('Controles do editor','Toque no celular; mouse, teclado e scroll no computador',
  `<div class="line"><span>Toque longo no fundo</span><b>Adicionar nó</b></div><div class="line"><span>Toque em uma porta livre e outra compatível</span><b>Criar conexão</b></div><div class="line"><span>Arraste a bolinha de uma porta</span><b>Conectar / criar máquina</b></div><div class="line"><span>Segure o valor numérico</span><b>Limitar vazão da porta</b></div><div class="line"><span>Toque em uma conexão</span><b>Tier da esteira / desconectar</b></div><div class="line"><span>Toque em um nó</span><b>Selecionar</b></div><div class="line"><span>Toque duplo em um nó</span><b>Editar / abrir área</b></div><div class="line"><span>Toque longo em um nó</span><b>Editar</b></div><div class="line"><span>Arraste um nó ou o fundo</span><b>Mover (toda a seleção) / navegar</b></div><div class="line"><span>Dois dedos (pinça)</span><b>Zoom de 1% a 400%</b></div><div class="line"><span>Enquadrar</span><b>Ver a fábrica inteira</b></div>
  <div class="info">Cálculo v${APP_VERSION}: dimensiona máquinas por metas, limites e balanço de materiais. Circuitos de reciclagem convergentes são estimados em regime estacionário, não simulam partida/estoques e não equivalem à otimização global do Modeler Steam. Uma saída pode alimentar várias máquinas.</div>
  <div class="info">Zoom distante mostra versões simplificadas dos blocos para manter a fluidez em fábricas grandes. Toque em <b>Enquadrar</b> para ver tudo.</div>
  <div class="info">Outposts: dentro da área, adicione <b>Entrada do outpost</b> e <b>Saída do outpost</b>; elas viram portas no bloco do lado de fora.<br><br>Ferramenta independente, não oficial. Taxas de um catálogo de referência com ajustes da wiki oficial; confira mudanças do seu patch.</div>`,btn('Licenças','credits')+btn('Entendi','close','pri'))}
-function generatorSheet(){const opts=items.slice().sort((a,b)=>a.name.localeCompare(b.name)).map(i=>[i.id,i.name]);
+function generatorSheet(){const opts=items.slice().sort((a,b)=>itemName(a.id).localeCompare(itemName(b.id),appLanguage())).map(i=>[i.id,itemName(i.id)]);
  showSheet('Gerar cadeia de produção','Cria um projeto novo com a cadeia completa',`${selectField('Produto final','genProduct',opts,ITEM_BY_KEY['modular-engine'])}${field('Produção alvo (/min)','genRate','2,5','text')}${selectField('Receita final','genRecipe',[],null)}<div class="toggle"><span>Permitir receitas alternativas nos intermediários</span><input type="checkbox" id="genAlt"></div><div class="info orange">Gera um novo projeto sem apagar o atual. Cada item intermediário vira um único bloco compartilhado; subprodutos são reaproveitados quando a cadeia os consome e o resto vai para um AWESOME Sink.</div>`,btn('Cancelar','close')+btn('Gerar fábrica','runGenerator','pri'));
- const update=()=>{const item=Number($('genProduct').value),rr2=recs.filter(r=>!r.gen&&r.cat!==11&&r.outs.some(x=>x.item===item));const sel=$('genRecipe');sel.innerHTML=rr2.map(r=>`<option value="${r.id}">${esc(r.name)} · ${esc(machines[r.cat])}</option>`).join('')||'<option value="">Fonte externa</option>';const best=bestRecipeForItem(item);if(best)sel.value=String(best.id)};
+ const update=()=>{const item=Number($('genProduct').value),rr2=recs.filter(r=>!r.gen&&r.cat!==11&&r.outs.some(x=>x.item===item));const sel=$('genRecipe');sel.innerHTML=rr2.map(r=>`<option value="${r.id}">${esc(recipeLabel(r))} · ${esc(machineLabel(r.cat))}</option>`).join('')||'<option value="">Fonte externa</option>';const best=bestRecipeForItem(item);if(best)sel.value=String(best.id)};
  $('genProduct').addEventListener('change',update);update();}
 function planChain(finalItem,finalRid,allowAlt){
  const choice=new Map();let count=0,cut=false;
@@ -2720,9 +2942,9 @@ function runGenerator(){
  toast(`${newp.nodes.length} blocos gerados${cut?' (cadeia limitada)':''}`);
 }
 function nodeTitleSafe(n){return n.title||(n.type==='recipe'?recs[n.rid]?.name:itemName(n.item))||'';}
-function exportCSV(){const c=calculated;const lines=[['Tipo','Nó','Máquina','Produto','Alvo /min','Vazão real /min','Máquinas requeridas','Máquinas dimensionadas','Uso %','Somersloops','Power Shards','Energia MW','Geração MW'].join(';')];
+function exportCSV(){const c=calculated;const csvHeader=['Tipo','Nó','Máquina','Produto','Alvo /min','Vazão real /min','Máquinas requeridas','Máquinas dimensionadas','Uso %','Somersloops','Power Shards','Energia MW','Geração MW'];const lines=[csvHeader.map(t=>langIsEnglish()?translateUIMessage(t):t).join(';')];
  for(const n of boardNodes()){const s=c.nodes[n.id]||emptyCalcState(),r=n.type==='recipe'?recOf(n):null,product=r?itemName(r.outs[0]?.item??r.ins[0]?.item):n.type==='source'?itemName(n.item):'';
-  const row=[n.type,nodeTitle(n),r?machines[r.cat]:nodeSubtitle(n),product,fmt(s.requestedOuts[0]||s.neededIns[0]||0),fmt(s.actualOuts[0]||s.actualIns[0]||0),fmt(s.wanted),fmt(s.machines),r?fmt((s.util||0)*100,1):'',s.sloops||0,s.shards||0,fmt(s.power),fmt(s.gen||0)];
+  const row=[n.type,nodeTitle(n),r?machineLabel(r.cat):nodeSubtitle(n),product,fmt(s.requestedOuts[0]||s.neededIns[0]||0),fmt(s.actualOuts[0]||s.actualIns[0]||0),fmt(s.wanted),fmt(s.machines),r?fmt((s.util||0)*100,1):'',s.sloops||0,s.shards||0,fmt(s.power),fmt(s.gen||0)];
   lines.push(row.map(x=>'"'+String(x).replace(/"/g,'""')+'"').join(';'))}
  offerFile(new Blob(['\ufeff'+lines.join('\r\n')],{type:'text/csv;charset=utf-8'}),safeName(project.name)+'.csv');toast('Relatório CSV preparado');}
 function exportPNG(){const ns=boardNodes(),es=boardEdges();if(!ns.length)return toast('Não há blocos para exportar.',true);
@@ -2741,7 +2963,7 @@ function importProjectText(text,filename){if(text.length>8*1024*1024)throw Error
  else if(data&&Array.isArray(data.nodes)&&Array.isArray(data.edges))p=data;
  else if(data&&Array.isArray(data.Data)&&/\.sfmd$/i.test(filename)){
   p=emptyProject('Importado do Satisfactory Modeler');let guessed=0;
-  for(const m of data.Data){if(!m?.Name)continue;const recipe=REC_BY_NAME[String(m.Name).toLowerCase()]||recs.find(r=>r.outs.some(o=>itemName(o.item).toLowerCase()===String(m.Name).toLowerCase())&&!r.alt);if(!recipe){guessed++;continue;}p.nodes.push({id:id(),board:'root',type:'recipe',rid:recipe.id,rkey:recipe.key,x:Number(m.X)||0,y:Number(m.Y)||0,title:typeof m.Title==='string'?m.Title:'',clock:100,limit:Number.isFinite(Number(m.Max))?Number(m.Max):null,target:null,portCaps:{}})}
+  for(const m of data.Data){if(!m?.Name)continue;const recipe=REC_BY_NAME[String(m.Name).toLowerCase()]||recs.find(r=>r.outs.some(o=>[itemName(o.item),items[o.item]?.name,items[o.item]?.namePt].some(t=>t?.toLowerCase()===String(m.Name).toLowerCase()))&&!r.alt);if(!recipe){guessed++;continue;}p.nodes.push({id:id(),board:'root',type:'recipe',rid:recipe.id,rkey:recipe.key,x:Number(m.X)||0,y:Number(m.Y)||0,title:typeof m.Title==='string'?m.Title:'',clock:100,limit:Number.isFinite(Number(m.Max))?Number(m.Max):null,target:null,portCaps:{}})}
   if(!p.nodes.length)throw Error('Nenhuma receita reconhecida neste .sfmd.');p._importNotes=`${p.nodes.length} receitas importadas, ${guessed} itens desconhecidos. As conexões .sfmd não são reconstruídas nesta versão.`;
  }else throw Error('Formato incompatível. Importe um backup JSON do Factory Flow ou um .sfmd do Modeler.');
  if(!p||!Array.isArray(p.nodes)||!Array.isArray(p.edges)||p.nodes.length>5000||p.edges.length>20000)throw Error('Estrutura inválida ou maior que o limite suportado.');
@@ -2755,6 +2977,161 @@ function importProjectText(text,filename){if(text.length>8*1024*1024)throw Error
  if(notes)showSheet(data?.Data?'Importação parcial':'Confira a importação',p.name,`<div class="info orange">${esc(notes)}${data?.Data?'<br>Recrie as ligações manualmente ou use o arquivo de backup desta ferramenta para preservar a topologia.':''}</div>`,btn('Entendi','close'));
 }
 
-loadAll();recompute(true);setupEvents();render();
+
+/* ---------------- Interface bilingue (sem alterar o modelo de dados) ---------------- */
+const UI_EN={"Configurações":"Settings","Preferências do editor e do cálculo":"Editor and calculation preferences","Idioma / Language":"Language","Automático (idioma do sistema)":"Automatic (system language)","Português (Brasil)":"Portuguese (Brazil)","Inglês (English)":"English","Precisão visual":"Display precision","Sem decimais":"No decimal places","1 decimal":"1 decimal place","2 decimais":"2 decimal places","3 decimais":"3 decimal places","Alinhar nós à grade":"Snap nodes to grid","Mostrar grade":"Show grid","Mostrar números nas conexões":"Show numbers on connections","Modo de cálculo":"Calculation mode","Automático · recalcula a cada mudança":"Automatic · recompute after each change","Manual · recalcula ao tocar em Recalcular":"Manual · recompute on request","Sem cálculo · editor visual":"No calculation · visual editor","Esteira mais rápida liberada":"Highest unlocked conveyor tier","Cano mais rápido liberado":"Highest unlocked pipe tier","Custo das receitas (Game Mode)":"Recipe cost (Game Mode)","Consumo de energia (Game Mode)":"Power consumption (Game Mode)","Os multiplicadores reproduzem as opções de Game Modes da 1.2: o de custo multiplica os ingredientes das receitas de produção; o de energia multiplica o consumo das máquinas.":"Multipliers reproduce Satisfactory 1.2 Game Mode options: recipe cost multiplies ingredients; power multiplier changes machine power consumption.","Preferências salvas":"Preferences saved","Cancelar":"Cancel","Aplicar":"Apply","Salvar":"Save","Salvar alterações":"Save changes","Fechar":"Close","Entendi":"Got it","Editar":"Edit","Resumo":"Summary","Enquadrar":"Fit view","Recalcular":"Recalculate","Recalcular agora":"Recalculate now","Sem cálculo":"No calculation","Sem pendências":"No issues","Ver pendências e alertas":"View warnings and issues","pendência":"issue","pendências":"issues","aviso":"warning","avisos":"warnings","nó":"node","nós":"nodes","linha":"link","linhas":"links","Manual":"Manual","Automático":"Automatic","Tamanho da fábrica":"Factory size","Nome do projeto":"Project name","Altere o nome exibido":"Change the displayed name","Nome":"Name","Nova fábrica":"New factory","Minha fábrica":"My factory","Plano principal":"Main plan","Adicionar":"Add","Adicionar nó":"Add node","Adicionar receita ou máquina":"Add recipe or machine","Trocar receita":"Change recipe","Trocar receita por":"Replace recipe with","Trocar receita e preservar conexões":"Replace recipe and preserve links","Receita":"Recipe","Receitas":"Recipes","Produto":"Item","Produtos":"Items","Recursos":"Resources","Logística":"Logistics","Todos":"All","Tudo":"All","Outros":"Other","Buscar":"Search","Pesquisar":"Search","Buscar receita, recurso ou máquina":"Search recipes, resources, or machines","Filtrar por nome":"Filter by name","Fonte de recurso":"Resource source","Fonte externa":"External source","Fonte de recurso • automática, extratora (Mk/pureza/clock) ou vazão fixa":"Resource input • auto, extractor (Mk/purity/clock), or fixed rate","Fonte automática":"Automatic source","Água automática":"Automatic water","extratores de 120 m³/min":"120 m³/min water extractors","Entrada automática · acompanha a demanda":"Automatic input · follows demand","Entrada fixa":"Fixed input","Entrada de recurso":"Resource input","Extratores de água":"Water extractors","Extratores necessários":"Required extractors","Vazão":"Flow rate","Vazão fixa":"Fixed flow rate","Vazão real":"Actual flow","Vazão planejada":"Planned flow","Capacidade":"Capacity","Capacidade máxima":"Maximum capacity","Conexões":"Connections","Conexão":"Connection","Limitar vazão da porta":"Limit port flow","Desconectar":"Disconnect","Desconectar portas":"Disconnect ports","Ajustes do nó · taxas em itens ou m³ por minuto":"Node settings · rates in items or m³ per minute","Título opcional":"Optional title","Máquinas equivalentes necessárias":"Equivalent machines needed","Máquinas para construir":"Machines to build","Quantidade desejada de máquinas":"Desired number of machines","Máquinas desejadas":"Desired machines","Meta da saída principal (/min)":"Main output target (/min)","Valor fixo. Em branco: calcula pela demanda.":"Fixed target. Blank: follow demand.","Em branco: sem teto.":"Blank: no limit.","Em branco: automático.":"Blank: automatic.","Clock (%)":"Clock (%)","Somersloops por máquina":"Somersloops per machine","1% a 250%. Até 3 Power Shards.":"1% to 250%. Up to 3 Power Shards.","Nenhum":"None","necessárias":"needed","máquinas":"machines","máquina":"machine","construir":"build","Plano":"Plan","Uso real":"Actual utilization","Uso":"Utilization","por máquina":"per machine","por gerador":"per generator","Ajustes do nó":"Node settings","Taxas por máquina com clock e Somersloops atuais":"Rates per machine with current clock and Somersloops","Taxas em itens ou m³ por minuto":"Rates in items or m³ per minute","Receita personalizada":"Custom recipe","Criar receita personalizada":"Create custom recipe","Subproduto":"By-product","subproduto":"by-product","alternativa":"alternate","Alternativa":"Alternate","fabricação manual":"manual crafting","Entrada":"Input","Saída":"Output","entradas":"inputs","saídas":"outputs","Entrada do outpost":"Outpost input","Saída do outpost":"Outpost output","Recebe do plano de fora":"Receives from outside plan","Envia ao plano de fora":"Sends to outside plan","Depósito dimensional":"Dimensional Depot","Divisor prioritário":"Smart Splitter","Divisor":"Splitter","Combinador prioritário":"Priority merger","Combinador":"Merger","Armazenamento":"Storage","Anotação":"Note","Destino / meta":"Destination / target","Nota":"Note","Nó":"Node","Geradores":"Generators","geradores":"generators","constr.":"built","Extração":"Extraction","Extratora":"Extractor","Extrator":"Extractor","Gerador a carvão":"Coal-Powered Generator","Gerador a combustível":"Fuel-Powered Generator","Usina nuclear":"Nuclear Power Plant","Refinaria":"Refinery","Construtor":"Constructor","Montador":"Assembler","Fabricante":"Manufacturer","Misturador":"Blender","Empacotadora":"Packager","Conversor":"Converter","Codificador quântico":"Quantum Encoder","Acelerador":"Accelerator","Fundição avançada":"Foundry","Fundição":"Smelter","Bancada manual":"Manual bench","Gerar cadeia de produção":"Generate production chain","Cria um projeto novo com a cadeia completa":"Creates a new project with the full chain","Produto final":"Final product","Produção alvo (/min)":"Target production (/min)","Receita final":"Final recipe","Permitir receitas alternativas nos intermediários":"Allow alternate recipes for intermediate products","Gerar":"Generate","Gera um novo projeto sem apagar o atual. Cada item intermediário vira um único bloco compartilhado; subprodutos são reaproveitados quando a cadeia os consome e o resto vai para um AWESOME Sink.":"Creates a new project without deleting the current one. Each intermediate is shared; by-products are reused when needed, with unused output routed to AWESOME Sink.","Nova análise":"New analysis","Novo projeto":"New project","Meus projetos":"My projects","Projetos":"Projects","Trocar projeto":"Switch project","Duplicar projeto":"Duplicate project","Excluir projeto":"Delete project","Excluir projeto?":"Delete project?","Confirmação de exclusão":"Delete confirmation","Excluir definitivamente":"Delete permanently","Projeto excluído":"Project deleted","Projeto duplicado":"Project duplicated","Projeto importado":"Project imported","Plano vazio criado":"Empty plan created","Salvar modelo":"Save template","Modelos":"Templates","Escolher modelo":"Choose template","Modelo excluído":"Template deleted","Backup JSON preparado":"JSON backup ready","Importar":"Import","Exportar":"Export","Exportar JSON":"Export JSON","Exportar CSV":"Export CSV","Exportar PNG":"Export PNG","Relatório CSV preparado":"CSV report ready","Imagem PNG preparada":"PNG image ready","Menu":"Menu","Ajuda":"Help","Controles no celular":"Mobile controls","Pensado para toque, sem mouse ou teclado":"Designed for touch input","Toque longo no fundo":"Long press the background","Toque em uma porta livre e outra compatível":"Tap an open port and another compatible port","Arraste a bolinha de uma porta":"Drag a port dot","Conectar / criar máquina":"Connect / create machine","Segure o valor numérico":"Long-press a numeric value","Toque em uma conexão":"Tap a connection","Tier da esteira / desconectar":"Conveyor tier / disconnect","Toque em um nó":"Tap a node","Selecionar":"Select","Toque duplo em um nó":"Double-tap a node","Editar / abrir área":"Edit / open area","Toque longo em um nó":"Long-press a node","Arraste um nó ou o fundo":"Drag a node or background","Mover (toda a seleção) / navegar":"Move (entire selection) / pan","Dois dedos (pinça)":"Pinch with two fingers","Zoom de 1% a 400%":"Zoom from 1% to 400%","Ver a fábrica inteira":"View the entire factory","Licenças":"Licenses","Desfazer":"Undo","Refazer":"Redo","Copiar":"Copy","Colar":"Paste","Duplicar":"Duplicate","Excluir":"Delete","Excluir seleção":"Delete selection","Selecionar tudo":"Select all","Limpar":"Clear","Confirmar":"Confirm","Voltar":"Back","Nenhuma receita encontrada":"No recipes found","Nenhum resultado encontrado":"No results found","Nome vazio.":"Name is empty.","Nome atualizado":"Name updated","Formato incompatível.":"Incompatible format.","Portas incompatíveis.":"Incompatible ports.","Conexão removida":"Link removed","Alertas da fábrica":"Factory alerts","Alertas":"Alerts","Não houve convergência":"Did not converge","Energia":"Power","Consumo planejado; geração conforme o combustível que chega":"Planned consumption; generation depends on available fuel","Consumo de energia":"Power consumption","Geração de energia":"Power generation","Energia total":"Total power","Consumo":"Consumption","Geração":"Generation","Total":"Total","Demanda":"Demand","Produção":"Production","Recurso":"Resource","Limite":"Limit","Limites":"Limits","Dreno":"Sink","Destino":"Destination","Máquinas":"Machines","Média":"Average","Pendências":"Issues","Status":"Status","Taxa":"Rate","Não há blocos para exportar.":"No nodes to export.","Sem metas":"No targets","Sem resultados":"No results","Explicação":"Explanation","Taxa de produção":"Production rate","Máquinas requeridas":"Required machines","Máquinas dimensionadas":"Planned machines","Energia MW":"Power MW","Geração MW":"Generation MW","Abrir":"Open","Sistema":"System","Sistema detectado":"Detected system","Idioma do aplicativo":"Application language","A seleção manual fica salva neste navegador.":"Manual selection is saved in this browser.","Detecção automática de idioma":"Automatic language detection","3 casas decimais":"3 decimal places","Ferramentas do projeto":"Project tools","Ações, edição, salvamento e configurações":"Actions, editing, saving, and settings","Gestos e ajuda":"Gestures and help","Localizar bloco":"Find node","Inserir modelo":"Insert template","Apagar seleção":"Delete selection","Exportar resumo CSV":"Export CSV summary","Gerar cadeia automática":"Generate production chain","Criar projeto":"Create project","Duplicar atual":"Duplicate current","Renomear":"Rename","Excluir atual":"Delete current","Atual":"Current","planos salvos neste dispositivo":"plans saved on this device","Estes projetos ficam no armazenamento do navegador (localStorage). Em arquivos HTML abertos pelo app Arquivos do iPhone, a persistência pode variar. Exporte o JSON regularmente.":"Projects are stored in your browser (localStorage). For HTML files opened in iOS Files, persistence may vary. Export JSON backups regularly.","Pular":"Skip","Novo plano":"New plan","abrir":"open","aberto":"open","Área":"Area","área":"area","Receitas alternativas":"Alternate recipes","Adicionar à fábrica":"Add to factory","Busque pelo nome do produto ou máquina":"Search by product or machine name","Buscar receita, produto ou máquina...":"Search recipe, item, or machine...","Conectar":"Connect","Trocar receita · ":"Replace recipe · ","Apenas receitas que fabricam":"Only recipes producing","Selecione outra receita para":"Select another recipe for","Não há outras receitas cadastradas para este produto.":"No other recipes are registered for this product.","Nenhum item corresponde ao filtro. Experimente outro termo ou outra aba.":"No items match your filter. Try another term or tab.","Configuração":"Setting","Créditos e licença":"Credits and license","Dados de referência e direitos autorais":"Reference data and copyright","Factory Flow é um projeto não oficial e independente. Não é afiliado a Coffee Stain Studios nem ao Satisfactory Modeler da Steam.":"Factory Flow is an independent, unofficial project. It is not affiliated with Coffee Stain Studios or Satisfactory Modeler on Steam.","Receitas e nomes do jogo":"Recipes and game names","Catálogo incorporado como referência, sem garantia de atualização para o último patch.":"Catalog is embedded as reference data and may not match the latest game patch.","Nenhuma pendência detectada":"No issues detected","Todas as entradas exigidas estão atendidas pelo fluxo calculado.":"All required inputs are supplied by the calculated flow.","Toque em um alerta para centralizar o bloco.":"Tap an alert to center its node.","Nenhum recurso extraído ainda.":"No resources extracted yet.","Nenhuma máquina nesta área.":"No machines in this area.","Geração (MW)":"Generation (MW)","Saldo (MW)":"Balance (MW)","produz":"produces","consome":"consumes","Meta":"Target","meta":"target","Fábrica":"Factory","Fábricas":"Factories","gerador":"generator","equivalentes":"equivalent","extratoras":"extractors","extratora":"extractor","necessários":"required","necessário":"required","sem destino":"without destination","Realimentação prevista":"Planned feedback","Disponível":"Available","disponível":"available","Consumo por gerador":"Consumption per generator","Resíduo":"Residue","Resíduos":"Residues","Overclock de gerador é linear.":"Generator overclocking is linear.","Geradores equivalentes":"Equivalent generators","MW gerados (com o combustível que chega)":"MW generated (with available fuel)","Potência desejada (MW)":"Desired power (MW)","Quantidade desejada de geradores":"Desired number of generators","Inteiro exato. Em branco: cálculo automático pela potência desejada.":"Exact integer. Blank: automatically calculated from desired power.","Inteiro exato. Em branco: dimensionamento automático.":"Exact integer. Blank: automatic sizing.","Quantidade desejada":"Desired quantity","Objetivo":"Goal","Máquinas equivalentes":"Equivalent machines","gerados":"generated","calcula":"calculates","máximo":"maximum","mínimo":"minimum","Esteira":"Conveyor","Tubulação":"Pipeline","Vazão máxima":"Maximum flow","Limite da saída":"Output limit","Limite da entrada":"Input limit","Atributos":"Attributes","Material desta estrutura":"Material for this structure","Detectar pela conexão":"Detect from connection","Teto":"Cap","nenhuma saída":"no output","Mostrar":"Show","Água":"Water","Fabricação":"Manufacturing","ciclo":"cycle","por ciclo":"per cycle","Controles do editor":"Editor controls","Toque no celular; mouse, teclado e scroll no computador":"Touch on mobile; mouse, keyboard, and wheel on desktop","Selecionar todos":"Select all","todos":"all","seleção":"selection","modelo":"template","modelo salvo":"template saved","Gerar fábrica":"Generate factory","Ajuda e gestos":"Help and gestures","Fábrica criada":"Factory created","Seleção":"Selection","Ativar":"Enable","Desativar":"Disable","nenhum":"none","Nenhuma":"None","atual":"current","Para continuar":"To continue","Aguardando":"Waiting","Refinarias":"Refineries","plano":"plan","Planos":"Plans","Cálculo":"Calculation","Detector de receitas":"Recipe detector","Fabricação automática":"Automatic manufacturing","Para criar":"To create","sem meta":"without target","Com meta":"With target","Outro termo":"Another term","outra aba":"another tab","item":"item","Itens":"Items","Adicione um destino":"Add a destination","deletar":"delete","Limite de vazão":"Flow limit","máq.":"mach.","máq":"mach.","equiv.":"equiv.","previsto":"planned","prevista":"planned","em uso":"in use","em espera":"idle","últ.":"last","último":"last","ger.":"gen.","falta":"missing","faltam":"missing","faltando":"missing","máquina(s)":"machine(s)","sem limite":"no limit","sujeito a limite":"subject to limit","Meta:":"Target:","por minuto":"per minute","uma máquina":"one machine","no máximo":"at most","pelo menos":"at least","Por padrão":"By default","não configurada":"not configured","sem entrada":"no input","sem saída":"no output","sem alimentação":"not supplied","sem recursos":"no resources","Potência calculada":"Calculated power","Potência total":"Total power","Máquinas necessárias":"Required machines","Máquinas calculadas":"Calculated machines","Sem recursos":"No resources","Sem entradas":"No inputs","Quantidade necessária":"Required quantity","Economia":"Savings","para construir":"to build","no total":"total","Número de máquinas":"Number of machines","a 100%":"at 100%","a 250%":"at 250%","manual":"manual","automática":"automatic","Meta de recebimento":"Receiving target","Demanda alvo":"Target demand","Valor inválido":"Invalid value","Fonte fixa":"Fixed source","Produção real":"Actual production","Produção prevista":"Planned production","Clique em":"Click","Toque em":"Tap","Toque":"Tap","clique":"click","tocar":"tap","consumo":"consumption","produção":"production","máquinas equivalentes":"equivalent machines","Calculado":"Calculated","calculada":"calculated","calculado":"calculated","Mínimo":"Minimum","Máximo":"Maximum","Tipo":"Type","Máquina":"Machine","Alvo /min":"Target /min","Vazão real /min":"Actual flow /min","Uso %":"Utilization %","Resumo de produção":"Production summary","Consumo planejado (MW)":"Planned consumption (MW)","Máquinas por tipo (para construir)":"Machines by type (to build)","Máquinas por tipo":"Machines by type","Metas e saídas finais (fluxo real)":"Targets and final outputs (actual flow)","Recursos utilizados":"Resources used","Balanço por item (fluxo real)":"Per-item balance (actual flow)","Saldo positivo segue para destinos, armazenamento, Sink ou fica sem uso.":"Positive surplus can flow to destinations, storage, a Sink, or remain unused.","Sem fluxo calculado.":"No calculated flow.","Consumo planejado inclui máquinas de energia variável pela média do ciclo, Somersloops e o multiplicador de energia. Fontes automáticas ou manuais não entram no consumo.":"Planned consumption includes average cycle power for variable-power machines, Somersloops, and the power multiplier. Automatic and manual sources do not count toward power consumption.","Inteiro exato. Em branco: cálculo automático por demanda.":"Exact integer. Blank: automatic sizing based on demand.","Criação de conexão":"Create connection","1 de 1":"1 of 1","Máquinas por tipo (a construir)":"Machines by type (to build)","consumido":"consumed","utilizados":"used","usados":"used","No modo automático":"In automatic mode","No modo manual":"In manual mode","Cria uma fábrica":"Creates a factory","cálculo":"calculation","Calculado pela demanda":"Calculated from demand","Exemplo":"Example","Preencha":"Fill in","Em branco":"Blank","Para construção":"For construction","Fluxo real":"Actual flow","Fluxo planejado":"Planned flow","Recurso externo":"External resource","Sink":"Sink","Por máquina":"Per machine","Ajustes":"Settings","Ajuste":"Adjustment","A taxa":"The rate","Zoom distante mostra versões simplificadas dos blocos para manter a fluidez em fábricas grandes.":"Distant zoom uses simplified node representations to keep large factories responsive.","Outposts: dentro da área, adicione":"Outposts: inside the area, add","elas viram portas no bloco do lado de fora.":"They become ports on the outer node.","Ferramenta independente, não oficial.":"Independent, unofficial tool.","Taxas de um catálogo de referência com ajustes da wiki oficial; confira mudanças do seu patch.":"Rates come from a reference catalog with adjustments from the official wiki; check changes for your game patch.","Cálculo v":"Calculation v","dimensiona máquinas por metas, limites e balanço de materiais.":"sizes machines using targets, constraints, and material balance.","Circuitos de reciclagem convergentes são estimados em regime estacionário, não simulam partida/estoques e não equivalem à otimização global do Modeler Steam.":"Convergent recycling loops are estimated at steady state: they do not model startup or inventories, and they are not equivalent to the Steam Modeler global optimizer.","Uma saída pode alimentar várias máquinas.":"One output may feed multiple machines.","Não há máquinas nesta área.":"No machines in this area.","Vazão calculada":"Calculated flow","cálculo automático por demanda":"automatic sizing based on demand","Criar conexão":"Create link","para ver tudo.":"to view everything.","e":"and","de":"of","por":"per","para":"for","toque":"tap","Máq.":"Mach."};
+const UI_EN_FRAGMENTS=[["pendências", "issues"], ["pendência", "issue"], ["avisos", "warnings"], ["aviso", "warning"], ["nós", "nodes"], ["nó", "node"], ["linhas", "links"], ["linha", "link"], ["máquinas", "machines"], ["máquina", "machine"], ["alternativa", "alternate"], ["geradores", "generators"], ["constr.", "built"]];
+const uiOriginalTexts=new WeakMap();
+Object.assign(UI_EN,{'Catálogo':'Catalog','Inspetor':'Inspector','Visão da fábrica':'Factory overview','Pesquisar catálogo':'Search catalog','Buscar receita, máquina…':'Search recipes, machines…','Recolher painel':'Toggle panel','Redimensionar painel':'Resize panel','Centralizar seleção':'Center selection','Fonte de recurso • automática ou vazão fixa':'Resource source • automatic or fixed rate'});
+const UI_REPLACEMENT_KEYS=Object.keys(UI_EN).filter(k=>k.length>=3).sort((a,b)=>b.length-a.length);
+const UI_REPLACEMENT_PATTERN=new RegExp('(?<![\\p{L}\\p{N}])(?:'+UI_REPLACEMENT_KEYS.map(x=>x.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')).join('|')+')(?![\\p{L}\\p{N}])','gu');
+function translateUIMessage(source){
+ const sourceString=String(source||'');
+ const trimmed=sourceString.trim();
+ if(!trimmed)return sourceString;
+ if(Object.prototype.hasOwnProperty.call(UI_EN,trimmed)){
+  const p=sourceString.indexOf(trimmed);
+  return sourceString.slice(0,p)+UI_EN[trimmed]+sourceString.slice(p+trimmed.length);
+ }
+ return sourceString.replace(UI_REPLACEMENT_PATTERN,part=>UI_EN[part]||part);
+}
+
+function skipUITranslation(element){
+ if(!element)return true;
+ // User-authored names and comments must remain untouched in both languages.
+ return Boolean(element.closest('input,textarea,[contenteditable],.planname,.user-project-name,.note-content,.node-title,.lodm-title,.lodc-title,.itemname,#breadcrumbs,#inspectorTitle,.pic,.machicon'));
+}
+function localizeTree(root){
+ const locale=langIsEnglish();
+ if(!root||!root.isConnected)return;
+ if(root.nodeType===3){
+  const p=root.parentElement;if(skipUITranslation(p))return;
+  const cache=uiOriginalTexts.get(root);
+  let original=cache&&root.nodeValue===cache.output?cache.original:root.nodeValue;
+  const output=locale?translateUIMessage(original):original;
+  if(root.nodeValue!==output)root.nodeValue=output;
+  uiOriginalTexts.set(root,{original,output});
+  return;
+ }
+ if(root.nodeType!==1)return;
+ if(!skipUITranslation(root)){
+  const walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);
+  const nodes=[];while(walker.nextNode())nodes.push(walker.currentNode);
+  for(const n of nodes)localizeTree(n);
+ }
+ // Attribute translations must never modify inputs, user-defined names or values.
+ for(const el of [root,...root.querySelectorAll('[title],[aria-label],[placeholder]')]){
+  if(skipUITranslation(el))continue;
+  for(const key of ['title','aria-label','placeholder']){
+   if(!el.hasAttribute(key))continue;
+   const originalAttr='data-l10n-original-'+key;
+   let orig=el.getAttribute(originalAttr);
+   const current=el.getAttribute(key);
+   if(!orig||(!langIsEnglish()&&orig!==current)){orig=current;el.setAttribute(originalAttr,orig);}
+   const output=locale?translateUIMessage(orig):orig;
+   if(current!==output)el.setAttribute(key,output);
+  }
+ }
+}
+let localeTranslationQueued=false;
+const localizationPending=new Set();
+function localizeAll(){
+ document.documentElement.lang=appLanguage();
+ localizeTree(document.getElementById('app'));
+ localeTranslationQueued=false;
+ localizationPending.clear();
+}
+function scheduleLocalization(){
+ if(localeTranslationQueued)return;
+ localeTranslationQueued=true;
+ queueMicrotask(()=>{
+  for(const node of localizationPending)localizeTree(node);
+  localizationPending.clear();localeTranslationQueued=false;
+ });
+}
+const uiLocalizationObserver=new MutationObserver(records=>{
+ for(const record of records)if(record.type==='childList')for(const node of record.addedNodes)localizationPending.add(node);
+ if(localizationPending.size)scheduleLocalization();
+});
+function activateLocalization(){uiLocalizationObserver.observe($('app'),{childList:true,subtree:true});localizeAll();}
+function persistLanguage(mode){
+ languagePreference=['auto','pt-BR','en-US'].includes(mode)?mode:'auto';
+ try{localStorage.setItem(LANGUAGE_STORAGE_KEY,languagePreference);}catch(e){}
+ document.documentElement.lang=appLanguage();
+}
+
+/* v0.4.19: dedicated workspace. All layout state stays outside project JSON. */
+const desktopQuery=matchMedia('(min-width:1024px) and (min-height:560px) and (pointer:fine)');
+const tabletQuery=matchMedia('(min-width:651px) and (min-height:500px)');
+const desktopLayout=()=>desktopQuery.matches;
+let desktopReady=false,inspectorSignature='',catalogSignature='',catalogTab='all',spacePan=false;
+function centerSelection(){const ns=boardNodes().filter(n=>selected.has(n.id));if(!ns.length)return fitBoard();const r=currentRect(),l=Math.min(...ns.map(n=>n.x)),t=Math.min(...ns.map(n=>n.y)),rr=Math.max(...ns.map(n=>n.x+NODE_W)),b=Math.max(...ns.map(n=>n.y+nodeHeight(n)));camera.x=r.width/2-(l+rr)/2*camera.z;camera.y=r.height/2-(t+b)/2*camera.z;updateCamera();save();}
+function refreshCatalog(){
+ if(!desktopReady)return;const signature=[project.id,project.current,appLanguage(),catalogTab,$('catalogSearch').value,JSON.stringify(project.customRecipes)].join('|');if(signature===catalogSignature)return;catalogSignature=signature;
+ const match=queryMatcher($('catalogSearch').value),list=pickerTabCandidates(catalogTab,{}).filter(v=>match(normalize(v.name+' '+v.sub+' '+(v.searchNames||''))));
+ $('catalogList').innerHTML=list.map(v=>`<button class="pickitem" draggable="true" data-catalog="${esc([v.kind,v.rid??v.idx??v.item??v.key].join(':'))}"><span class="picktext"><span class="picktitle">${esc(v.name)}</span><span class="picksub">${esc(v.sub)}</span></span></button>`).join('')||'<p>Nenhum resultado encontrado</p>';
+ for(const b of $('catalogTabs').children)b.classList.toggle('active',b.dataset.catalogTab===catalogTab);
+}
+function addCatalog(key,pos=null){const item=pickerTabCandidates(catalogTab,{}).find(v=>[v.kind,v.rid??v.idx??v.item??v.key].join(':')===key);if(!item)return;const r=currentRect();pickerContext={pos:pos||toWorld(r.left+r.width/2-123*camera.z,r.top+r.height/2-60*camera.z)};selectPicker(item);}
+function syncDesktop(){
+ if(!desktopReady)return;
+ const active=desktopLayout(),tablet=!active&&tabletQuery.matches;$('app').classList.toggle('desktop-mode',active);$('app').classList.toggle('tablet-mode',tablet);
+ if(!active&&!tablet){if($('inspectorBody').contains($('editForm'))){$('inspectorBody').replaceChildren();inspectorSignature='';}return;}
+ refreshCatalog();
+ if(!active&&tablet&&!$('inspectorPanel').classList.contains('tablet-open')){$('inspectorBody').replaceChildren();inspectorSignature='';return;}
+ if(!$('overlay').classList.contains('hidden'))return;
+ const n=selected.size===1?nBy([...selected][0]):null,c=n?calculated.nodes[n.id]:null;
+ const sig=JSON.stringify([project.id,project.current,appLanguage(),n,c,n?null:calculated.stats,selected.size]);
+ if(sig===inspectorSignature)return;
+ inspectorSignature=sig;
+ if(n)inspectNode(n.id,true);
+ else{$('inspectorTitle').textContent=langIsEnglish()?'Factory overview':'Visão da fábrica';const st=calculated.stats;$('inspectorBody').innerHTML=`<div class="metricgrid"><div class="metric"><strong>${boardNodes().length}</strong><span>${langIsEnglish()?'Nodes':'Nós'}</span></div><div class="metric"><strong>${fmt(st.power)}</strong><span>MW</span></div></div><div class="info">${langIsEnglish()?'Power generation':'Geração'}: ${fmt(st.gen)} MW<br>${langIsEnglish()?'Issues':'Pendências'}: ${st.shortages||0}<br>${selected.size} ${langIsEnglish()?'selected':'selecionados'}</div>${btn('Resumo','desktopSummary')}${btn('Alertas','alerts')}`;}
+}
+function setupDesktop(){
+ const style=document.createElement('style');style.textContent=`
+ .workspace-panel,.desktop-actions,.tablet-actions{display:none}
+ .tablet-mode .tablet-actions{display:flex;gap:4px}.tablet-mode .workspace-panel.tablet-open{display:flex;position:absolute;top:var(--top);bottom:var(--bottom);width:min(340px,calc(100vw - 80px));z-index:80;background:var(--panel);flex-direction:column;box-shadow:0 5px 30px #0009}.tablet-mode #catalogPanel{left:0}.tablet-mode #inspectorPanel{right:0}.tablet-mode .panel-grip{display:none}
+ .desktop-mode{--left-panel:270px;--right-panel:320px}
+ .desktop-mode .desktop-actions{display:flex;gap:6px}
+ .desktop-mode .workspace-panel{display:flex;position:absolute;top:var(--top);bottom:var(--bottom);z-index:65;background:#15202df5;flex-direction:column;min-height:0;border:1px solid var(--border)}
+ .desktop-mode #catalogPanel{left:0;width:var(--left-panel)}.desktop-mode #inspectorPanel{right:0;width:var(--right-panel)}
+ .panel-heading{padding:12px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);gap:8px;font-size:13px;color:var(--orange)}
+ .panel-content{padding:12px;overflow:auto;min-height:0;overscroll-behavior:contain;flex:1}
+ #catalogSearch{width:100%;padding:10px;background:var(--bg);color:white;border:1px solid var(--border);border-radius:8px}
+ #catalogTabs{display:flex;flex-wrap:wrap;gap:4px;padding:10px 0}#catalogTabs button{padding:7px;border:1px solid var(--border);background:#223448;color:white;border-radius:6px;font-size:11px}#catalogTabs .active{color:var(--orange);border-color:var(--orange)}
+ #catalogList .pickitem{width:100%;text-align:left;margin:5px 0}#catalogList .picksub{display:block}#inspectorBody .twocol{grid-template-columns:1fr}#inspectorBody .field input,#inspectorBody .field select{font-size:14px}
+ .desktop-mode #viewport{left:var(--left-panel);right:var(--right-panel)}.desktop-mode .fab{right:calc(var(--right-panel) + 15px)}
+ .desktop-mode .panel-collapsed{width:42px!important}.desktop-mode .panel-collapsed .panel-content,.desktop-mode .panel-collapsed .panel-heading strong{display:none}
+ .desktop-mode.left-collapsed #viewport{left:42px}.desktop-mode.right-collapsed #viewport{right:42px}.desktop-mode.right-collapsed .fab{right:57px}
+ .panel-grip{position:absolute;top:0;bottom:0;width:7px;cursor:col-resize;touch-action:none;z-index:2}#catalogPanel .panel-grip{right:-3px}#inspectorPanel .panel-grip{left:-3px}.panel-collapsed .panel-grip{display:none}
+ @media(min-width:651px) and (pointer:coarse){.sheet{max-width:740px;width:94vw}.sheetbody{max-height:68dvh}}
+ @media(min-width:1024px) and (max-width:1199px){.desktop-mode{--left-panel:220px;--right-panel:280px}.desktop-actions .bbutton{font-size:11px;padding:8px}}
+ `;document.head.append(style);
+ const en=false; // Static chrome starts in PT and is translated reversibly by localizeAll.
+ const aside=(side,title,body)=>`<aside class="workspace-panel" id="${side}Panel" aria-label="${title}"><div class="panel-heading"><strong id="${side==='inspector'?'inspectorTitle':'catalogTitle'}">${title}</strong><button class="ib" data-collapse="${side}" aria-label="${en?'Toggle panel':'Recolher painel'}" aria-expanded="true">↔</button></div><div class="panel-content" id="${side}Body">${body}</div><div class="panel-grip" data-resize="${side}" role="separator" aria-label="${en?'Resize panel':'Redimensionar painel'}" tabindex="0" aria-orientation="vertical"></div></aside>`;
+ $('app').insertAdjacentHTML('beforeend',aside('catalog',en?'Catalog':'Catálogo',`<input id="catalogSearch" aria-label="${en?'Search catalog':'Pesquisar catálogo'}" placeholder="${en?'Search recipes, machines…':'Buscar receita, máquina…'}"><div id="catalogTabs"><button data-catalog-tab="all">${en?'All':'Tudo'}</button><button data-catalog-tab="recipes">${en?'Recipes':'Receitas'}</button><button data-catalog-tab="resources">${en?'Resources':'Recursos'}</button><button data-catalog-tab="utils">${en?'Logistics':'Logística'}</button></div><div id="catalogList"></div>`)+aside('inspector',en?'Inspector':'Inspetor',''));
+ document.querySelector('.top-actions').insertAdjacentHTML('afterbegin',`<div class="desktop-actions">${btn('Importar','import')}${btn('Exportar JSON','export')}${btn('Configurações','settings')}${btn(en?'Center selection':'Centralizar seleção','centerSelection')}</div>`);
+ document.querySelector('.top-actions').insertAdjacentHTML('afterbegin',`<div class="tablet-actions"><button class="ib" data-tablet="catalog" title="Catálogo">＋</button><button class="ib" data-tablet="inspector" title="Inspetor">⚙</button></div>`);
+ document.querySelector('.tablet-actions').addEventListener('click',e=>{const b=e.target.closest('[data-tablet]');if(!b)return;const target=$(b.dataset.tablet+'Panel'),opened=target.classList.contains('tablet-open');document.querySelectorAll('.workspace-panel').forEach(p=>p.classList.remove('tablet-open'));target.classList.toggle('tablet-open',!opened);inspectorSignature='';syncDesktop();});
+ const actions=e=>{const b=e.target.closest('[data-action]');if(!b)return;if(b.dataset.action==='centerSelection')centerSelection();else if(b.dataset.action==='desktopSummary')summarySheet();else onAction(b.dataset.action);};
+ document.querySelector('.desktop-actions').addEventListener('click',actions);$('inspectorBody').addEventListener('click',actions);
+ $('catalogSearch').addEventListener('input',refreshCatalog);$('catalogTabs').addEventListener('click',e=>{const b=e.target.closest('[data-catalog-tab]');if(b){catalogTab=b.dataset.catalogTab;refreshCatalog();}});
+ $('catalogList').addEventListener('click',e=>{const b=e.target.closest('[data-catalog]');if(b)addCatalog(b.dataset.catalog);});
+ $('catalogList').addEventListener('dragstart',e=>{const b=e.target.closest('[data-catalog]');if(b){e.dataTransfer.setData('application/x-factory-flow',b.dataset.catalog);e.dataTransfer.effectAllowed='copy';}});
+ $('viewport').addEventListener('dragover',e=>{if(e.dataTransfer.types.includes('application/x-factory-flow'))e.preventDefault();});
+ $('viewport').addEventListener('drop',e=>{const key=e.dataTransfer.getData('application/x-factory-flow');if(key){e.preventDefault();addCatalog(key,toWorld(e.clientX,e.clientY));}});
+ document.querySelectorAll('[data-collapse]').forEach(b=>b.addEventListener('click',()=>{const side=b.dataset.collapse;if(!desktopLayout()){$(side+'Panel').classList.remove('tablet-open');return;}const closed=$(side+'Panel').classList.toggle('panel-collapsed');$('app').classList.toggle(side==='catalog'?'left-collapsed':'right-collapsed',closed);b.setAttribute('aria-expanded',String(!closed));render();}));
+ document.querySelectorAll('[data-resize]').forEach(grip=>{
+  const resize=x=>{const left=grip.dataset.resize==='catalog',max=Math.min(420,(innerWidth-420)/2),width=Math.max(200,Math.min(max,left?x:innerWidth-x));$('app').style.setProperty(left?'--left-panel':'--right-panel',width+'px');updateCamera();};
+  grip.addEventListener('pointerdown',e=>{e.preventDefault();grip.setPointerCapture(e.pointerId);});grip.addEventListener('pointermove',e=>{if(grip.hasPointerCapture(e.pointerId))resize(e.clientX);});grip.addEventListener('pointerup',e=>{if(grip.hasPointerCapture(e.pointerId))grip.releasePointerCapture(e.pointerId);render();});
+  grip.addEventListener('keydown',e=>{if(!['ArrowLeft','ArrowRight'].includes(e.key))return;e.preventDefault();const b=grip.getBoundingClientRect();resize(b.x+(e.key==='ArrowLeft'?-20:20));render();});
+ });
+ desktopQuery.addEventListener('change',()=>{inspectorSignature='';render();});
+ document.addEventListener('keydown',e=>{if(['INPUT','TEXTAREA','SELECT'].includes(e.target.tagName)||!$('overlay').classList.contains('hidden'))return;if(e.code==='Space'){spacePan=true;e.preventDefault();}if(!e.ctrlKey&&!e.metaKey&&e.key.toLowerCase()==='f'){e.preventDefault();e.shiftKey?centerSelection():fitBoard();}});
+ document.addEventListener('keyup',e=>{if(e.code==='Space')spacePan=false;});window.addEventListener('blur',()=>spacePan=false);
+ desktopReady=true;
+}
+loadAll();recompute(true);setupEvents();setupDesktop();render();activateLocalization();
 window.FACTORY_FLOW_DEBUG={getState:()=>clone(project),getStats:()=>clone(calculated),recipesCount:()=>recs.length,itemsCount:()=>items.length,createRecipe:(rid,x,y)=>{mutate(()=>project.nodes.push({...createNode({kind:'recipe',rid},x,y)}))},recompute:()=>{recompute(true);render()},version:APP_VERSION};
 </script></div></body></html>
+
