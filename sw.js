@@ -1,8 +1,9 @@
 /* Factory Flow v0.4.19 · cache offline do PWA */
-const CACHE_NAME = 'factory-flow-pwa-v0.4.19-screen-test-1';
+const CACHE_NAME = 'factory-flow-pwa-v0.4.19-screen-test-2';
 const APP_FILES = [
   './',
   './index.html',
+  './teste-tela.html',
   './manifest.webmanifest',
   './manifest-teste-tela.webmanifest',
   './icons/icon-180.png',
