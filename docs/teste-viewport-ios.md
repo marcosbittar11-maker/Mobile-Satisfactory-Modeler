@@ -13,13 +13,17 @@ Objetivo: grade até as bordas no modo instalado, controles flutuantes e protegi
 
 ## Prévia publicada para teste
 
-URL: https://marcosbittar11-maker.github.io/Mobile-Satisfactory-Modeler/?teste-tela=1
+URL: https://marcosbittar11-maker.github.io/Mobile-Satisfactory-Modeler/teste-tela.html
 
-No Safari, usar Compartilhar → Adicionar à Tela de Início e abrir **FF Tela Teste**. O manifesto tem ID/start_url específicos para esse teste. A mudança visual é ativada somente no modo instalado; o Safari com barra de endereço mantém o layout normal.
+No Safari, usar Compartilhar → Adicionar à Tela de Início e abrir **FF Tela Teste 2**. Deve aparecer **TESTE TELA 2** no cabeçalho. O manifesto tem ID/start_url no caminho fixo `teste-tela.html`, sem depender de parâmetro. O parâmetro antigo continua compatível. O modo instalado aceita tanto `display-mode: standalone` quanto `navigator.standalone` do iOS; o Safari com barra de endereço mantém o layout normal.
 
 A versão normal conserva o layout atual. Para evitar alterar fábricas do app normal, o teste usa chaves separadas de projetos, projeto ativo, idioma e modelos no localStorage. É possível exportar JSON no app normal e importar no teste. Não apaga nem migra os projetos originais.
 
-O servidor fornece o mesmo documento para a URL normal e para a URL com parâmetro. A seleção do teste ocorre no carregamento, evitando contaminar o fallback offline do service worker com um HTML exclusivo da prévia. O teste automatizado abriu a prévia e depois o app normal sem rede, verificando layout e armazenamento de ambos. Manifesto normal, ícones e estratégia do SW preservados; só foram acrescentados o manifesto de teste e uma revisão do cache para disponibilizá-lo offline.
+O servidor fornece os mesmos bytes para `index.html` e `teste-tela.html`. A seleção do teste ocorre no carregamento pelo caminho, evitando contaminar o fallback offline do service worker com um HTML exclusivo da prévia. O teste automatizado abriu a prévia e depois o app normal sem rede, verificando layout e armazenamento de ambos. É criado somente um link de manifesto, apontando desde o início para o manifesto correto, em vez de trocar o endereço de um manifesto já descoberto. Manifesto normal, ícones e estratégia do SW preservados; acrescentados manifesto/entrada de teste e uma revisão do cache.
+
+A captura do primeiro teste mostrou o layout antigo mesmo após abertura pelo ícone FF Tela Teste. Sem telemetria do aparelho, não é possível distinguir perda do parâmetro, seleção/caching do manifesto ou reconhecimento do modo instalado. A revisão 2 elimina a dependência do parâmetro, evita a troca tardia do manifesto, aceita o sinal nativo do iOS e torna a identificação visual inequívoca. A hipótese foi reproduzida em teste: a entrada sem parâmetro anteriormente reutilizava o armazenamento normal.
+
+`node tests/preview-launch.js /caminho/do/pacote-pages`: passou para caminho fixo, identificação visível, fallback iOS, manifesto sem query, isolamento de armazenamento, compatibilidade do link antigo, recarga offline e retorno offline ao app normal. O teste injeta `navigator.standalone` para exercitar esse contrato em Chromium; não declara homologação em Safari físico.
 
 ## Evidências
 

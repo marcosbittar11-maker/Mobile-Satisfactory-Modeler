@@ -1,8 +1,12 @@
 {
-  "originalLayoutPreserved": true,
-  "previewEdgeToEdge": true,
+  "fixedPath": true,
+  "visibleTestMarker": true,
+  "iosStandaloneFallback": true,
+  "manifestLaunchWithoutQuery": true,
   "isolatedStorage": true,
-  "previewOffline": true,
-  "originalOfflineAfterPreview": true,
+  "oldQueryCompatible": true,
+  "offlinePreview": true,
+  "offlineOriginalAfterPreview": true,
+  "browserLayoutPreserved": true,
   "errors": []
 }
