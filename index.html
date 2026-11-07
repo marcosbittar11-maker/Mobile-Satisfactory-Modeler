@@ -156,6 +156,44 @@ button.alert-row:active{background:#24384b}
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="apple-touch-icon" sizes="180x180" href="./icons/icon-180.png">
 <link rel="icon" type="image/png" sizes="192x192" href="./icons/icon-192.png">
+<style id="factory-flow-viewport-preview">
+/* iOS standalone: edge-to-edge factory, with only the controls in the safe area. */
+@media (display-mode: standalone) and (max-width: 1023px) {
+  html.viewport-test { --top: calc(57px + env(safe-area-inset-top,0px)); }
+  html.viewport-test #app { height: 100%; height: 100dvh; bottom: auto; }
+  html.viewport-test #app > #viewport { bottom: 0; }
+  html.viewport-test #app > .topbar {
+    padding-top: calc(env(safe-area-inset-top, 0px) + 7px);
+    padding-bottom: 8px;
+    padding-left: max(12px, env(safe-area-inset-left, 0px));
+    padding-right: max(12px, env(safe-area-inset-right, 0px));
+  }
+  html.viewport-test #app > .topbar .topbrand .eyebrow {
+    font-size: 11px; line-height: 14px; letter-spacing: 1.2px;
+  }
+  html.viewport-test #app > .topbar .topbrand { padding-top: 2px; padding-bottom: 2px; }
+  html.viewport-test #app > .bottom {
+    left: max(8px, env(safe-area-inset-left, 0px));
+    right: max(8px, env(safe-area-inset-right, 0px));
+    bottom: calc(env(safe-area-inset-bottom, 0px) + 6px);
+    min-height: 0; padding: 0; border: 0;
+    background: none; box-shadow: none; pointer-events: none;
+  }
+  html.viewport-test #app > .bottom > * { pointer-events: auto; }
+  html.viewport-test #app > .fab { right: max(13px, env(safe-area-inset-right, 0px)); }
+  html.viewport-test #app .bread, html.viewport-test #app .hud { left: max(12px, env(safe-area-inset-left, 0px)); }
+}
+@media (display-mode: standalone) and (min-width: 651px) and (max-width: 1023px) {
+  html.viewport-test { --top: calc(60px + env(safe-area-inset-top, 0px)); }
+}
+</style>
+<script id="factory-flow-viewport-preview-boot">
+if (new URLSearchParams(location.search).get('teste-tela') === '1') {
+  document.documentElement.classList.add('viewport-test');
+  window.FACTORY_FLOW_VIEWPORT_TEST = true;
+  document.querySelector('link[rel="manifest"]').href = './manifest-teste-tela.webmanifest';
+}
+</script>
 </head><body><div id="app">
 <header class="topbar"><button class="ib" id="btnProjects" aria-label="Meus projetos" title="Projetos">▤</button><div class="topbrand"><div class="eyebrow"><span class="brand-caption">FICSIT • MOBILE FLOW</span> <span class="app-version-badge" id="appVersionBadge" aria-label="Versão"></span></div><button class="planname" id="btnName">Nova fábrica</button></div><div class="top-actions"><button class="ib" id="btnUndo" title="Desfazer">↶</button><button class="ib" id="btnRedo" title="Refazer">↷</button><button class="ib" id="btnMenu" title="Menu">☰</button></div></header>
 <div id="viewport"><div class="grid" id="gridBg"></div><canvas id="wires"></canvas><div id="world"></div><div class="bread" id="breadcrumbs"></div><div class="hud" id="stats"></div><div class="hint" id="hint"><div class="hintlogo">⚙️</div><h3>Monte a sua fábrica</h3><p>Comece do zero: toque em <b>+</b> para uma receita. Depois, arraste a <b>bolinha laranja</b> para criar automaticamente a etapa anterior. Use dois dedos para zoom.</p></div></div>
@@ -1071,7 +1109,7 @@ const ITEM_NAMES_PT={
 const MACHINE_NAMES_PT={"Smelter":"Fundidora","Foundry":"Fundição","Refinery":"Refinaria","Constructor":"Construtor","Assembler":"Montadora","Manufacturer":"Fabricadora","Blender":"Misturadora","Particle Accelerator":"Acelerador de Partículas","Packager":"Empacotadora","Converter":"Conversor","Quantum Encoder":"Codificador Quântico","Nuclear Power Plant":"Usina Nuclear","Coal-Powered Generator":"Gerador a Carvão","Fuel-Powered Generator":"Gerador a Combustível","Equipment Workshop (manual)":"Oficina de Equipamentos (manual)"};
 items.forEach(it=>it.namePt=ITEM_NAMES_PT[it.key]||it.name);
 Object.assign(aliases,{'invólucro de alumínio':'aluminum casing','carcaça de alumínio':'aluminum casing','chapa de alumínio alclad':'alclad aluminum sheet','chapa de duralumínio':'alclad aluminum sheet','chapa de alumínio':'alclad aluminum sheet'});
-const LANGUAGE_STORAGE_KEY='factory_flow_ui_language_v1';
+const LANGUAGE_STORAGE_KEY='factory_flow_ui_language_v1' + (window.FACTORY_FLOW_VIEWPORT_TEST ? '_viewport_test' : '');
 let languagePreference='auto';
 try{const stored=localStorage.getItem(LANGUAGE_STORAGE_KEY);if(['auto','pt-BR','en-US'].includes(stored))languagePreference=stored;}catch(e){}
 const detectedLanguage=()=>{const langs=navigator.languages?.length?navigator.languages:[navigator.language||'en-US'];return /^pt(?:-|$)/i.test(langs[0]||'')?'pt-BR':'en-US';};
@@ -1103,7 +1141,7 @@ const id=()=>Math.random().toString(36).slice(2,9)+Date.now().toString(36).slice
 const itemName=i=>items[i]?(langIsEnglish()?items[i].name:items[i].namePt):(langIsEnglish()?'Item':'Produto');
 function itemIcon(item){let n=(items[item]?.name||'').toLowerCase();if(/water|acid|solution|oil|fuel|gas|residue|biofuel/.test(n))return '💧';if(/iron|steel|beam|plate|rod|ingot|scrap/.test(n))return '🔩';if(/copper|caterium|wire|cable|sheet/.test(n))return '🟠';if(/computer|circuit|ai |connector|quantum|oscillator/.test(n))return '💻';if(/motor|rotor|stator|frame|engine/.test(n))return '⚙️';if(/coal|sulfur|quartz|bauxite|ore|sam|limestone/.test(n))return '⛏️';if(/plastic|rubber|polymer/.test(n))return '🧱';return '📦'}
 /* UI translation infrastructure is injected below after the main initialization. */
-const projectKey='factory_flow_mobile_projects_v2',activeKey='factory_flow_mobile_active_v2';
+const projectKey='factory_flow_mobile_projects_v2' + (window.FACTORY_FLOW_VIEWPORT_TEST ? '_viewport_test' : ''),activeKey='factory_flow_mobile_active_v2' + (window.FACTORY_FLOW_VIEWPORT_TEST ? '_viewport_test' : '');
 let projects=[],project,history=[],future=[],selected=new Set(),pending=null,gesture=null,activePointers=new Map(),camera={x:50,y:90,z:0.9},calculated=null,dragline=null,pickerContext=null,lastTap=null;
 function save(){project.cameras[project.current]=clone(camera);try{localStorage.setItem(projectKey,JSON.stringify(projects));localStorage.setItem(activeKey,project.id);}catch(e){toast('Salvamento local indisponível. Exporte um arquivo JSON!',true)}}
 const boardNodes=()=>project.nodes.filter(n=>n.board===project.current);
@@ -1500,7 +1538,7 @@ function pasteSelection(){if(!clipboard?.nodes.length)return toast('Nada copiado
  const edges=clone(clipboard.edges).map(e=>{const x={...e,id:id(),board:bmap[e.board]||project.current,from:map[e.from],to:map[e.to]};delete x.tpn;delete x.fpn;if(e.tpn&&map[e.tpn])x.tpn=map[e.tpn];if(e.fpn&&map[e.fpn])x.fpn=map[e.fpn];return x;}).filter(e=>e.from&&e.to);
  mutate(()=>{project.boards.push(...boards);project.nodes.push(...nodes);project.edges.push(...edges)});selected=new Set(nodes.filter(n=>n.board===project.current).map(n=>n.id));render();toast('Seleção colada')}
 function duplicateSelection(){copySelection();pasteSelection();closeSheet()}
-const TEMPLATE_KEY='factory_flow_templates_v1';
+const TEMPLATE_KEY='factory_flow_templates_v1' + (window.FACTORY_FLOW_VIEWPORT_TEST ? '_viewport_test' : '');
 function readTemplates(){try{const v=JSON.parse(localStorage.getItem(TEMPLATE_KEY)||'[]');return Array.isArray(v)?v:[]}catch{return[]}}
 function writeTemplates(v){try{localStorage.setItem(TEMPLATE_KEY,JSON.stringify(v));return true}catch{toast('Falha ao salvar modelo local',true);return false}}
 function saveTemplate(){if(!selected.size)return toast('Selecione blocos para salvar como modelo.',true);copySelection();const pending=clone(clipboard);
