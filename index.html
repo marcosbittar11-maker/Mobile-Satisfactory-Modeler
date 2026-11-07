@@ -159,22 +159,28 @@ button.alert-row:active{background:#24384b}
 /* iOS standalone: edge-to-edge factory, with only the controls in the safe area. */
 @media (max-width: 1023px) {
   html.viewport-test.viewport-app { --top: calc(57px + env(safe-area-inset-top,0px)); }
-  html.viewport-test.viewport-app #app { height: 100%; height: 100dvh; bottom: auto; }
+  html.viewport-test.viewport-app #app { height: 100%; height: 100dvh; height: 100lvh; bottom: auto; }
   html.viewport-test.viewport-app #app > #viewport { bottom: 0; }
   html.viewport-test.viewport-app #app > .topbar {
     padding-top: calc(env(safe-area-inset-top, 0px) + 7px);
     padding-bottom: 8px;
+    background: #15202d; box-shadow: none;
+    filter: none; backdrop-filter: none; -webkit-backdrop-filter: none;
     padding-left: max(12px, env(safe-area-inset-left, 0px));
     padding-right: max(12px, env(safe-area-inset-right, 0px));
   }
   html.viewport-test.viewport-app #app > .topbar .topbrand .eyebrow {
-    font-size: 11px; line-height: 14px; letter-spacing: 1.2px;
+    font-size: 12px; line-height: 16px; letter-spacing: .4px;
+    font-weight: 700; opacity: 1; text-shadow: none;
   }
-  html.viewport-test.viewport-app #app > .topbar .topbrand { padding-top: 2px; padding-bottom: 2px; }
+  html.viewport-test.viewport-app #app > .topbar .topbrand { padding: 0; align-self: flex-start; }
+  html.viewport-test.viewport-app #app > .topbar .app-version-badge {
+    font-size: 11px; line-height: 16px; font-weight: 700; color: #fff;
+  }
   html.viewport-test.viewport-app #app > .bottom {
     left: max(8px, env(safe-area-inset-left, 0px));
     right: max(8px, env(safe-area-inset-right, 0px));
-    bottom: calc(env(safe-area-inset-bottom, 0px) + 6px);
+    bottom: env(safe-area-inset-bottom, 0px);
     min-height: 0; padding: 0; border: 0;
     background: none; box-shadow: none; pointer-events: none;
   }
@@ -210,12 +216,41 @@ button.alert-row:active{background:#24384b}
   document.head.appendChild(manifest);
   if (preview) {
     var title = document.createElement('meta');
-    title.name = 'apple-mobile-web-app-title'; title.content = 'FF Tela Teste 2';
+    title.name = 'apple-mobile-web-app-title'; title.content = 'FF Tela Teste 3';
     document.head.appendChild(title);
     document.addEventListener('DOMContentLoaded', function () {
-      document.title = 'Factory Flow — Teste Tela 2';
+      document.title = 'Factory Flow — Teste Tela 3';
       var caption = document.querySelector('.brand-caption');
-      if (caption) caption.textContent = 'TESTE TELA 2';
+      if (caption) {
+        caption.textContent = 'TESTE TELA 3';
+        caption.setAttribute('role', 'button'); caption.tabIndex = 0;
+        caption.title = 'Informações do teste';
+        function showViewportInfo() {
+          var app = document.getElementById('app'), editor = document.getElementById('viewport');
+          var footer = document.querySelector('.bottom'), vv = window.visualViewport;
+          var probe = document.createElement('div');
+          probe.style.cssText = 'position:fixed;visibility:hidden;pointer-events:none;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)';
+          document.body.appendChild(probe);
+          var safe = getComputedStyle(probe);
+          var info = {
+            teste: 3, modoApp: document.documentElement.classList.contains('viewport-app'),
+            tela: [screen.width, screen.height], janela: [innerWidth, innerHeight],
+            visual: vv ? [vv.width, vv.height, vv.offsetTop, vv.scale] : null,
+            app: [app.getBoundingClientRect().top, app.getBoundingClientRect().height],
+            editor: [editor.getBoundingClientRect().top, editor.getBoundingClientRect().bottom],
+            rodape: [footer.getBoundingClientRect().top, footer.getBoundingClientRect().bottom],
+            areaSegura: [safe.paddingTop, safe.paddingBottom], pixels: devicePixelRatio
+          };
+          probe.remove();
+          showSheet('Medidas do teste', 'Não altera seu projeto',
+            '<pre style="white-space:pre-wrap;font-size:13px">'+esc(JSON.stringify(info,null,2))+'</pre>',
+            btn('Fechar','close'));
+        }
+        caption.addEventListener('click', showViewportInfo);
+        caption.addEventListener('keydown', function (event) {
+          if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); showViewportInfo(); }
+        });
+      }
     });
   }
 })();
