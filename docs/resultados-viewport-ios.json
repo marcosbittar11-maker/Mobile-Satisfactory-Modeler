@@ -1,0 +1,252 @@
+{
+  "syntheticSafeAreas": true,
+  "results": [
+    {
+      "case": "browser",
+      "app": {
+        "top": 0,
+        "bottom": 852,
+        "left": 0,
+        "right": 393,
+        "height": 852
+      },
+      "header": {
+        "top": 0,
+        "bottom": 104,
+        "left": 0,
+        "right": 393,
+        "height": 104
+      },
+      "footer": {
+        "top": 762,
+        "bottom": 852,
+        "left": 0,
+        "right": 393,
+        "height": 90
+      },
+      "button": {
+        "top": 767.5,
+        "bottom": 812.5,
+        "left": 8,
+        "right": 106.328125,
+        "height": 45
+      },
+      "editor": {
+        "top": 104,
+        "bottom": 762,
+        "left": 0,
+        "right": 393,
+        "height": 658
+      },
+      "background": "linear-gradient(0deg, rgba(21, 31, 43, 0.976), rgba(16, 25, 38, 0.953))",
+      "font": 10,
+      "overflow": false
+    },
+    {
+      "case": "iphone-app",
+      "app": {
+        "top": 0,
+        "bottom": 852,
+        "left": 0,
+        "right": 393,
+        "height": 852
+      },
+      "header": {
+        "top": 0,
+        "bottom": 104,
+        "left": 0,
+        "right": 393,
+        "height": 104
+      },
+      "footer": {
+        "top": 767,
+        "bottom": 812,
+        "left": 8,
+        "right": 385,
+        "height": 45
+      },
+      "button": {
+        "top": 767,
+        "bottom": 812,
+        "left": 8,
+        "right": 106.328125,
+        "height": 45
+      },
+      "editor": {
+        "top": 104,
+        "bottom": 852,
+        "left": 0,
+        "right": 393,
+        "height": 748
+      },
+      "background": "none",
+      "font": 11,
+      "overflow": false
+    },
+    {
+      "case": "small-app",
+      "app": {
+        "top": 0,
+        "bottom": 680,
+        "left": 0,
+        "right": 320,
+        "height": 680
+      },
+      "header": {
+        "top": 0,
+        "bottom": 77,
+        "left": 0,
+        "right": 320,
+        "height": 77
+      },
+      "footer": {
+        "top": 629,
+        "bottom": 674,
+        "left": 8,
+        "right": 312,
+        "height": 45
+      },
+      "button": {
+        "top": 629,
+        "bottom": 674,
+        "left": 8,
+        "right": 84,
+        "height": 45
+      },
+      "editor": {
+        "top": 77,
+        "bottom": 680,
+        "left": 0,
+        "right": 320,
+        "height": 603
+      },
+      "background": "none",
+      "font": 11,
+      "overflow": false
+    },
+    {
+      "case": "landscape-app",
+      "app": {
+        "top": 0,
+        "bottom": 393,
+        "left": 0,
+        "right": 852,
+        "height": 393
+      },
+      "header": {
+        "top": 0,
+        "bottom": 60,
+        "left": 0,
+        "right": 852,
+        "height": 60
+      },
+      "footer": {
+        "top": 309,
+        "bottom": 366,
+        "left": 47,
+        "right": 805,
+        "height": 57
+      },
+      "button": {
+        "top": 314.5,
+        "bottom": 360.5,
+        "left": 47,
+        "right": 135.0625,
+        "height": 46
+      },
+      "editor": {
+        "top": 60,
+        "bottom": 393,
+        "left": 0,
+        "right": 852,
+        "height": 333
+      },
+      "background": "none",
+      "font": 11,
+      "overflow": false
+    },
+    {
+      "case": "tablet-browser",
+      "app": {
+        "top": 0,
+        "bottom": 1024,
+        "left": 0,
+        "right": 768,
+        "height": 1024
+      },
+      "header": {
+        "top": 0,
+        "bottom": 84,
+        "left": 0,
+        "right": 768,
+        "height": 84
+      },
+      "footer": {
+        "top": 929,
+        "bottom": 1024,
+        "left": 0,
+        "right": 768,
+        "height": 95
+      },
+      "button": {
+        "top": 944.5,
+        "bottom": 990.5,
+        "left": 23,
+        "right": 111.0625,
+        "height": 46
+      },
+      "editor": {
+        "top": 81,
+        "bottom": 932,
+        "left": 0,
+        "right": 768,
+        "height": 851
+      },
+      "background": "linear-gradient(0deg, rgba(21, 31, 43, 0.976), rgba(16, 25, 38, 0.953))",
+      "font": 10,
+      "overflow": false
+    },
+    {
+      "case": "desktop-browser",
+      "app": {
+        "top": 0,
+        "bottom": 768,
+        "left": 0,
+        "right": 1366,
+        "height": 768
+      },
+      "header": {
+        "top": 0,
+        "bottom": 57,
+        "left": 0,
+        "right": 1366,
+        "height": 57
+      },
+      "footer": {
+        "top": 693,
+        "bottom": 768,
+        "left": 0,
+        "right": 1366,
+        "height": 75
+      },
+      "button": {
+        "top": 709.5,
+        "bottom": 753.5,
+        "left": 23,
+        "right": 111.0625,
+        "height": 44
+      },
+      "editor": {
+        "top": 57,
+        "bottom": 696,
+        "left": 270,
+        "right": 1046,
+        "height": 639
+      },
+      "background": "linear-gradient(0deg, rgba(21, 31, 43, 0.976), rgba(16, 25, 38, 0.953))",
+      "font": 10,
+      "overflow": false
+    }
+  ],
+  "errors": []
+}
