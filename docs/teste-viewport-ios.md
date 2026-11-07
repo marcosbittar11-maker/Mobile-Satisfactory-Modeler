@@ -1,5 +1,15 @@
 # Teste de viewport iOS — v0.4.19
 
+## Revisão 3 após a captura do usuário
+
+O usuário confirmou o Teste Tela 2 ativo, mas pediu os controles mais baixos e relatou o cabeçalho ainda suavizado. A revisão 3 no wrapper de Pages remove a margem extra de 6 px abaixo dos controles (mantém somente a área segura), testa `100lvh` no modo instalado para ocupar a maior altura disponível e torna o cabeçalho opaco, com fonte 12 px, line-height explícito e marca alinhada ao topo para evitar centralização em meio pixel. Não se declara a nitidez nativa corrigida sem nova captura do aparelho.
+
+O endereço e o ID do manifesto são os mesmos, preservando os projetos da prévia. O cabeçalho passa a mostrar **TESTE TELA 3**. Tocar nessa marca abre medidas locais da tela, janela, visualViewport, app, editor e rodapé; nada é transmitido e o projeto não é modificado. O layout normal continua protegido pelo seletor do teste e pelo seu armazenamento separado.
+
+**Verificação desta revisão:** os três scripts executáveis do pacote passaram na análise sintática por `vm.Script`; `index.html` e `teste-tela.html` têm conteúdo idêntico; as condições de ativação e as propriedades foram conferidas estaticamente. Os testes de navegador novos não foram concluídos: o ambiente reiniciou e o sandbox bloqueou servidor local (`EPERM`) e inicialização do Chromium (`Operation not permitted`). Os resultados de navegador descritos abaixo são históricos das revisões anteriores, não execução do Teste Tela 3. Os novos critérios estão em `tests/preview-launch.js`, pendentes de execução.
+
+O CSS da candidata principal nesta branch ainda corresponde à revisão anterior. A revisão 3 está apenas no pacote opt-in de Pages para homologação no aparelho, antes de transferir o ajuste validado ao HTML principal.
+
 Objetivo: grade até as bordas no modo instalado, controles flutuantes e protegidos pela área segura, e cabeçalho compacto/mais legível. Candidata na branch `fix/ios-standalone-viewport`; não integrada à main.
 
 ## Alteração proposta
