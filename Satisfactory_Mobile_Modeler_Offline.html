@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="pt-BR"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover, user-scalable=no"/>
 <meta name="theme-color" content="#0a1018"/><meta name="apple-mobile-web-app-capable" content="yes"/><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
-<title>Factory Flow v0.4.19 — Satisfactory Mobile Modeler</title>
+<title>Factory Flow v0.4.20 — Satisfactory Mobile Modeler</title>
 <style>
 :root{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#e8f0f9;background:#0b121a;--bg:#0b121a;--panel:#15202d;--panel2:#1e2e3f;--border:#304357;--muted:#8e9fb2;--orange:#ffb74d;--aqua:#5ddbd2;--warn:#ff7e72;--green:#72d6a3;--blue:#72b5ff;--top:calc(57px + env(safe-area-inset-top,0px));--bottom:calc(72px + env(safe-area-inset-bottom,0px));}
 *{box-sizing:border-box}html,body{width:100%;height:100%;margin:0;overflow:hidden;overscroll-behavior:none}button,input,select,textarea{font:inherit}button{cursor:pointer;-webkit-tap-highlight-color:transparent}button:focus-visible,input:focus-visible{outline:2px solid var(--orange);outline-offset:2px}body{-webkit-touch-callout:none}
@@ -843,6 +843,10 @@ const items=RAW_ITEMS.trim().split('\n').map((line,id)=>{let [name,key]=line.spl
 const cats=['Fundição','Fundição avançada','Refinaria','Construtor','Montador','Fabricante','Misturador','Acelerador','Embaladora','Conversor','Codificador quântico','Usina nuclear','Gerador a carvão','Gerador a combustível','Bancada manual'];
 const machines=['Smelter','Foundry','Refinery','Constructor','Assembler','Manufacturer','Blender','Particle Accelerator','Packager','Converter','Quantum Encoder','Nuclear Power Plant','Coal-Powered Generator','Fuel-Powered Generator','Equipment Workshop (manual)'];
 const machineIcons=['♨️','🔥','🛢️','⚙️','🔩','🏭','🧪','⚛️','📦','🔄','✨','☢️','⚡','⛽','🛠️'];
+// IDs independentes do idioma. O índice numérico de cada categoria continua
+// inalterado para manter compatibilidade com receitas e projetos antigos.
+const MACHINE_ASSET_IDS=Object.freeze(['smelter','foundry','refinery','constructor','assembler','manufacturer','blender','particle-accelerator','packager','converter','quantum-encoder','nuclear-power-plant','coal-generator','fuel-generator','equipment-workshop']);
+const MACHINE_CATEGORY_BY_ID=Object.freeze(Object.fromEntries(MACHINE_ASSET_IDS.map((key,cat)=>[key,cat])));
 const powers=[4,16,30,4,15,55,75,0,10,0,0,0,0,0,0];
 const recs=RAW_RECIPES.trim().split('\n').map((line,id)=>{let [name,cat,duration,ingredients,products]=line.split('~');const parse=s=>s?s.split(',').map(x=>{let [i,q]=x.split(':');return{item:parseInt(i,36),qty:Number(q)}}):[];return{id,name,cat:+cat,duration:+duration,ins:parse(ingredients),outs:parse(products),alt:name.startsWith('Alternate: ')};});
 const ITEM_BY_KEY=Object.fromEntries(items.map(x=>[x.key,x.id]));
@@ -1133,10 +1137,23 @@ const GAME_ICON_NAMES=new Set(`AI Expansion Server|AI Limiter|Adaptive Control U
 const SAT_ATLAS_EXTRA='Alien Carapace|Alien Organs|Assembler|Beacon|Biofuel|Blender|Cartridge|Color Cartridge|Constructor|Converter|Conveyor Belt|Conveyor Belt Mk.2|Conveyor Belt Mk.3|Conveyor Belt Mk.4|Conveyor Belt Mk.5|Conveyor Belt Mk.6|Flower Petals|Foundry|Manufacturer|Miner|Miner MK1|Miner MK2|Miner MK3|Nuclear Power Plant|Oil Extractor|Packager|Particle Accelerator|Pipeline Mk.1|Pipeline Mk.2|Quantum Encoder|Refinery|Resource Well Extractor|Smelter|Somersloop|Water Extractor'.split('|');
 const SAT_ATLAS_POS=new Map([...new Set([...GAME_ICON_NAMES,...SAT_ATLAS_EXTRA])].sort().map((name,index)=>[name,index]));
 const SAT_ATLAS_COLS=16,SAT_ATLAS_TILE=36;
+// O atlas usa os nomes originais na preparação, mas as consultas usam IDs
+// únicos (item.key / MACHINE_ASSET_IDS), nunca textos PT-BR/EN.
+const ITEM_ATLAS_BY_ID=new Map(items.map(item=>[item.key,SAT_ATLAS_POS.get(item.name)]).filter(([,index])=>index!==undefined));
+const MACHINE_ATLAS_BY_ID=new Map(machines.map((name,cat)=>[MACHINE_ASSET_IDS[cat],SAT_ATLAS_POS.get(name)]).filter(([,index])=>index!==undefined));
+// Ícones distintos e offline para itens não incluídos na imagem original.
+const ITEM_FALLBACK_BY_ID=Object.freeze({
+ 'biochemical-sculptor':'🧬','blade-runners':'🥾','chainsaw':'🪚','factory-carttm':'🛒',
+ 'gas-mask':'😷','golden-factory-carttm':'🏎️','hazmat-suit':'🥽','hoverpack':'🎒',
+ 'jetpack':'🚀','object-scanner':'📡','nobelisk-detonator':'💥',
+ 'bacon-agaric':'🍄','paleberry':'🫐','beryl-nut':'🌰','medicinal-inhaler':'💊',
+ 'parachute':'🪂','rebar-gun':'🏹','rifle':'🔫','xeno-zapper':'⚡',
+ 'xeno-basher':'🔨','zipline':'🧗'
+});
 // High-contrast self-contained pictograms: display immediately when offline.
 // The image drawn on top remains the original game icon when the network permits it.
 function offlineItemSvg(item){
- const name=itemName(item).toLowerCase();
+ const name=(items[item]?.name||'').toLowerCase();
  let color='#9bafc0', secondary='#566f83',type='box';
  if(/coal|coke|carbon/.test(name)){color='#384856';secondary='#1d2734';type='ore';}
  else if(/copper|caterium/.test(name)){color=/caterium/.test(name)?'#e7ba45':'#e17d41';secondary='#8c4e30';type=/ingot/.test(name)?'ingot':'ore';}
@@ -1157,15 +1174,31 @@ function offlineItemSvg(item){
  else shape=`<path d="m5 14 17-8 16 9-17 9Z" fill="${color}" stroke="#dfedf3"/><path d="M5 14v15l16 10V24Z" fill="${secondary}" stroke="#dfedf3"/><path d="M38 15v16l-17 8V24Z" fill="${color}" opacity=".76" stroke="#dfedf3"/>`;
  return `<svg viewBox="0 0 42 42" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">${shape}</svg>`;
 }
-function gameIconMarkup(item){
- if(item==null||!items[item])return `<span class="game-item-icon"><span class="fallback">${offlineItemSvg(item)}</span></span>`;
- const name=itemName(item),index=SAT_ATLAS_POS.get(name);
- const fb=`<span class="fallback">${offlineItemSvg(item)}</span>`;
- if(index==null)return `<span class="game-item-icon">${fb}</span>`;
+// Reutilizado pelo catálogo, editor e nós; IDs não mudam com o idioma.
+function assetSpriteMarkup(index,label,id,kind,fallback){
+ const attr=kind==='machine'?'data-machine-id':'data-resource-id';
+ const idAttribute=`${attr}="${esc(id)}"`;
+ if(index==null)return `<span class="game-item-icon" ${idAttribute} role="img" aria-label="${esc(label)}">${fallback}</span>`;
  const x=index%SAT_ATLAS_COLS*SAT_ATLAS_TILE,y=Math.floor(index/SAT_ATLAS_COLS)*SAT_ATLAS_TILE;
- return `<span class="game-item-icon with-atlas">${fb}<span class="game-atlas-icon" role="img" aria-label="${esc(name)}" style="background-position:-${x}px -${y}px"></span></span>`;
+ return `<span class="game-item-icon with-atlas" ${idAttribute}>${fallback}<span class="game-atlas-icon" role="img" aria-label="${esc(label)}" style="background-position:-${x}px -${y}px"></span></span>`;
 }
-function nodeIcon(n){return n.type==='recipe'?gameIconMarkup(recOf(n)?.outs?.[0]?.item):n.type==='source'?gameIconMarkup(n.item):(toolset.find(x=>x.key===n.type)?.icon||'⚙️')}
+function gameIconMarkup(item){
+ const resource=items[item];
+ if(!resource)return `<span class="game-item-icon"><span class="fallback">${offlineItemSvg(item)}</span></span>`;
+ const emoji=ITEM_FALLBACK_BY_ID[resource.key];
+ const fallback=`<span class="fallback">${emoji?esc(emoji):offlineItemSvg(item)}</span>`;
+ return assetSpriteMarkup(ITEM_ATLAS_BY_ID.get(resource.key),itemName(item),resource.key,'resource',fallback);
+}
+function machineIconMarkup(cat){
+ const id=MACHINE_ASSET_IDS[cat];
+ if(!id)return '<span class="game-item-icon"><span class="fallback">🏭</span></span>';
+ const fallback=`<span class="fallback">${esc(machineIcons[cat]||'🏭')}</span>`;
+ return assetSpriteMarkup(MACHINE_ATLAS_BY_ID.get(id),machineLabel(cat),id,'machine',fallback);
+}
+function recipeIconMarkup(recipe){
+ return recipe?.outs?.length?gameIconMarkup(recipe.outs[0].item):machineIconMarkup(recipe?.cat);
+}
+function nodeIcon(n){return n.type==='recipe'?recipeIconMarkup(recOf(n)):n.type==='source'?gameIconMarkup(n.item):(toolset.find(x=>x.key===n.type)?.icon||'⚙️')}
 function nodeIconText(n){return n.type==='recipe'?itemIcon(recOf(n)?.outs?.[0]?.item):n.type==='source'?itemIcon(n.item):(toolset.find(x=>x.key===n.type)?.icon||'⚙️')}
 
 // Infer a terminal demand when a user deliberately specifies raw-material
@@ -1789,7 +1822,7 @@ function setupEvents(){const vp=$('viewport');vp.addEventListener('pointerdown',
  if(window.visualViewport){visualViewport.addEventListener('resize',syncVisibleViewport);visualViewport.addEventListener('scroll',syncVisibleViewport)}document.addEventListener('keydown',e=>{if(!$('overlay').classList.contains('hidden')){if(e.key==='Escape')closeSheet();return}let typing=['INPUT','TEXTAREA','SELECT'].includes(document.activeElement?.tagName);if(typing)return;const mod=e.ctrlKey||e.metaKey,k=e.key.toLowerCase();if(mod&&k==='z'){e.preventDefault();return e.shiftKey?redo():undo()}if(mod&&k==='y'){e.preventDefault();return redo()}if(mod&&k==='s'){e.preventDefault();return exportJSON()}if(mod&&k==='c'){e.preventDefault();return copySelection()}if(mod&&k==='v'){e.preventDefault();return pasteSelection()}if(mod&&k==='a'){e.preventDefault();selected=new Set(boardNodes().map(n=>n.id));return render()}if(e.key==='Delete'||e.key==='Backspace'){e.preventDefault();return deleteSelected()}if(e.key==='Escape'){pending=null;selected.clear();render()}});
 }
 /* ================= v0.4 · núcleo ================= */
-const APP_VERSION='0.4.19';
+const APP_VERSION='0.4.20';
 $('appVersionBadge').textContent='v'+APP_VERSION;
 const NODE_W=246,Z_MIN=0.01,Z_MAX=4;
 const BELT_CAPS=[60,120,270,480,780,1200],PIPE_CAPS=[300,600];
@@ -1797,6 +1830,7 @@ const BELT_CAPS=[60,120,270,480,780,1200],PIPE_CAPS=[300,600];
 const SLOOP_SLOTS=[1,2,2,1,2,4,4,4,0,2,4,0,0,0,0];
 const SAFE_ID=/^[A-Za-z0-9_-]{1,64}$/;
 const NODE_TYPES=new Set(['recipe','source','splitter','priority_splitter','merger','priority_merger','storage','depot','sink','output','outpost','blueprint','note','port_in','port_out']);
+// Os IDs de extratoras originais (water-extractor, miner-mk1 etc.) seguem estáveis.
 const EXTRACTORS={
  'miner-mk1':{name:'Miner Mk.1',rate:60,power:5,purity:true},
  'miner-mk2':{name:'Miner Mk.2',rate:120,power:15,purity:true},
@@ -2745,7 +2779,7 @@ function refreshPicker(){
  for(const el of document.querySelectorAll('#pickTabs [data-tab]'))el.classList.toggle('active',el.dataset.tab===pickerContext.tab);
  const match=queryMatcher(pickerContext.query);
  const list=pickerTabCandidates(pickerContext.tab,pickerContext).filter(v=>match(normalize(v.name+' '+v.sub+' '+(v.searchNames||'')))).slice(0,500);
- $('pickerList').innerHTML=list.length?list.map(v=>`<button class="pickitem" data-pick="${esc([v.kind,v.rid??v.idx??v.item??v.key].join(':'))}"><span class="pic">${v.kind==='recipe'?gameIconMarkup(recs[v.rid]?.outs?.[0]?.item??recs[v.rid]?.ins?.[0]?.item):v.kind==='source'?gameIconMarkup(v.item):v.icon}</span><span class="picktext"><span class="picktitle" ${v.kind==='custom'?'data-user-text':''}>${esc(v.name)}</span><div class="picksub">${esc(v.sub)}</div></span>${v.alt?'<span class="picktag">ALT</span>':''}</button>`).join(''):
+ $('pickerList').innerHTML=list.length?list.map(v=>`<button class="pickitem" data-pick="${esc([v.kind,v.rid??v.idx??v.item??v.key].join(':'))}"><span class="pic">${v.kind==='recipe'?recipeIconMarkup(recs[v.rid]):v.kind==='custom'?recipeIconMarkup(project.customRecipes?.[v.idx]):v.kind==='source'?gameIconMarkup(v.item):v.icon}</span><span class="picktext"><span class="picktitle" ${v.kind==='custom'?'data-user-text':''}>${esc(v.name)}</span><div class="picksub">${esc(v.sub)}</div></span>${v.alt?'<span class="picktag">ALT</span>':''}</button>`).join(''):
  `<div class="emptylist">${pickerContext.replaceId?'Não há outras receitas cadastradas para este produto.':'Nenhum item corresponde ao filtro. Experimente outro termo ou outra aba.'}</div>`;
 }
 function createNode(item,x,y){
@@ -3317,10 +3351,21 @@ const tabletQuery=matchMedia('(min-width:651px) and (min-height:500px)');
 const desktopLayout=()=>desktopQuery.matches;
 let desktopReady=false,inspectorSignature='',catalogSignature='',catalogTab='all',spacePan=false;
 function centerSelection(){const ns=boardNodes().filter(n=>selected.has(n.id));if(!ns.length)return fitBoard();const r=currentRect(),l=Math.min(...ns.map(n=>n.x)),t=Math.min(...ns.map(n=>n.y)),rr=Math.max(...ns.map(n=>n.x+NODE_W)),b=Math.max(...ns.map(n=>n.y+nodeHeight(n)));camera.x=r.width/2-(l+rr)/2*camera.z;camera.y=r.height/2-(t+b)/2*camera.z;updateCamera();save();}
+function catalogIconMarkup(v){
+ if(v.kind==='recipe')return recipeIconMarkup(recs[v.rid]);
+ if(v.kind==='custom')return recipeIconMarkup(project.customRecipes?.[v.idx]);
+ if(v.kind==='source')return gameIconMarkup(v.item);
+ return esc(v.icon||'⚙️');
+}
+function catalogAssetAttr(v){
+ if(v.kind==='source')return ` data-resource-id="${esc(items[v.item]?.key||'')}"`;
+ if(v.kind==='recipe'||v.kind==='custom')return ` data-machine-id="${esc(MACHINE_ASSET_IDS[v.cat]||'')}"`;
+ return '';
+}
 function refreshCatalog(){
  if(!desktopReady)return;const signature=[project.id,project.current,appLanguage(),catalogTab,$('catalogSearch').value,JSON.stringify(project.customRecipes)].join('|');if(signature===catalogSignature)return;catalogSignature=signature;
  const match=queryMatcher($('catalogSearch').value),list=pickerTabCandidates(catalogTab,{}).filter(v=>match(normalize(v.name+' '+v.sub+' '+(v.searchNames||''))));
- $('catalogList').innerHTML=list.map(v=>`<button class="pickitem" draggable="true" data-catalog="${esc([v.kind,v.rid??v.idx??v.item??v.key].join(':'))}"><span class="picktext"><span class="picktitle" ${v.kind==='custom'?'data-user-text':''}>${esc(v.name)}</span><span class="picksub">${esc(v.sub)}</span></span></button>`).join('')||'<p>Nenhum resultado encontrado</p>';
+ $('catalogList').innerHTML=list.map(v=>`<button class="pickitem" draggable="true" data-catalog="${esc([v.kind,v.rid??v.idx??v.item??v.key].join(':'))}"${catalogAssetAttr(v)}><span class="pic">${catalogIconMarkup(v)}</span><span class="picktext"><span class="picktitle" ${v.kind==='custom'?'data-user-text':''}>${esc(v.name)}</span><span class="picksub">${esc(v.sub)}</span></span></button>`).join('')||'<p>Nenhum resultado encontrado</p>';
  for(const b of $('catalogTabs').children)b.classList.toggle('active',b.dataset.catalogTab===catalogTab);
 }
 function addCatalog(key,pos=null){const item=pickerTabCandidates(catalogTab,{}).find(v=>[v.kind,v.rid??v.idx??v.item??v.key].join(':')===key);if(!item)return;const r=currentRect();pickerContext={pos:pos||toWorld(r.left+r.width/2-123*camera.z,r.top+r.height/2-60*camera.z)};selectPicker(item);}
