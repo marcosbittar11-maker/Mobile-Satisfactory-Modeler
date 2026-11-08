@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="pt-BR"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover, user-scalable=no"/>
 <meta name="theme-color" content="#0a1018"/><meta name="apple-mobile-web-app-capable" content="yes"/><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
-<title>Factory Flow v0.4.22 — Satisfactory Mobile Modeler</title>
+<title>Factory Flow v0.4.23 — Satisfactory Mobile Modeler</title>
 <style>
 :root{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#e8f0f9;background:#0b121a;--bg:#0b121a;--panel:#15202d;--panel2:#1e2e3f;--border:#304357;--muted:#8e9fb2;--orange:#ffb74d;--aqua:#5ddbd2;--warn:#ff7e72;--green:#72d6a3;--blue:#72b5ff;--top:calc(57px + env(safe-area-inset-top,0px));--bottom:calc(72px + env(safe-area-inset-bottom,0px));}
 *{box-sizing:border-box}html,body{width:100%;height:100%;margin:0;overflow:hidden;overscroll-behavior:none}button,input,select,textarea{font:inherit}button{cursor:pointer;-webkit-tap-highlight-color:transparent}button:focus-visible,input:focus-visible{outline:2px solid var(--orange);outline-offset:2px}body{-webkit-touch-callout:none}
@@ -1571,6 +1571,16 @@ function upstreamRecipeChoices(port){
 }
 // Link an input backwards to its normal production recipe (or a resource miner),
 // using the demand of the touched input to size the upstream block automatically.
+// O ponto onde o mouse/dedo solta a conexão é o CENTRO do novo card.
+// Coordenadas do mundo: independentes do zoom e da máquina de origem.
+function placeDraggedNodeAtDrop(node,worldPoint){
+ if(!node||!worldPoint||!Number.isFinite(worldPoint.x)||!Number.isFinite(worldPoint.y))return false;
+ let x=worldPoint.x-NODE_W/2,y=worldPoint.y-nodeHeight(node)/2;
+ if(project.settings.snap){x=Math.round(x/32)*32;y=Math.round(y/32)*32;}
+ node.x=Math.round(x);node.y=Math.round(y);
+ return true;
+}
+
 function spawnAtEnd(port,clientX,clientY,choice=null){
  const base=nBy(port.nid),material=base&&portItem(base,port.io,port.index);
  if(material===undefined||material===null)return false;
@@ -1586,11 +1596,8 @@ function spawnAtEnd(port,clientX,clientY,choice=null){
  }
  let targetPort=findCompatibleNewPort(fresh,port);
  if(!targetPort)return false;
- const place=toWorld(clientX,clientY);
- // The dragged endpoint becomes the matching port on the new card.
- fresh.x=Math.round(place.x-(targetPort.io==='out'?246:0));
- fresh.y=Math.round(place.y-(65+9+targetPort.index*38+16));
- if(project.settings.snap){fresh.x=Math.round(fresh.x/32)*32;fresh.y=Math.round(fresh.y/32)*32;}
+ // A posição vem exclusivamente do ponto real de soltura, não da porta de origem.
+ if(!placeDraggedNodeAtDrop(fresh,toWorld(clientX,clientY)))return false;
  if(fresh.type==='source'){
   // A fonte criada por arraste começa automática; o editor permite trocar por extratora física.
   fresh.sourceMode='auto';fresh.sourceMachine='external';fresh.sourceCount=1;fresh.clock=100;
@@ -1883,7 +1890,7 @@ function setupEvents(){const vp=$('viewport');if(!$('ffSelectionRect')){const re
  if(window.visualViewport){visualViewport.addEventListener('resize',syncVisibleViewport);visualViewport.addEventListener('scroll',syncVisibleViewport)}document.addEventListener('keydown',e=>{if(!$('overlay').classList.contains('hidden')){if(e.key==='Escape')closeSheet();return}let typing=['INPUT','TEXTAREA','SELECT'].includes(document.activeElement?.tagName);if(typing)return;const mod=e.ctrlKey||e.metaKey,k=e.key.toLowerCase();if(mod&&k==='z'){e.preventDefault();return e.shiftKey?redo():undo()}if(mod&&k==='y'){e.preventDefault();return redo()}if(mod&&k==='s'){e.preventDefault();return exportJSON()}if(mod&&k==='c'){e.preventDefault();return copySelection()}if(mod&&k==='v'){e.preventDefault();return pasteSelection()}if(mod&&k==='a'){e.preventDefault();selected=new Set(boardNodes().map(n=>n.id));return render()}if(e.key==='Delete'||e.key==='Backspace'){e.preventDefault();return deleteSelected()}if(e.key==='Escape'){pending=null;selected.clear();render()}});
 }
 /* ================= v0.4 · núcleo ================= */
-const APP_VERSION='0.4.22';
+const APP_VERSION='0.4.23';
 $('appVersionBadge').textContent='v'+APP_VERSION;
 const NODE_W=246,Z_MIN=0.01,Z_MAX=4;
 const BELT_CAPS=[60,120,270,480,780,1200],PIPE_CAPS=[300,600];
@@ -2868,7 +2875,8 @@ function selectPicker(item){
   mutate(()=>{const current=nBy(context.replaceId),oldPorts=ports(current);current.rid=n.rid;current.rkey=n.rkey;current.recipe=n.recipe;current.title='';const newPorts=ports(current);
    project.edges=project.edges.filter(e=>{if(e.from===current.id){const ix=newPorts.outs.indexOf(oldPorts.outs[e.fi]);if(ix<0)return false;e.fi=ix;}if(e.to===current.id){const ix=newPorts.ins.indexOf(oldPorts.ins[e.ti]);if(ix<0)return false;e.ti=ix;}return true;});});
   selected=new Set([old.id]);closeSheet();render();toast('Receita substituída; conexões válidas preservadas');return;}
- if(context.link){const ln=nBy(context.link.nid);n.x=Math.round(ln.x+(context.link.io==='in'?-300:300));n.y=Math.round(ln.y+context.link.index*35);}
+ // Ao escolher uma receita no modal, preservamos o ponto de soltura.
+ if(context.link&&!placeDraggedNodeAtDrop(n,context.pos))return;
  const other=context.link?findCompatibleNewPort(n,context.link):null;
  if(context.link&&!other){toast('Este nó não possui uma porta compatível.',true);return;}
  mutate(()=>{if(n.boardId)project.boards.push({id:n.boardId,name:n.type==='outpost'?'Novo outpost':'Novo blueprint',parent:project.current});project.nodes.push(n);
