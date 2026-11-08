@@ -1,5 +1,5 @@
 /* Factory Flow v0.4.21 · cache offline do PWA */
-const CACHE_NAME = 'factory-flow-pwa-v0.4.21-utility-1';
+const CACHE_NAME = 'factory-flow-pwa-v0.4.21-utility-2';
 const APP_FILES = [
   './',
   './index.html',
@@ -34,7 +34,11 @@ self.addEventListener('fetch', (event) => {
   if (request.mode === 'navigate') {
     // Online: versões novas; offline: cópia completa da última instalação.
     event.respondWith(fetch(request).then(response => {
-      if (response.ok) {
+        // Só a entrada principal pode atualizar a cópia offline do aplicativo.
+      // Um redirecionamento da antiga URL teste-tela.html não pode substituir index.html.
+      const appPath = new URL('./', self.registration.scope).pathname;
+      const indexPath = new URL('./index.html', self.registration.scope).pathname;
+      if (response.ok && (url.pathname === appPath || url.pathname === indexPath)) {
         const copy = response.clone();
         event.waitUntil(caches.open(CACHE_NAME).then(c => c.put('./index.html', copy)));
       }

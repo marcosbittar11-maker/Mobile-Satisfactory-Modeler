@@ -5,6 +5,8 @@
 </head><body><main><h1>Factory Flow</h1><p>A página de teste foi incorporada ao aplicativo principal.</p><a href="./index.html">Abrir Factory Flow</a></main>
 <script>(function(){
 try{
+ const migrationFlag='factory_flow_test_screen_migrated_v04121';
+ if(localStorage.getItem(migrationFlag)==='1'){location.replace('./index.html');return;}
  const a='factory_flow_mobile_projects_v2_viewport_test',b='factory_flow_mobile_projects_v2';
  const old=JSON.parse(localStorage.getItem(a)||'[]');
  const current=JSON.parse(localStorage.getItem(b)||'[]');
@@ -32,6 +34,7 @@ try{
  [['factory_flow_ui_language_v1_viewport_test','factory_flow_ui_language_v1'],['factory_flow_templates_v1_viewport_test','factory_flow_templates_v1']].forEach(pair=>{
   if(!localStorage.getItem(pair[1])&&localStorage.getItem(pair[0]))localStorage.setItem(pair[1],localStorage.getItem(pair[0]));
  });
+  localStorage.setItem(migrationFlag,'1');
 }catch(e){console.warn('Projetos antigos preservados. Migração não executada:',e);}
 location.replace('./index.html');
 })();</script></body></html>
