@@ -68,14 +68,34 @@ button.alert-row:active{background:#24384b}
  .bottom{gap:10px}
 }
 </style>
-<style id="pwa-standalone-safe-area-v1">
-/* iPhone instalado: amplia a folga abaixo da Dynamic Island sem afetar Safari/Edge. */
-@media (display-mode: standalone) {
-  :root { --top: calc(74px + env(safe-area-inset-top, 0px)); }
-  .topbar {
-    padding-top: calc(env(safe-area-inset-top, 0px) + 19px);
-    padding-bottom: 12px;
+<style id="pwa-standalone-safe-area-v2">
+/* iOS standalone: edge-to-edge factory, with only the controls in the safe area. */
+@media (display-mode: standalone) and (max-width: 1023px) {
+  #app { height: 100%; height: 100dvh; bottom: auto; }
+  #app > #viewport { bottom: 0; }
+  #app > .topbar {
+    padding-top: calc(env(safe-area-inset-top, 0px) + 7px);
+    padding-bottom: 8px;
+    padding-left: max(12px, env(safe-area-inset-left, 0px));
+    padding-right: max(12px, env(safe-area-inset-right, 0px));
   }
+  #app > .topbar .topbrand .eyebrow {
+    font-size: 11px; line-height: 14px; letter-spacing: 1.2px;
+  }
+  #app > .topbar .topbrand { padding-top: 2px; padding-bottom: 2px; }
+  #app > .bottom {
+    left: max(8px, env(safe-area-inset-left, 0px));
+    right: max(8px, env(safe-area-inset-right, 0px));
+    bottom: calc(env(safe-area-inset-bottom, 0px) + 6px);
+    min-height: 0; padding: 0; border: 0;
+    background: none; box-shadow: none; pointer-events: none;
+  }
+  #app > .bottom > * { pointer-events: auto; }
+  #app > .fab { right: max(13px, env(safe-area-inset-right, 0px)); }
+  #app .bread, #app .hud { left: max(12px, env(safe-area-inset-left, 0px)); }
+}
+@media (display-mode: standalone) and (min-width: 651px) and (max-width: 1023px) {
+  :root { --top: calc(60px + env(safe-area-inset-top, 0px)); }
 }
 </style>
 <style id="compact-mobile-footer-v0411">

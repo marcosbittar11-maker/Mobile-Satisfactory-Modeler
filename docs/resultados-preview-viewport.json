@@ -1,0 +1,12 @@
+{
+  "fixedPath": true,
+  "visibleTestMarker": true,
+  "iosStandaloneFallback": true,
+  "manifestLaunchWithoutQuery": true,
+  "isolatedStorage": true,
+  "oldQueryCompatible": true,
+  "offlinePreview": true,
+  "offlineOriginalAfterPreview": true,
+  "browserLayoutPreserved": true,
+  "errors": []
+}
