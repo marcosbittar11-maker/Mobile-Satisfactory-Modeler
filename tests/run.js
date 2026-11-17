@@ -41,7 +41,7 @@ const HELPERS = () => {
 };
 
 const tests = [];
-const test = (name, fn) => tests.push({ name, fn });
+const test = (name, fn, opts) => tests.push({ name, fn, opts });
 const near = (a, b, msg, eps = 1e-6) => { if (!(Math.abs(a - b) <= eps * Math.max(1, Math.abs(b)))) throw Error(`${msg}: esperado ${b}, obtido ${a}`); };
 const ok = (c, msg) => { if (!c) throw Error(msg); };
 
@@ -297,13 +297,72 @@ test('Sem metas e só fontes automáticas: comportamento anterior mantido', asyn
   near(r.nodes.al.m, 3, 'foundries');
 });
 
+// ---------- v0.4.25: menu de contexto no bloco ----------
+const DESKTOP = { viewport: { width: 1366, height: 800 }, hasTouch: false };
+const nodeCenter = (page, rkey) => page.evaluate(k => {
+  const n = project.nodes.find(n => n.rkey === k); selected = new Set(); camera = { x: 40, y: 40, z: 1 };
+  n.x = 100; n.y = 150; render(); const r = document.querySelector(`[data-node="${n.id}"] .node-title`).getBoundingClientRect();
+  return { x: r.left + r.width / 2, y: r.top + r.height / 2, id: n.id };
+}, rkey);
+test('Desktop: inspetor lateral começa recolhido', async page => {
+  const r = await page.evaluate(() => ({ desktop: desktopLayout(), collapsed: inspectorCollapsed(), body: $('inspectorBody').children.length }));
+  ok(r.desktop, 'não entrou no layout desktop'); ok(r.collapsed, 'painel aberto por padrão'); ok(r.body === 0, 'painel recolhido não deve renderizar o editor');
+}, DESKTOP);
+test('Desktop: clique direito no bloco troca a receita pelo menu', async page => {
+  await page.evaluate(j => { importProjectText(j, 'f.json'); try { closeSheet(); } catch {} }, FIXTURE_423);
+  const c = await nodeCenter(page, 'iron-ingot');
+  await page.mouse.click(c.x, c.y, { button: 'right' });
+  const menu = await page.evaluate(() => { const m = document.querySelector('.ctxmenu'); return m && { text: m.textContent, box: m.getBoundingClientRect().toJSON() }; });
+  ok(menu, 'menu não abriu'); ok(Math.abs(menu.box.left - c.x) < 12 && Math.abs(menu.box.top - c.y) < 12, 'menu longe do cursor');
+  const acts = await page.$$eval('.ctxmenu [data-ctx]', els => els.map(e => e.dataset.ctx));
+  ok(['edit', 'swap', 'duplicate', 'delete'].every(a => acts.includes(a)), 'itens: ' + acts);
+  await page.click('.ctxmenu [data-ctx="swap"]');
+  const names = await page.$$eval('.ctxmenu .ctxrname', els => els.map(e => e.textContent));
+  ok(names.some(n => /Iron Alloy Ingot/.test(n)), 'alternativas: ' + names.join(', '));
+  await page.click('.ctxmenu .ctxrecipe:has-text("Iron Alloy Ingot")');
+  const r = await page.evaluate(id => { const n = nBy(id); return { key: n.rkey, menu: !!document.querySelector('.ctxmenu'), edges: project.edges.filter(e => e.from === id || e.to === id).length }; }, c.id);
+  ok(r.key === 'alternate-iron-alloy-ingot', 'receita: ' + r.key); ok(!r.menu, 'menu não fechou'); ok(r.edges === 2, 'ligações preservadas: ' + r.edges);
+  await page.evaluate(() => undo());
+  ok(await page.evaluate(id => nBy(id).rkey, c.id) === 'iron-ingot', 'desfazer troca');
+}, DESKTOP);
+test('Desktop: "Editar…" com painel recolhido abre janela; Esc e clique fora fecham o menu', async page => {
+  await page.evaluate(j => { importProjectText(j, 'f.json'); try { closeSheet(); } catch {} }, FIXTURE_423);
+  const c = await nodeCenter(page, 'motor');
+  await page.mouse.click(c.x, c.y, { button: 'right' }); await page.keyboard.press('Escape');
+  ok(!(await page.$('.ctxmenu')), 'Esc não fechou');
+  await page.mouse.click(c.x, c.y, { button: 'right' }); await page.mouse.click(5, 400);
+  ok(!(await page.$('.ctxmenu')), 'clique fora não fechou');
+  await page.mouse.click(c.x, c.y, { button: 'right' }); await page.click('.ctxmenu [data-ctx="edit"]');
+  const r = await page.evaluate(() => ({ open: !$('overlay').classList.contains('hidden'), forms: document.querySelectorAll('#editForm').length, title: $('sheetTitle').textContent }));
+  ok(r.open && r.forms === 1 && /Motor/.test(r.title), JSON.stringify(r));
+}, DESKTOP);
+test('Desktop: escolha de abrir o painel lateral fica salva', async page => {
+  await page.click('[data-collapse="inspector"]');
+  ok(!(await page.evaluate(() => inspectorCollapsed())), 'não abriu');
+  await page.reload(); await page.waitForTimeout(150);
+  ok(!(await page.evaluate(() => inspectorCollapsed())), 'escolha perdida após recarregar');
+  await page.evaluate(() => localStorage.removeItem('factory_flow_inspector_collapsed_v1'));
+}, DESKTOP);
+test('Celular: toque longo no bloco abre o mesmo menu', async page => {
+  await page.evaluate(j => { importProjectText(j, 'f.json'); try { closeSheet(); } catch {} }, FIXTURE_423);
+  const c = await nodeCenter(page, 'stator');
+  // toque real (no mouse, o toque longo vira seleção em área desde a v0.4.22)
+  const cdp = await page.context().newCDPSession(page);
+  await cdp.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [{ x: c.x, y: c.y }] });
+  await page.waitForTimeout(700);
+  await cdp.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
+  await page.waitForTimeout(100);
+  const r = await page.evaluate(() => { const m = document.querySelector('.ctxmenu'); return m && { swap: !!m.querySelector('[data-ctx="swap"]'), right: m.getBoundingClientRect().right }; });
+  ok(r && r.swap, 'menu não abriu no toque longo'); ok(r.right <= 390, 'menu fora da tela');
+});
+
 (async () => {
   const server = require('http').createServer((req, res) => { res.setHeader('Content-Type', 'text/html'); res.end(fs.readFileSync(HTML)); });
   await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
   const browser = await chromium.launch({ executablePath: process.env.CHROMIUM_PATH || undefined, args: ['--no-sandbox'] });
   let fail = 0;
   for (const t of tests) {
-    const page = await (await browser.newContext({ viewport: { width: 390, height: 844 }, isMobile: false, hasTouch: true })).newPage();
+    const page = await (await browser.newContext({ viewport: { width: 390, height: 844 }, isMobile: false, hasTouch: true, ...(t.opts || {}) })).newPage();
     const errors = []; page.on('pageerror', e => errors.push(e.message));
     await page.goto('http://127.0.0.1:' + server.address().port); await page.waitForTimeout(150); await page.evaluate(HELPERS);
     try { await t.fn(page); if (errors.length) throw Error('erro JS: ' + errors.join(' | ')); console.log('✓ ' + t.name); }
