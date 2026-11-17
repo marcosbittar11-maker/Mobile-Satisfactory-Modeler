@@ -284,6 +284,10 @@ test('Com metas em todas as saídas: calcula pelas metas', async page => {
   const r = await ruleCase(page, "by('motor').target=10;by('steel-beam').target=30;");
   near(r.motor, 10, 'motor'); near(r.beam, 30, 'viga'); near(r.iron, 180, 'ferro derivado das metas', 1e-4); near(r.coal, 180, 'carvão', 1e-4); ok(r.problems === 0, 'pendências');
 });
+test('Meta em uma saída só: a outra saída fica com o resto dos insumos (decisão do autor)', async page => {
+  const r = await ruleCase(page, "by('motor').target=10;");
+  near(r.motor, 10, 'motor pela meta'); near(r.beam, 187.5, 'viga com o restante', 1e-4); near(r.iron, 600, 'ferro', 1e-4); ok(r.problems === 0, 'pendências');
+});
 test('Meta acima dos insumos fixos gera pendência', async page => {
   const r = await ruleCase(page, "by('motor').target=60;by('steel-beam').target=30;");
   near(r.iron, 600, 'ferro no máximo', 1e-4); ok(r.problems > 0, 'sem pendência para meta impossível');
