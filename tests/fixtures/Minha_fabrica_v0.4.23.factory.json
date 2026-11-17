@@ -1,0 +1,356 @@
+{
+  "format": "factory-flow-mobile",
+  "version": 1,
+  "app": "0.4.23",
+  "catalog": {
+    "recipes": 308,
+    "items": 172
+  },
+  "exported": "2026-11-17T01:36:06.063Z",
+  "project": {
+    "id": "zb6es8w2v9xu",
+    "schema": 5,
+    "name": "Minha fábrica",
+    "created": 1794157192722,
+    "boards": [
+      {
+        "id": "root",
+        "name": "Plano principal",
+        "parent": null
+      }
+    ],
+    "current": "root",
+    "nodes": [
+      {
+        "id": "l4mhtp50jezu",
+        "board": "root",
+        "x": -358.1182200715301,
+        "y": 173.22043951123973,
+        "title": "",
+        "clock": 100,
+        "limit": 600,
+        "target": null,
+        "machineGoal": null,
+        "portCaps": {},
+        "type": "source",
+        "item": 0,
+        "ikey": "iron-ore",
+        "sourceMachine": "external",
+        "purity": 1,
+        "sourceCount": 1,
+        "sourceMode": "manual",
+        "autoSupply": false,
+        "sourceModeBeforeManual": "auto"
+      },
+      {
+        "id": "1keteng0jhkp",
+        "board": "root",
+        "x": -367.0874802269109,
+        "y": 415.04845753689136,
+        "title": "",
+        "clock": 100,
+        "limit": 600,
+        "target": null,
+        "machineGoal": null,
+        "portCaps": {},
+        "type": "source",
+        "item": 2,
+        "ikey": "coal",
+        "sourceMachine": "external",
+        "purity": 1,
+        "sourceCount": 1,
+        "sourceMode": "manual",
+        "autoSupply": false,
+        "sourceModeBeforeManual": "auto"
+      },
+      {
+        "id": "d8aj17g0kh17",
+        "board": "root",
+        "x": 589.6666666666664,
+        "y": 350.2222222222223,
+        "title": "",
+        "clock": 100,
+        "limit": null,
+        "target": null,
+        "machineGoal": null,
+        "portCaps": {},
+        "type": "recipe",
+        "rid": 9,
+        "rkey": "alternate-solid-steel-ingot",
+        "sloops": 0
+      },
+      {
+        "id": "x21adk50kmap",
+        "board": "root",
+        "x": 102.40957411888016,
+        "y": 170.01123944136472,
+        "title": "",
+        "clock": 100,
+        "limit": null,
+        "target": null,
+        "machineGoal": null,
+        "portCaps": {},
+        "type": "recipe",
+        "rid": 0,
+        "rkey": "iron-ingot",
+        "sloops": 0
+      },
+      {
+        "id": "j3ww5lt0n9ln",
+        "board": "root",
+        "x": 1244.5153022636532,
+        "y": 73.95071258099276,
+        "title": "",
+        "clock": 100,
+        "limit": null,
+        "target": null,
+        "machineGoal": null,
+        "portCaps": {},
+        "type": "recipe",
+        "rid": 46,
+        "rkey": "steel-beam",
+        "sloops": 0
+      },
+      {
+        "id": "d13netb0nbxl",
+        "board": "root",
+        "x": 1246.7801935537352,
+        "y": 332.49077290247715,
+        "title": "",
+        "clock": 100,
+        "limit": null,
+        "target": null,
+        "machineGoal": null,
+        "portCaps": {},
+        "type": "recipe",
+        "rid": 48,
+        "rkey": "steel-pipe",
+        "sloops": 0
+      },
+      {
+        "id": "sqfqutq0qkww",
+        "board": "root",
+        "x": 1873.8498376654309,
+        "y": 653.2337207607386,
+        "title": "",
+        "clock": 100,
+        "limit": null,
+        "target": null,
+        "machineGoal": null,
+        "portCaps": {},
+        "type": "recipe",
+        "rid": 56,
+        "rkey": "alternate-steel-rotor",
+        "sloops": 0
+      },
+      {
+        "id": "qzvn9bm0qtue",
+        "board": "root",
+        "x": 1872.9339744267866,
+        "y": 411.2693182734417,
+        "title": "",
+        "clock": 100,
+        "limit": null,
+        "target": null,
+        "machineGoal": null,
+        "portCaps": {},
+        "type": "recipe",
+        "rid": 63,
+        "rkey": "stator",
+        "sloops": 0
+      },
+      {
+        "id": "05ajsxu0r13o",
+        "board": "root",
+        "x": 2291.2113726877064,
+        "y": 526.7540272370766,
+        "title": "",
+        "clock": 100,
+        "limit": null,
+        "target": null,
+        "machineGoal": null,
+        "portCaps": {},
+        "type": "recipe",
+        "rid": 65,
+        "rkey": "motor",
+        "sloops": 0
+      },
+      {
+        "id": "dl65y2p0sbtl",
+        "board": "root",
+        "x": 1256.2110096459016,
+        "y": 743.5952070344597,
+        "title": "",
+        "clock": 100,
+        "limit": null,
+        "target": null,
+        "machineGoal": null,
+        "portCaps": {},
+        "type": "recipe",
+        "rid": 18,
+        "rkey": "wire",
+        "sloops": 0
+      },
+      {
+        "id": "rq44ng80sly8",
+        "board": "root",
+        "x": 588.386072050251,
+        "y": 718.8610748735363,
+        "title": "",
+        "clock": 100,
+        "limit": null,
+        "target": null,
+        "machineGoal": null,
+        "portCaps": {},
+        "type": "recipe",
+        "rid": 4,
+        "rkey": "copper-ingot",
+        "sloops": 0
+      },
+      {
+        "id": "sz4r9k90sqb5",
+        "board": "root",
+        "x": -368.9037606165273,
+        "y": 732.9468264321846,
+        "title": "",
+        "clock": 100,
+        "limit": null,
+        "target": null,
+        "machineGoal": null,
+        "portCaps": {},
+        "type": "source",
+        "item": 1,
+        "ikey": "copper-ore",
+        "sourceMachine": "external",
+        "purity": 1,
+        "sourceCount": 1,
+        "sourceMode": "auto",
+        "autoSupply": false
+      }
+    ],
+    "edges": [
+      {
+        "id": "2y8wvyy0kh17",
+        "board": "root",
+        "from": "1keteng0jhkp",
+        "fi": 0,
+        "to": "d8aj17g0kh17",
+        "ti": 1
+      },
+      {
+        "id": "o5kwi2f0kmap",
+        "board": "root",
+        "from": "l4mhtp50jezu",
+        "fi": 0,
+        "to": "x21adk50kmap",
+        "ti": 0
+      },
+      {
+        "id": "ib4fwlg0ksud",
+        "board": "root",
+        "from": "x21adk50kmap",
+        "fi": 0,
+        "to": "d8aj17g0kh17",
+        "ti": 0
+      },
+      {
+        "id": "7nvfhf70nbxl",
+        "board": "root",
+        "from": "d8aj17g0kh17",
+        "fi": 0,
+        "to": "d13netb0nbxl",
+        "ti": 0
+      },
+      {
+        "id": "tyybeik0oe0s",
+        "board": "root",
+        "from": "d8aj17g0kh17",
+        "fi": 0,
+        "to": "j3ww5lt0n9ln",
+        "ti": 0
+      },
+      {
+        "id": "pvj54sv0rtxt",
+        "board": "root",
+        "from": "d13netb0nbxl",
+        "fi": 0,
+        "to": "qzvn9bm0qtue",
+        "ti": 0
+      },
+      {
+        "id": "depsqb70rvij",
+        "board": "root",
+        "from": "d13netb0nbxl",
+        "fi": 0,
+        "to": "sqfqutq0qkww",
+        "ti": 0
+      },
+      {
+        "id": "7wlljcf0s5oi",
+        "board": "root",
+        "from": "qzvn9bm0qtue",
+        "fi": 0,
+        "to": "05ajsxu0r13o",
+        "ti": 1
+      },
+      {
+        "id": "qxm7dno0s6sx",
+        "board": "root",
+        "from": "sqfqutq0qkww",
+        "fi": 0,
+        "to": "05ajsxu0r13o",
+        "ti": 0
+      },
+      {
+        "id": "1wctc4n0sbtl",
+        "board": "root",
+        "from": "dl65y2p0sbtl",
+        "fi": 0,
+        "to": "qzvn9bm0qtue",
+        "ti": 1
+      },
+      {
+        "id": "z9nrrkc0sd3c",
+        "board": "root",
+        "from": "dl65y2p0sbtl",
+        "fi": 0,
+        "to": "sqfqutq0qkww",
+        "ti": 1
+      },
+      {
+        "id": "5o4wbuo0sly8",
+        "board": "root",
+        "from": "rq44ng80sly8",
+        "fi": 0,
+        "to": "dl65y2p0sbtl",
+        "ti": 0
+      },
+      {
+        "id": "tzht96j0sqb5",
+        "board": "root",
+        "from": "sz4r9k90sqb5",
+        "fi": 0,
+        "to": "rq44ng80sly8",
+        "ti": 0
+      }
+    ],
+    "cameras": {
+      "root": {
+        "x": -1200.4799398082741,
+        "y": 32.50708868785159,
+        "z": 0.900000000000002
+      }
+    },
+    "settings": {
+      "snap": false,
+      "grid": 32,
+      "calc": "auto",
+      "decimals": 3,
+      "showLabels": true,
+      "maxBelt": 6,
+      "maxPipe": 2,
+      "recipeCostMul": 1,
+      "powerMul": 1
+    }
+  }
+}

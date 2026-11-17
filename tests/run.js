@@ -251,6 +251,24 @@ test('Arraste em grupo é desfeito em um passo', async page => {
   near(u[0], 0, 'a após desfazer'); near(u[1], 400, 'b após desfazer');
 });
 
+// ---------- v0.4.24: sem metas, oferta fixa deve ser usada por inteiro ----------
+const FIXTURE_423 = fs.readFileSync(path.join(__dirname, 'fixtures', 'Minha_fabrica_v0.4.23.factory.json'), 'utf8');
+test('Sem metas: 600 de minério e carvão fixos são usados por inteiro', async page => {
+  const r = await page.evaluate(j => {
+    importProjectText(j, 'f.json'); try { closeSheet(); } catch {}
+    const by = k => calculated.nodes[project.nodes.find(n => n.rkey === k || n.ikey === k).id];
+    return { iron: by('iron-ore').actualOuts[0], coal: by('coal').actualOuts[0], beam: by('steel-beam').actualOuts[0], motor: by('motor').actualOuts[0],
+      rotor: by('alternate-steel-rotor').actualOuts[0], stator: by('stator').actualOuts[0], alerts: calculated.stats.alerts.filter(a => a.sev === 'problem').length };
+  }, FIXTURE_423);
+  near(r.iron, 600, 'minério de ferro usado', 1e-4); near(r.coal, 600, 'carvão usado', 1e-4);
+  near(r.rotor, r.stator, 'rotores e estatores equilibrados para o motor', 1e-4);
+  ok(r.beam > 112.5 && r.motor > 25, `as duas saídas crescem (viga ${r.beam}, motor ${r.motor})`); ok(r.alerts === 0, 'pendências: ' + r.alerts);
+});
+test('Sem metas e só fontes automáticas: comportamento anterior mantido', async page => {
+  const r = await page.evaluate(() => T.build({ nodes: { fe: { src: 'iron-ore' }, cu: { src: 'copper-ore' }, al: { r: 'Alternate: Iron Alloy Ingot' } }, edges: [['fe', 0, 'al', 0], ['cu', 0, 'al', 1]] }));
+  near(r.nodes.al.m, 3, 'foundries');
+});
+
 (async () => {
   const server = require('http').createServer((req, res) => { res.setHeader('Content-Type', 'text/html'); res.end(fs.readFileSync(HTML)); });
   await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));

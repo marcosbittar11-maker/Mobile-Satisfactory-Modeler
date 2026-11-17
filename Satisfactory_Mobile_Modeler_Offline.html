@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="pt-BR"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover, user-scalable=no"/>
 <meta name="theme-color" content="#0a1018"/><meta name="apple-mobile-web-app-capable" content="yes"/><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
-<title>Factory Flow v0.4.23 — Satisfactory Mobile Modeler</title>
+<title>Factory Flow v0.4.24 — Satisfactory Mobile Modeler</title>
 <style>
 :root{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#e8f0f9;background:#0b121a;--bg:#0b121a;--panel:#15202d;--panel2:#1e2e3f;--border:#304357;--muted:#8e9fb2;--orange:#ffb74d;--aqua:#5ddbd2;--warn:#ff7e72;--green:#72d6a3;--blue:#72b5ff;--top:calc(57px + env(safe-area-inset-top,0px));--bottom:calc(72px + env(safe-area-inset-bottom,0px));}
 *{box-sizing:border-box}html,body{width:100%;height:100%;margin:0;overflow:hidden;overscroll-behavior:none}button,input,select,textarea{font:inherit}button{cursor:pointer;-webkit-tap-highlight-color:transparent}button:focus-visible,input:focus-visible{outline:2px solid var(--orange);outline-offset:2px}body{-webkit-touch-callout:none}
@@ -1884,7 +1884,7 @@ function setupEvents(){const vp=$('viewport');if(!$('ffSelectionRect')){const re
  if(window.visualViewport){visualViewport.addEventListener('resize',syncVisibleViewport);visualViewport.addEventListener('scroll',syncVisibleViewport)}document.addEventListener('keydown',e=>{if(!$('overlay').classList.contains('hidden')){if(e.key==='Escape')closeSheet();return}let typing=['INPUT','TEXTAREA','SELECT'].includes(document.activeElement?.tagName);if(typing)return;const mod=e.ctrlKey||e.metaKey,k=e.key.toLowerCase();if(mod&&k==='z'){e.preventDefault();return e.shiftKey?redo():undo()}if(mod&&k==='y'){e.preventDefault();return redo()}if(mod&&k==='s'){e.preventDefault();return exportJSON()}if(mod&&k==='c'){e.preventDefault();return copySelection()}if(mod&&k==='v'){e.preventDefault();return pasteSelection()}if(mod&&k==='a'){e.preventDefault();selected=new Set(boardNodes().map(n=>n.id));return render()}if(e.key==='Delete'||e.key==='Backspace'){e.preventDefault();return deleteSelected()}if(e.key==='Escape'){pending=null;selected.clear();render()}});
 }
 /* ================= v0.4 · núcleo ================= */
-const APP_VERSION='0.4.23';
+const APP_VERSION='0.4.24';
 $('appVersionBadge').textContent='v'+APP_VERSION;
 const NODE_W=246,Z_MIN=0.01,Z_MAX=4;
 const BELT_CAPS=[60,120,270,480,780,1200],PIPE_CAPS=[300,600];
@@ -2227,8 +2227,13 @@ function reserveSpareResources(G,order,cyclic,inferred){
  const candidate=G.nodes.filter(n=>explicit.has(root(n.id))&&!isFixed(n.target)&&desiredMachines(n)===null&&!G.out.get(n.id).length&&
    ((n.type==='recipe'&&!rr(n)?.r?.gen&&rr(n)?.outs?.[0]>1e-12)||n.type==='output'||n.type==='sink'||['storage','depot','port_out'].includes(n.type))&&G.inc.get(n.id).length);
  if(!candidate.length)return null;
- const terminals=new Set(candidate.map(n=>n.id)),zero=new Map(candidate.map(n=>[n.id,0]));
- const base=sizeDemandPlan(G,order,cyclic,inferred,terminals,zero);
+ return distributeSpare(G,order,cyclic,inferred,candidate,new Map(candidate.map(n=>[n.id,0])),(n,req)=>Math.max(sourceReference(n),req));
+}
+// Distribui a folga das restrições (fontes fixas, tetos de máquina, portas, esteiras) entre terminais
+// automáticos, partindo de baseGoals. autoCap(n,req) define o teto de fontes automáticas (Infinity = sem teto).
+function distributeSpare(G,order,cyclic,inferred,candidate,baseGoals,autoCap){
+ const terminals=new Set(candidate.map(n=>n.id));
+ const base=sizeDemandPlan(G,order,cyclic,inferred,terminals,baseGoals);
  const constraints=[];
  const include=(key,cap,quantity)=>{if(Number.isFinite(cap))constraints.push({key,slack:Math.max(0,cap-quantity),value:pass=>quantityFrom(pass,key)});};
  const quantityFrom=(pass,key)=>{
@@ -2250,7 +2255,7 @@ function reserveSpareResources(G,order,cyclic,inferred){
  for(const n of G.nodes){
   const b=base.S.get(n.id);
   if(n.type==='source'){
-   const cap=isAutoSource(n)?Math.max(sourceReference(n),b?.requestedOuts?.[0]||0):sourceCap(n);
+   const cap=isAutoSource(n)?autoCap(n,b?.requestedOuts?.[0]||0):sourceCap(n);
    include('source|'+n.id,cap,b?.requestedOuts?.[0]||0);
   }else if(n.type==='recipe'){
    // Uma meta de produto fixa restringe o que outras ramificações podem retirar
@@ -2277,7 +2282,7 @@ function reserveSpareResources(G,order,cyclic,inferred){
  for(const e of G.edges)if(Number.isFinite(e.cap))include('edge|'+e.id,e.cap,base.W.get(e.id)||0);
  const proposals=[];
  for(const n of candidate){
-  const test=new Map(zero);test.set(n.id,1);
+  const test=new Map(baseGoals);test.set(n.id,(baseGoals.get(n.id)||0)+1);
   const probe=sizeDemandPlan(G,order,cyclic,inferred,terminals,test);
   const gradients=constraints.map(c=>Math.max(0,c.value(probe)-c.value(base)));
   const influenced=gradients.some((v,i)=>v>1e-9&&(constraints[i].key.startsWith('source|')||constraints[i].key.startsWith('output|')));
@@ -2287,7 +2292,7 @@ function reserveSpareResources(G,order,cyclic,inferred){
   if(n.type==='recipe'&&(isFixed(n.limit)||desiredMachines(n)!==null)){const R=rr(n);upper=Math.min(upper,(desiredMachines(n)??n.limit)*R.outs[0]);}
   if(upper>1e-8&&Number.isFinite(upper))proposals.push({n,gradients,max:Math.max(0,upper),amount:0});
  }
- if(!proposals.length)return {terminals,goals:zero};
+ if(!proposals.length)return {terminals,goals:new Map(baseGoals)};
  // Water-filling por demanda normalizada: dois produtos automáticos disputando
  // um recurso compartilham a sobra, sem alterar nenhuma meta fixa.
  const remaining=constraints.map(c=>c.slack);
@@ -2308,8 +2313,24 @@ function reserveSpareResources(G,order,cyclic,inferred){
   constraints.forEach((c,i)=>{const used=proposals.reduce((sum,p,j)=>sum+p.gradients[i]*request[j]*scale,0);remaining[i]=Math.max(0,remaining[i]-used);});
   if(scale>=1-1e-8)break;
  }
- const goals=new Map(zero);for(const p of proposals)goals.set(p.n.id,Math.max(0,p.amount));
+ const goals=new Map(baseGoals);for(const p of proposals)goals.set(p.n.id,(baseGoals.get(p.n.id)||0)+Math.max(0,p.amount));
  return {terminals,goals};
+}
+// v0.4.24: fábrica SEM metas, mas com oferta fixa (vazão fixa ou extratora física). A estimativa para frente
+// divide cada saída por igual entre os consumidores e perde material quando os ramos não estão na proporção
+// certa (ex.: Steel Pipe dividido 50/50 entre Rotor e Stator, quando o Motor pede 40/60). Aqui a folga das
+// fontes fixas é redistribuída entre as saídas finais inferidas até alguma restrição saturar.
+// Fontes automáticas acompanham a demanda (sem teto). Componentes só com fontes automáticas não mudam.
+function fillFixedSupply(G,order,cyclic,inferred){
+ if(!G.edges.length||!inferred.size)return null;
+ const parent=new Map(G.nodes.map(n=>[n.id,n.id]));
+ const root=x=>{while(parent.get(x)!==x){parent.set(x,parent.get(parent.get(x)));x=parent.get(x);}return x;};
+ for(const e of G.edges){const a=root(e.from),b=root(e.to);if(a!==b)parent.set(b,a);}
+ const explicit=new Set(G.nodes.filter(n=>n.type!=='source'&&(isFixed(n.target)||desiredMachines(n)!==null)).map(n=>root(n.id)));
+ const fixedSupply=new Set(G.nodes.filter(n=>n.type==='source'&&!isAutoSource(n)).map(n=>root(n.id)));
+ const candidate=G.nodes.filter(n=>inferred.has(n.id)&&inferred.get(n.id)>1e-9&&!explicit.has(root(n.id))&&fixedSupply.has(root(n.id))&&!(n.type==='recipe'&&rr(n)?.r?.gen));
+ if(!candidate.length)return null;
+ return distributeSpare(G,order,cyclic,inferred,candidate,new Map(candidate.map(n=>[n.id,inferred.get(n.id)])),()=>Infinity);
 }
 function recomputeCore(t0,mode){
  const G=buildCalcGraph(),{order,cyclic}=calcOrder(G),rev=[...order].reverse();
@@ -2319,7 +2340,10 @@ function recomputeCore(t0,mode){
  if(mode==='none'){calculated={pid:project.id,nodes:Object.fromEntries(S),edgeFlows:{},edgeWants:{},edgeWarn:{},cyclic,converged:true,stats:emptyStats,stale:false};return;}
  const inferred=inferTargets(G,order);
  const reserve=reserveSpareResources(G,order,cyclic,inferred);
- const plan=sizeDemandPlan(G,order,cyclic,inferred,reserve?.terminals,reserve?.goals);
+ const fill=fillFixedSupply(G,order,cyclic,inferred);
+ let planTerminals=reserve?.terminals,planGoals=reserve?.goals;
+ if(fill){planTerminals=new Set([...(planTerminals||[]),...fill.terminals]);planGoals=new Map([...(planGoals||[]),...fill.goals]);}
+ const plan=sizeDemandPlan(G,order,cyclic,inferred,planTerminals,planGoals);
  S=plan.S;W=plan.W;
  const it=plan.it,sizingConverged=plan.converged;
  // 2) Fluxo real: oferta para frente, aceitação para trás (contrapressão), até estabilizar.
