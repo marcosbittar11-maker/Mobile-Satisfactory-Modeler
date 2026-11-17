@@ -356,6 +356,20 @@ test('Celular: toque longo no bloco abre o mesmo menu', async page => {
   ok(r && r.swap, 'menu não abriu no toque longo'); ok(r.right <= 390, 'menu fora da tela');
 });
 
+// ---------- v0.4.26: ícones oficiais das construções de logística ----------
+test('Logística usa os ícones oficiais embutidos (offline) no quadro e no seletor', async page => {
+  const requests = []; page.on('request', r => { if (!r.url().startsWith('data:') && !r.url().startsWith('http://127.0.0.1')) requests.push(r.url()); });
+  const keys = ['splitter', 'priority_splitter', 'merger', 'priority_merger', 'storage', 'depot', 'sink'];
+  await page.evaluate(keys => { const nodes = {}; keys.forEach((k, i) => nodes[k] = { u: k, set: { x: (i % 3) * 300, y: Math.floor(i / 3) * 260 } }); T.build({ nodes, edges: [] }); camera = { x: 20, y: 200, z: 0.5 }; updateCamera(); render(); openPicker(); pickerContext.tab = 'utils'; refreshPicker(); }, keys);
+  await page.waitForTimeout(200);
+  const r = await page.evaluate(keys => ({
+    canvas: keys.map(k => { const n = project.nodes.find(n => n.type === k); const im = document.querySelector(`[data-node="${n.id}"] .utility-asset-img img`); return im && im.complete && im.naturalWidth === 72 ? 'ok' : k; }),
+    picker: [...document.querySelectorAll('#pickerList .utility-asset-img img')].filter(im => im.complete && im.naturalWidth === 72).length
+  }), keys);
+  ok(r.canvas.every(x => x === 'ok'), 'sem imagem no quadro: ' + r.canvas.filter(x => x !== 'ok'));
+  ok(r.picker >= keys.length, 'imagens no seletor: ' + r.picker); ok(requests.length === 0, 'requisições externas: ' + requests);
+});
+
 (async () => {
   const server = require('http').createServer((req, res) => { res.setHeader('Content-Type', 'text/html'); res.end(fs.readFileSync(HTML)); });
   await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
