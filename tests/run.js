@@ -264,6 +264,30 @@ test('Sem metas: 600 de minério e carvão fixos são usados por inteiro', async
   near(r.rotor, r.stator, 'rotores e estatores equilibrados para o motor', 1e-4);
   ok(r.beam > 112.5 && r.motor > 25, `as duas saídas crescem (viga ${r.beam}, motor ${r.motor})`); ok(r.alerts === 0, 'pendências: ' + r.alerts);
 });
+// Regra: sem meta, tudo sai dos insumos fixos; com meta em todas as saídas, tudo sai das metas.
+const ruleCase = (page, setup) => page.evaluate(([j, setup]) => {
+  importProjectText(j, 'f.json'); try { closeSheet(); } catch {}
+  const by = k => project.nodes.find(n => n.rkey === k || n.ikey === k);
+  new Function('by', setup)(by); normalizeProject(); recompute(true);
+  const v = k => calculated.nodes[by(k).id].actualOuts[0] || 0;
+  return { iron: v('iron-ore'), coal: v('coal'), beam: v('steel-beam'), motor: v('motor'), problems: calculated.stats.alerts.filter(a => a.sev === 'problem').length };
+}, [FIXTURE_423, setup]);
+test('Sem metas: dobrar os insumos fixos escala a fábrica inteira', async page => {
+  const r = await ruleCase(page, "by('iron-ore').limit=900;by('coal').limit=900;");
+  near(r.iron, 900, 'ferro', 1e-4); near(r.coal, 900, 'carvão', 1e-4); near(r.beam, 182.8125, 'viga', 1e-4); near(r.motor, 41.25, 'motor', 1e-4);
+});
+test('Sem metas: o insumo mais escasso limita (carvão 300)', async page => {
+  const r = await ruleCase(page, "by('coal').limit=300;");
+  near(r.coal, 300, 'carvão', 1e-4); near(r.iron, 300, 'ferro usado na proporção 1:1', 1e-4); ok(r.problems === 0, 'pendências');
+});
+test('Com metas em todas as saídas: calcula pelas metas', async page => {
+  const r = await ruleCase(page, "by('motor').target=10;by('steel-beam').target=30;");
+  near(r.motor, 10, 'motor'); near(r.beam, 30, 'viga'); near(r.iron, 180, 'ferro derivado das metas', 1e-4); near(r.coal, 180, 'carvão', 1e-4); ok(r.problems === 0, 'pendências');
+});
+test('Meta acima dos insumos fixos gera pendência', async page => {
+  const r = await ruleCase(page, "by('motor').target=60;by('steel-beam').target=30;");
+  near(r.iron, 600, 'ferro no máximo', 1e-4); ok(r.problems > 0, 'sem pendência para meta impossível');
+});
 test('Sem metas e só fontes automáticas: comportamento anterior mantido', async page => {
   const r = await page.evaluate(() => T.build({ nodes: { fe: { src: 'iron-ore' }, cu: { src: 'copper-ore' }, al: { r: 'Alternate: Iron Alloy Ingot' } }, edges: [['fe', 0, 'al', 0], ['cu', 0, 'al', 1]] }));
   near(r.nodes.al.m, 3, 'foundries');
